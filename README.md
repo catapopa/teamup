@@ -1,2 +1,2 @@
-# teamup
+# TeamUp
 Web API for Business Management
