@@ -9,12 +9,9 @@ import {User} from '../../core/models/user';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-  getAll(){
-    this.userService.getAll().subscribe((data) => console.log(data), (error1 => console.log(error1)) );
   }
 
 }
