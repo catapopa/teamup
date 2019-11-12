@@ -34,3 +34,17 @@ databaseChangeLog:
               - column:
                   name: role
                   type: VARCHAR(50)
+
+  - changeSet:
+      id: 2
+      author: iosif
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "admin"
+              - column:
+                  name: password
+                  value: "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6"
