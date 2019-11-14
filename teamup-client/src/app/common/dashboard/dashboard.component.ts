@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../core/services/user/user.service';
-import {User} from '../../core/models/user';
+import {AuthService} from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'dashboard',
@@ -9,9 +8,13 @@ import {User} from '../../core/models/user';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
 }

@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './core/common/login/login.component';
-import { DashboardComponent } from './core/common/dashboard/dashboard.component';
+import { LoginComponent } from './common/login/login.component';
+import { DashboardComponent } from './common/dashboard/dashboard.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './core/core/interceptors/auth.interceptor';
+import {AuthInterceptor} from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [

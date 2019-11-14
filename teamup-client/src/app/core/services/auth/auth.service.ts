@@ -1,4 +1,4 @@
-import {Component, Injectable, Input} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserLogin} from '../../models/userLogin';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
@@ -25,12 +25,16 @@ export class AuthService {
     this.http.post<any>('http://localhost:1212/authenticate', user).subscribe(async (data) => {
       console.log('data', data);
       localStorage.setItem('token', 'Bearer ' + data.jwtToken);
-      localStorage.setItem('language', 'en');
       await delay(1000);
       this.router.navigate(['dashboard']);
     }, (error1: HttpErrorResponse) => {
       console.log('Error', error1);
     });
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['login']);
   }
 
 
