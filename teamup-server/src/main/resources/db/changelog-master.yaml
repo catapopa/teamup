@@ -48,3 +48,90 @@ databaseChangeLog:
               - column:
                   name: password
                   value: "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6"
+
+  - changeSet:
+      id: 3
+      author: teo
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: failed_login_attempts
+                  type: INT
+              - column:
+                  name: supervisor
+                  type: INT
+              - column:
+                  name: seniority
+                  type: VARCHAR(50)
+              - column:
+                  name: picture
+                  type: BLOB
+              - column:
+                  name: location
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_user_location
+                    references: locations(id)
+              - column:
+                  name: supervisor
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_user_user
+                    references: users(id)
+            tableName: users
+        - createTable:
+            tableName: skills
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: level
+                  type: VARCHAR(50)
+        - createTable:
+            tableName: user_skills
+            columns:
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_userSkills_users
+                    references: users(id)
+              - column:
+                  name: skill_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_userSkills_skills
+                    references: skills(id)
+        - createTable:
+            tableName: locations
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: country
+                  type: VARCHAR(50)
+              - column:
+                  name: state
+                  type: VARCHAR(50)
+              - column:
+                  name: city
+                  type: VARCHAR(50)
