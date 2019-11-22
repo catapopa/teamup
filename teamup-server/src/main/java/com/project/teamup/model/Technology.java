@@ -1,5 +1,6 @@
 package com.project.teamup.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,16 +13,15 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "locations")
-public class Location {
+@Table(name = "technologies")
+public class Technology {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String country;
-    @Column
-    private String state;
-    @Column
-    private String city;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "technology_area")
+    private TechnologyArea area;
 }

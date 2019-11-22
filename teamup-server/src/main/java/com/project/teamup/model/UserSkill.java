@@ -1,13 +1,13 @@
 package com.project.teamup.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "skills")
@@ -16,11 +16,15 @@ public class UserSkill {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String name;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserSkillType type;
+    @ToString.Exclude
+    @JsonBackReference
+    @JoinColumn(name = "user")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private User user;
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "technology")
+    private Technology technology;
     @Column
     @Enumerated(EnumType.STRING)
     private UserSkillLevel level;

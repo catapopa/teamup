@@ -1,11 +1,8 @@
 package com.project.teamup.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -39,11 +37,15 @@ public class User {
     private Location location;
     @Lob
     @Column
+    @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
     @Column(name = "failed_login_attempts")
     private Integer failedLoginAttempts;
     @ManyToOne
-    @JsonBackReference
+    @JoinColumn(name = "company")
+    private Company company;
+    @ManyToOne
+    @JsonIgnore
     @ToString.Exclude
     @JoinColumn(name = "supervisor")
     private User supervisor;
@@ -53,9 +55,12 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private UserSeniority seniority;
-    @ManyToMany
-    @JoinTable(name = "user_skills",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    List<ProjectUserExperience> projects;
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UserSkill> skills;
 }
