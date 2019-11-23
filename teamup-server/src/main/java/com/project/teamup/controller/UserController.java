@@ -42,4 +42,10 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
     }
+
+    @PostMapping(value = "/update")
+    public UserDTO updateUser(@RequestBody UserDTO user) {
+        return userMapper.toDto(userService.updateUser(userMapper.toEntity(user)));
+    }
+
 }
