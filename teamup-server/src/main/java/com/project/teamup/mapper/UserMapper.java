@@ -6,14 +6,14 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = UserSkillMapper.class)
 public abstract class UserMapper {
-    public abstract User toUser(UserDTO userDto);
+    public abstract User toEntity(UserDTO dto);
 
-    public abstract List<User> toUserList(List<UserDTO> userDTOS);
+    public abstract List<User> toEntityList(List<UserDTO> dtoList);
 
-    public abstract UserDTO toUserDto(User user);
+    public abstract UserDTO toDto(User entity);
 
-    public abstract List<UserDTO> toUserDtoList(List<User> userDTOS);
+    public abstract List<UserDTO> toDtoList(List<User> entityList);
 
 }
