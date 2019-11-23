@@ -18,5 +18,5 @@ public class ProjectDTO {
     private String description;
     private IndustryDTO industry;
     private CompanyDTO company;
-    private List<UserExperienceDTO> employees;
+    private List<UserExperienceDTO> userExperiences;
 }

@@ -55,10 +55,13 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private UserSeniority seniority;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserLanguage language;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    List<ProjectUserExperience> projects;
+    List<ProjectUserExperience> projectExperiences;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

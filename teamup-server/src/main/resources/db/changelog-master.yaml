@@ -249,3 +249,14 @@ databaseChangeLog:
               - column:
                   name: level
                   type: VARCHAR(50)
+
+  - changeSet:
+      id: 4
+      author: iosif
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: users
