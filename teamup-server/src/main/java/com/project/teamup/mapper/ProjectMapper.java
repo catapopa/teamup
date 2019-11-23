@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(uses = {IndustryMapper.class, CompanyMapper.class})
+@Mapper(uses = {IndustryMapper.class, CompanyMapper.class, ProjectUserExperienceMapper.class})
 public abstract class ProjectMapper {
     public abstract Project toEntity(ProjectDTO dto);
 

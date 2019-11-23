@@ -29,4 +29,5 @@ public class UserDTO {
     private LocationDTO location;
     private CompanyDTO company;
     private List<UserSkillDTO> skills;
+    private List<ProjectExperienceDTO> projectExperiences;
 }

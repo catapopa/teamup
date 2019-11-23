@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(uses = UserSkillMapper.class)
+@Mapper(uses = {UserSkillMapper.class, ProjectUserExperienceMapper.class})
 public abstract class UserMapper {
     public abstract User toEntity(UserDTO dto);
 

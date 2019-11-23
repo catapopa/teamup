@@ -58,7 +58,7 @@ public class User {
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    List<ProjectUserExperience> projects;
+    List<ProjectUserExperience> projectExperiences;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -31,5 +31,5 @@ public class Project {
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ProjectUserExperience> employees;
+    private List<ProjectUserExperience> userExperiences;
 }
