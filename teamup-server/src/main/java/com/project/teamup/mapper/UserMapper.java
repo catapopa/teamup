@@ -15,5 +15,4 @@ public abstract class UserMapper {
     public abstract UserDTO toDto(User entity);
 
     public abstract List<UserDTO> toDtoList(List<User> entityList);
-
 }
