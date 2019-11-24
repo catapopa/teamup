@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.ws.Response;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -41,5 +45,19 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
+    }
+
+    @PutMapping(value = "/createProfile/{id}")
+    public UserDTO createUserProfile(@RequestBody UserDTO entity, @PathVariable("id") Long id, @RequestParam("bitmap") MultipartFile file) {
+        try {
+            byte[] array = file.getBytes();
+            Blob blob = new SerialBlob(array);
+            User user = userMapper.toEntity(entity);
+            userService.createProfile(user, id, blob);
+            return userMapper.toDto(userService.createProfile(user, id, blob));
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
