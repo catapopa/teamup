@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {UserService} from '../../core/services/user/user.service';
 import {UserLogin} from '../../core/models/userLogin';
 import {Token} from '../../core/models/token';
-import {LoginValidators} from './login.validators';
 import {AuthService} from '../../core/services/auth/auth.service';
 
 @Component({
@@ -25,8 +24,7 @@ export class LoginComponent implements OnInit {
     constructor(private router: Router, private userService: UserService, private fb: FormBuilder,
                 private authService: AuthService) {
         this.form = fb.group({
-            username: [null, [Validators.required, LoginValidators.cannotContainSpace,
-                LoginValidators.cannotContainUpperCaseLetter]],
+            username: [null, [Validators.required]],
             password: [null, [Validators.required]]
         });
     }
@@ -43,8 +41,8 @@ export class LoginComponent implements OnInit {
      *
      * */
     login() {
-        this.username = this.form.get('username').value.toString();
-        this.password = this.form.get('password').value.toString();
+        this.username = this.form.get('username').value;
+        this.password = this.form.get('password').value;
         this.userLogin = {username: this.username, password: this.password};
         this.authService.login(this.userLogin);
     }

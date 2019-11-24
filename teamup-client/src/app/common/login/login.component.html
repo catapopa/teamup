@@ -13,12 +13,6 @@
                 <div *ngIf="form.get('username').errors.required">
                     Username is required!
                 </div>
-                <div *ngIf="form.get('username').errors.cannotContainSpace">
-                    Username cannot contain any space!
-                </div>
-                <div *ngIf="form.get('username').errors.cannotContainUpperCaseLetter">
-                    Username cannot contain any upper case letter!
-                </div>
             </div>
         </div>
 

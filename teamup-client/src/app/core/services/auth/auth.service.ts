@@ -21,9 +21,7 @@ export class AuthService {
    * @param user that is going to be logged in
    */
   public login(user: UserLogin) {
-    console.log(user);
     this.http.post<any>('http://localhost:1212/authenticate', user).subscribe(async (data) => {
-      console.log('data', data);
       localStorage.setItem('token', 'Bearer ' + data.jwtToken);
       await delay(1000);
       this.router.navigate(['dashboard']);
