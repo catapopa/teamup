@@ -42,4 +42,11 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
     }
+
+    @PostMapping(value = "/activate")
+    public String activateUser(@RequestBody List<UserDTO> users){
+        User deactivatedUser = userMapper.toEntity(users.get(0));
+        User admin = userMapper.toEntity(users.get(1));
+        return userService.activateUser(admin, deactivatedUser);
+    }
 }

@@ -1,6 +1,7 @@
 package com.project.teamup.utils;
 
 import com.project.teamup.dto.UserDTO;
+import com.project.teamup.model.User;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -61,7 +62,7 @@ public class MailService {
      * @param newPassword the new generated password
      * @return the message of the mail
      * */
-    public static String sendMessageNewPassword(UserDTO blockedUser, UserDTO admin, String newPassword){
+    public static String sendMessageNewPassword(User blockedUser, User admin, String newPassword){
         StringBuilder message = new StringBuilder();
         message.append("Hello, ");
         message.append(blockedUser.getFirstName());
@@ -106,7 +107,7 @@ public class MailService {
      *              a new password for the user
      * @return the message of the mail
      * */
-    public static String sendMessageDeactivatedAccount(UserDTO blockedUser, UserDTO admin){
+    public static String sendMessageDeactivatedAccount(User blockedUser, User admin){
         StringBuilder message = new StringBuilder();
         message.append("Hi, ");
         message.append(admin.getFirstName());
