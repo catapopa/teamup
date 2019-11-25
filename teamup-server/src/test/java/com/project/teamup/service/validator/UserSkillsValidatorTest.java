@@ -30,6 +30,7 @@ public class UserSkillsValidatorTest {
     public void validateObject() {
         List<UserSkill> userSkills = new ArrayList<>();
         UserSkill userSkill = new UserSkill(1L,null,new Technology(), UserSkillLevel.BEGINNER);
+        userSkills.add(userSkill);
 
         // case: user is null
         Assert.assertFalse(userSkillsValidator.validateObject(userSkills));
