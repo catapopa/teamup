@@ -3,6 +3,7 @@ package com.project.teamup.service;
 
 import com.project.teamup.dao.TechnologyAreaRepository;
 import com.project.teamup.model.TechnologyArea;
+import com.project.teamup.service.validator.TechnologyAreaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,19 @@ import java.util.Optional;
 public class TechnologyAreaService {
     @Autowired
     private TechnologyAreaRepository technologyAreaRepository;
+    @Autowired
+    private TechnologyAreaValidator technologyAreaValidator;
 
     public List<TechnologyArea> getAll() {
         return technologyAreaRepository.findAll();
     }
 
     public TechnologyArea save(TechnologyArea technology) {
-        return technologyAreaRepository.save(technology);
+        if (technologyAreaValidator.validateObject(technology)){
+            return technologyAreaRepository.save(technology);
+        }
+        // Should throw Exception instead of returning null?
+        return null;
     }
 
     public void delete(Long id) {
