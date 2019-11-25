@@ -2,6 +2,7 @@ package com.project.teamup.security;
 
 import com.project.teamup.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +16,15 @@ import java.util.Optional;
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<com.project.teamup.model.User> user = userRepository.findByUsername(username);
+        if (loginAttemptService.isBlocked(user)) {
+            return new User(user.get().getUsername(), user.get().getPassword(), true, true, true, false, AuthorityUtils.NO_AUTHORITIES);
+        }
 
         if (user.isPresent()) {
             return new User(user.get().getUsername(), user.get().getPassword(), new ArrayList<>());
