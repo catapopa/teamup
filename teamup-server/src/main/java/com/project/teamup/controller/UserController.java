@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.ws.Response;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/users")
+@CrossOrigin()
 public class UserController {
     @Autowired
     private UserService userService;
