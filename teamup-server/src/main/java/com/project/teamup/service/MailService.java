@@ -1,20 +1,21 @@
-package com.project.teamup.utils;
+package com.project.teamup.service;
 
-import com.project.teamup.dto.UserDTO;
 import com.project.teamup.model.User;
-
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Date;
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 /**
  * Sends mails to different users of the application.
  * @author Sonya
  * @since 23.11.2019
  * */
+@Service
 public class MailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     /**
      * Sends an email
@@ -22,33 +23,13 @@ public class MailService {
      * @param userEmail email of the user who must receive the message
      * @param subject the subject of the mail
      * @param message the email's message
-     * @throws MessagingException if the mail hasn't been sent
      * */
-    public static void sendMail(String userEmail, String subject, String message) throws MessagingException {
-        String username = "teamUp732@gmail.com";
-        String password = "proiectcolectiv2019";
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        //Establishing a session with required user details
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-        MimeMessage msg = new MimeMessage(session);
-        String to = userEmail;
-        InternetAddress[] address = InternetAddress.parse(to, true);
-        msg.setRecipients(Message.RecipientType.TO, address);
-        msg.setFrom(new InternetAddress(username));
-        msg.setSentDate(new Date());
-        msg.setSubject(subject);
-        msg.setText(message);
-        msg.setHeader("XPriority", "1");
-        Transport.send(msg);
+    public void sendMail(String userEmail, String subject, String message) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(userEmail);
+        email.setSubject(subject);
+        email.setText(message);
+        mailSender.send(email);
     }
 
     /**
@@ -62,7 +43,7 @@ public class MailService {
      * @param newPassword the new generated password
      * @return the message of the mail
      * */
-    public static String sendMessageNewPassword(User blockedUser, User admin, String newPassword){
+    public String sendMessageNewPassword(User blockedUser, User admin, String newPassword){
         StringBuilder message = new StringBuilder();
         message.append("Hello, ");
         message.append(blockedUser.getFirstName());
@@ -91,7 +72,7 @@ public class MailService {
      * be sent to an user when his password was
      * newly generated.
      * */
-    public static String newPasswordSubject(){
+    public String newPasswordSubject(){
         return "Recover your password";
     }
 
@@ -107,7 +88,7 @@ public class MailService {
      *              a new password for the user
      * @return the message of the mail
      * */
-    public static String sendMessageDeactivatedAccount(User blockedUser, User admin){
+    public String sendMessageDeactivatedAccount(User blockedUser, User admin){
         StringBuilder message = new StringBuilder();
         message.append("Hi, ");
         message.append(admin.getFirstName());
@@ -129,7 +110,7 @@ public class MailService {
      * be sent to an admin when a user's account
      * has been deactivated
      * */
-    public static String accountDeactivatedSubject(){
+    public String accountDeactivatedSubject(){
         return "User deactivated";
     }
 }

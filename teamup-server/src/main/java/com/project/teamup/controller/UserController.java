@@ -3,13 +3,12 @@ package com.project.teamup.controller;
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.User;
+import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -44,9 +43,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/activate")
-    public String activateUser(@RequestBody List<UserDTO> users){
-        User deactivatedUser = userMapper.toEntity(users.get(0));
-        User admin = userMapper.toEntity(users.get(1));
-        return userService.activateUser(admin, deactivatedUser);
+    public String activateUser(@RequestParam(name="adminUsername") String adminUsername,
+                               @RequestParam(name="emplUsername") String emplUsername){
+        return userService.activateUser(adminUsername, emplUsername);
     }
 }
