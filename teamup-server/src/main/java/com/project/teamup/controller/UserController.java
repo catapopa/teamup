@@ -2,14 +2,11 @@ package com.project.teamup.controller;
 
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
-import com.project.teamup.model.User;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController

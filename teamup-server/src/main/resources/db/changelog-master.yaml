@@ -260,3 +260,30 @@ databaseChangeLog:
                   name: language
                   type: VARCHAR(50)
             tableName: users
+
+  - changeSet:
+      id: 5
+      author: cristi
+      changes:
+        - createTable:
+            tableName: activation_tokens
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: token
+                  type: VARCHAR(50)
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_verify_user
+                    references: users(id)
+              - column:
+                  name: expiry_date
+                  type: DATE
