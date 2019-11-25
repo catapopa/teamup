@@ -9,11 +9,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
+    private final static int VERIFICATION_TOKEN_VALIDITY = 60 * 60 * 1000;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -31,6 +36,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public String generateActivationLink(User user){
+        VerificationToken verificationToken = tokenRepository.findByUser(user);
+
+        return "http://localhost:4200/registration/"+verificationToken.getToken();
+    }
+
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
@@ -39,14 +50,22 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void createVerificationTokenForUser(User user, String token) {
-        final VerificationToken myToken = new VerificationToken(token, user);
+    public void createVerificationTokenForUser(User user) {
 
-        tokenRepository.save(myToken);
+        tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime())));
+
+
     }
 
-    public VerificationToken getVerificationToken(String token) {
+    public boolean isValidToken(String token) {
 
-        return tokenRepository.findByToken(token);
+        VerificationToken verificationToken = tokenRepository.findByToken(token);
+
+        if (verificationToken != null && verificationToken.getExpiryDate().before(new Timestamp(new Date().getTime()))){
+            tokenRepository.delete(verificationToken);
+            return true;
+        }
+
+        return false;
     }
 }

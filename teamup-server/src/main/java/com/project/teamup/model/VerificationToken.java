@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -14,8 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VerificationToken {
-
-    private static final int EXPIRATION = 60 * 24;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,20 +27,5 @@ public class VerificationToken {
     private User user;
 
     @Column(name = "expiry_date")
-    private Date expiryDate;
-
-    public VerificationToken(final String token, final User user) {
-        super();
-
-        this.token = token;
-        this.user = user;
-        this.expiryDate = calculateExpiryDate();
-    }
-
-    private Date calculateExpiryDate() {
-        final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(new Date().getTime());
-        cal.add(Calendar.MINUTE, VerificationToken.EXPIRATION);
-        return new Date(cal.getTime().getTime());
-    }
+    private Timestamp expiryDate;
 }
