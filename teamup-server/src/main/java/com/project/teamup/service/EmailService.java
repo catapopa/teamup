@@ -5,6 +5,7 @@ import com.project.teamup.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -25,6 +26,7 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 
     @Autowired
+    @Qualifier("emailTemplateEngine")
     private TemplateEngine templateEngine;
 
     @Autowired

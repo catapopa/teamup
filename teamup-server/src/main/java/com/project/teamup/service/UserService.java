@@ -51,10 +51,11 @@ public class UserService {
     }
 
     public void createVerificationTokenForUser(User user) {
+        VerificationToken verificationToken = tokenRepository.findByUser(user);
 
-        tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime())));
-
-
+        if (verificationToken == null){
+            tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
+        }
     }
 
     public boolean isValidToken(String token) {

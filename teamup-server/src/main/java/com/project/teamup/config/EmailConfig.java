@@ -1,5 +1,6 @@
 package com.project.teamup.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
@@ -14,6 +15,7 @@ import java.util.Collections;
 public class EmailConfig {
 
     @Bean
+    @Qualifier("emailTemplateEngine")
     public TemplateEngine emailTemplateEngine() {
         final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.addTemplateResolver(htmlTemplateResolver());
