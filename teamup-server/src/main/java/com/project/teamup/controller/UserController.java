@@ -30,10 +30,9 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
-    @PostMapping(value = "/generateToken/{id}")
-    public ResponseEntity generateToken(@PathVariable Long id){
-        //User userEntity = userMapper.toEntity(user);
-        User userEntity = userService.findById(id).get();
+    @PostMapping(value = "/generateToken/{userId}")
+    public ResponseEntity generateToken(@PathVariable Long userId){
+        User userEntity = userService.findById(userId).get();
 
         userService.createVerificationTokenForUser(userEntity);
 

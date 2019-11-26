@@ -18,6 +18,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final static int VERIFICATION_TOKEN_VALIDITY = 60 * 60 * 1000;
+    private final static String WEB_APP_URL = "http://localhost:4200/registration/";
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +32,6 @@ public class UserService {
     }
 
     public User save(User user) {
-        System.out.println(user.getEmail() + " " + user.getPassword());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -39,7 +39,7 @@ public class UserService {
     public String generateActivationLink(User user){
         VerificationToken verificationToken = tokenRepository.findByUser(user);
 
-        return "http://localhost:4200/registration/"+verificationToken.getToken();
+        return WEB_APP_URL+verificationToken.getToken();
     }
 
     public void delete(Long id) {
@@ -55,6 +55,11 @@ public class UserService {
 
         if (verificationToken == null){
             tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
+        }else {
+            if (verificationToken.getExpiryDate().after(new Timestamp(new Date().getTime()))){
+                tokenRepository.delete(verificationToken);
+                tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
+            }
         }
     }
 
