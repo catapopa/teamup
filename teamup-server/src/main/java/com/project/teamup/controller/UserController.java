@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.ws.Response;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/users")
+@CrossOrigin()
 public class UserController {
     @Autowired
     private UserService userService;
@@ -41,5 +43,12 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
+    }
+
+    @PostMapping(value = "/activate")
+    public String activateUser(@RequestBody List<UserDTO> users){
+        User deactivatedUser = userMapper.toEntity(users.get(0));
+        User admin = userMapper.toEntity(users.get(1));
+        return userService.activateUser(admin, deactivatedUser);
     }
 }
