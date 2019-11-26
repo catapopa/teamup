@@ -17,28 +17,28 @@ import java.util.List;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserSkillsValidatorTest {
+public class UserValidatorTest {
     @InjectMocks
-    UserSkillsValidator userSkillsValidator;
+    UserValidator userValidator;
     @Mock
     TechnologyValidator technologyValidator;
 
     @Test
-    public void validateObject() {
+    public void validateUserSkills() {
         List<UserSkill> userSkills = new ArrayList<>();
         UserSkill userSkill = new UserSkill(1L,null,new Technology(), UserSkillLevel.BEGINNER);
         userSkills.add(userSkill);
 
         // case: user is null
-        Assert.assertFalse(userSkillsValidator.validateObject(userSkills));
+        Assert.assertFalse(userValidator.validateUserSkills(userSkills));
 
         // case: technology is not valid
         userSkills.get(0).setUser(new User());
         Mockito.when(technologyValidator.validateObject(Mockito.any())).thenReturn(false);
-        Assert.assertFalse(userSkillsValidator.validateObject(userSkills));
+        Assert.assertFalse(userValidator.validateUserSkills(userSkills));
 
         // case: technology is valid
         Mockito.when(technologyValidator.validateObject(Mockito.any())).thenReturn(true);
-        Assert.assertTrue(userSkillsValidator.validateObject(userSkills));
+        Assert.assertTrue(userValidator.validateUserSkills(userSkills));
     }
 }

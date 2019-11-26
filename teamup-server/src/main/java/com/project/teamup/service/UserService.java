@@ -2,6 +2,7 @@ package com.project.teamup.service;
 
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.model.User;
+import com.project.teamup.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder bcryptEncoder;
+    @Autowired
+    private UserValidator userValidator;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -22,7 +25,9 @@ public class UserService {
 
     public User save(User user) {
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        if (userValidator.validateObject(user)) return userRepository.save(user);
+        // Should throw Exception here?
+        return null;
     }
 
     public void delete(Long id) {
