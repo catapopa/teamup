@@ -5,7 +5,6 @@ import com.project.teamup.model.User;
 import com.project.teamup.model.UserSkill;
 import com.project.teamup.model.UserSkillLevel;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserSkillsValidatorTest {
@@ -38,5 +36,9 @@ public class UserSkillsValidatorTest {
         userSkills.get(0).setUser(new User());
         Mockito.when(technologyValidator.validateObject(Mockito.any())).thenReturn(false);
         Assert.assertFalse(userSkillsValidator.validateObject(userSkills));
+
+        // case: technology is valid
+        Mockito.when(technologyValidator.validateObject(Mockito.any())).thenReturn(true);
+        Assert.assertTrue(userSkillsValidator.validateObject(userSkills));
     }
 }
