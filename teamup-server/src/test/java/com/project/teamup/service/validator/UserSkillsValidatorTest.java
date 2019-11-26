@@ -7,24 +7,23 @@ import com.project.teamup.model.UserSkillLevel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UserSkillsValidatorTest {
     @InjectMocks
     UserSkillsValidator userSkillsValidator;
     @Mock
     TechnologyValidator technologyValidator;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void validateObject() {
