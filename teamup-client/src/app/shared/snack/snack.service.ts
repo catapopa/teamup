@@ -3,45 +3,46 @@ import SnackComponent from './snack.component';
 
 
 export class ConfirmPromptService {
-	private readonly successClassName: string = 'success-snackbar';
-	private readonly warningClassName: string = 'warning-snackbar';
-	private readonly errorClassName: string = 'error-snackbar';
-	private readonly genericErrorMsgKey: string = 'snackMessages.genericError';
 
-	constructor(private snackBar: MatSnackBar) { }
+    private readonly successClassName: string = 'success-snackbar';
+    private readonly warningClassName: string = 'warning-snackbar';
+    private readonly errorClassName: string = 'error-snackbar';
+    private readonly genericErrorMsgKey: string = 'snackMessages.genericError';
 
-	commonConfig() {
-		const config = new MatSnackBarConfig();
-		config.verticalPosition = 'top';
-		return config;
-	}
+    constructor(private snackBar: MatSnackBar) { }
 
-	openSnack(messageKey: string, className: string, config: MatSnackBarConfig) {
-		config.panelClass = [className];
+    commonConfig() {
+        const config = new MatSnackBarConfig();
+        config.verticalPosition = 'top';
+        return config;
+    }
 
-		this.snackBar.openFromComponent(SnackComponent, config);
-	}
+    openSnack(messageKey: string, className: string, config: MatSnackBarConfig) {
+        config.panelClass = [className];
 
-	openSnackBar(messageKey: string) {
-		const config = this.commonConfig();
-		config.duration = 3000;
-		config.data = { success: true };
+        this.snackBar.openFromComponent(SnackComponent, config);
+    }
 
-		this.openSnack(messageKey, this.successClassName, config);
-	}
+    openSnackBar(messageKey: string) {
+        const config = this.commonConfig();
+        config.duration = 3000;
+        config.data = { success: true };
 
-	openSnackBarWarning(messageKey: string) {
-		const config = this.commonConfig();
-		config.data = { warning: true };
+        this.openSnack(messageKey, this.successClassName, config);
+    }
 
-		this.openSnack(messageKey, this.warningClassName, config);
-	}
+    openSnackBarWarning(messageKey: string) {
+        const config = this.commonConfig();
+        config.data = { warning: true };
 
-	openSnackBarError(messageKey?: string) {
-		const config = this.commonConfig();
-		const errorMsgKey = messageKey || this.genericErrorMsgKey;
-		config.data = { error: true };
+        this.openSnack(messageKey, this.warningClassName, config);
+    }
 
-		this.openSnack(errorMsgKey, this.errorClassName, config);
-	}
+    openSnackBarError(messageKey?: string) {
+        const config = this.commonConfig();
+        const errorMsgKey = messageKey || this.genericErrorMsgKey;
+        config.data = { error: true };
+
+        this.openSnack(errorMsgKey, this.errorClassName, config);
+    }
 }

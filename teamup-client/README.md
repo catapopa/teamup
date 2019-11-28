@@ -1,6 +1,12 @@
 # TeamUp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
+## Recommendations
+
+Use Visual Studio Code and install the following plugins
+EditorConfig: (https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+js-beautify: (https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify )
+TSLint (https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin )
+Angular 8 Snippets
 
 ## Development server
 

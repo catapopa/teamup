@@ -1,4 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.success-snackbar {
+	max-width: 100% !important;
+	margin-left: auto !important; // center align from left
+	margin-right: auto !important; // center align from right
+	margin-bottom: 1rem !important;
+	margin-top: 65px !important;
+	padding: 10px !important; // spacing between the text and boundary
+	background-color: #88A254;
+	color: #f7f0cf;
+
+	.mat-button-wrapper {
+		color: #f7f0cf !important; // action text color
+	}
+}
+
+.error-snackbar {
+	max-width: 100% !important;
+	margin-left: auto !important; // center align from left
+	margin-right: auto !important; // center align from right
+	margin-bottom: 1rem !important;
+	margin-top: 65px !important;
+	padding: 10px !important; // spacing between the text and boundary
+	background-color: #DB5843;
+	color: #f7f0cf;
+
+	.mat-button-wrapper {
+		color: #f7f0cf !important; // action text color
+	}
+}
+
+.warning-snackbar {
+	max-width: 100% !important;
+	margin-left: auto !important; // center align from left
+	margin-right: auto !important; // center align from right
+	margin-bottom: 1rem !important;
+	margin-top: 65px !important;
+	padding: 10px !important; // spacing between the text and boundary
+	background-color: #FBD977;
+	color: #213036;
+
+	.mat-button-wrapper {
+		color: #213036 !important; // action text color
+	}
+}
