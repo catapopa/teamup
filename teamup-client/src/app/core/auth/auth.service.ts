@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {UserLogin} from '../../models/userLogin';
+import {UserLogin} from '../../shared/models/userLogin';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {delay} from 'q';
