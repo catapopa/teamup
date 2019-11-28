@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/users")
+@CrossOrigin()
 public class UserController {
     @Autowired
     private UserService userService;
@@ -23,19 +25,19 @@ public class UserController {
     private EmailService emailService;
 
     @PostMapping(value = "/save")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user,@RequestBody String token) {
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user, @RequestBody String token) {
         if (userService.isValidToken(token)) {
             return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
         }
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
+
     @PostMapping(value = "/generateToken/{userId}")
-    public ResponseEntity generateToken(@PathVariable Long userId){
+    public ResponseEntity generateToken(@PathVariable Long userId) {
         User userEntity = userService.findById(userId).get();
 
         userService.createVerificationTokenForUser(userEntity);
-
         emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION);
 
         return ResponseEntity.ok().build();
