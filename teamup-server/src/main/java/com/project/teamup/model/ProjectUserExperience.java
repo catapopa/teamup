@@ -32,4 +32,5 @@ public class ProjectUserExperience {
     private LocalDate endDate;
     @Column
     private String description;
+    //TODO: Add skills here
 }
