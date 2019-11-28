@@ -28,4 +28,6 @@ public class UserSkill {
     @Column
     @Enumerated(EnumType.STRING)
     private UserSkillLevel level;
+    //TODO: separate user skill in another many to many table
+    //TODO: add i18n to the skill, technology, technology area
 }
