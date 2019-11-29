@@ -1,9 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserLogin } from '../shared/models/userLogin';
+import { UserLogin } from '../../shared/models/userLogin';
 import { Token } from '@angular/compiler/src/ml_parser/lexer';
-import { AuthService } from '../core/auth/auth.service';
+import { AuthService } from '../../core/authentication/auth.service';
 
 @Component({
     selector: 'login',
@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        // if the user is already logged in, it navigates to dashboard.
+        // if the user is already logged in, it navigates to home.
         if (localStorage.getItem('token')) {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['home']);
         }
     }
 

@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import SnackComponent from './snack/snack.component';
-import { HttpService } from './http.service';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
-    SnackComponent
+    SnackComponent,
+    TopBarComponent
   ],
   exports: [
     CommonModule,
@@ -17,7 +18,6 @@ import { HttpService } from './http.service';
     RouterModule,
   ],
   providers: [
-    HttpService
   ]
 })
 export class SharedModule { }
