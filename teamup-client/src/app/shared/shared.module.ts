@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import SnackComponent from './snack/snack.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
   imports: [
     CommonModule,
     RouterModule,
+    MatIconModule
   ],
   providers: [
     TopBarComponent

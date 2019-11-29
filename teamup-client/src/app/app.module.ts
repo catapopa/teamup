@@ -10,6 +10,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { CoreModule } from './core/core.module';
 import { LoginComponent } from './modules/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   // components, directives and pipes
@@ -21,10 +22,11 @@ import { HomeComponent } from './modules/home/home.component';
   imports: [
     BrowserModule,
     CoreModule,
+    SharedModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   // injectables
   providers: [{
