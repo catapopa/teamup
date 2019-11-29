@@ -23,7 +23,6 @@ export class AuthService {
   public login(user: UserLogin) {
     this.http.post<any>('http://localhost:1212/authenticate', user).subscribe(async (data) => {
       localStorage.setItem('token', 'Bearer ' + data.jwtToken);
-      await delay(1000);
       this.router.navigate(['home']);
     }, (error1: HttpErrorResponse) => {
       console.log('Error', error1);
