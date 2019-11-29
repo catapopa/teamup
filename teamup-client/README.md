@@ -1,4 +1,4 @@
-# TeamUp
+# teamup
 
 ## Recommendations
 
