@@ -6,7 +6,7 @@ import { Token } from '@angular/compiler/src/ml_parser/lexer';
 import { AuthService } from '../../core/authentication/auth.service';
 
 @Component({
-    selector: 'login',
+    selector: 'teamup-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
 })

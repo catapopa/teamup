@@ -11,13 +11,15 @@ import { TopBarComponent } from './top-bar/top-bar.component';
   ],
   exports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    TopBarComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
   ],
   providers: [
+    TopBarComponent
   ]
 })
 export class SharedModule { }

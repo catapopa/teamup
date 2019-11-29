@@ -3,7 +3,7 @@ import { Component, HostListener, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material';
 
 @Component({
-    selector: 'snack',
+    selector: 'teamup-snack',
     templateUrl: './snack.component.html'
 })
 export default class SnackComponent {
