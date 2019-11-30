@@ -1,10 +1,24 @@
 package com.project.teamup.service;
 
+import com.google.common.collect.Lists;
 import com.project.teamup.model.User;
+import com.project.teamup.model.UserLanguage;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Sends mails to different users of the application.
@@ -17,100 +31,131 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    /**
-     * Sends an email
-     *
-     * @param userEmail email of the user who must receive the message
-     * @param subject the subject of the mail
-     * @param message the email's message
-     * */
-    public void sendMail(String userEmail, String subject, String message) {
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(userEmail);
-        email.setSubject(subject);
-        email.setText(message);
-        mailSender.send(email);
+    @Autowired
+    @Qualifier("emailTemplateEngine")
+    private TemplateEngine templateEngine;
+
+
+    @Value("${spring.mail.username}")
+    private String emailFromAddress;
+
+    private MimeMessageHelper generateMimeMessage(String emailTemplate, String subject, List<String> recipients,
+                                                  Map<String,Object> variables) throws MessagingException {
+        Context context = new Context();
+
+        MimeMessage mimeMessage = this.mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,"UTF-8");
+
+        mimeMessageHelper.setSubject(subject);
+        mimeMessageHelper.setFrom(emailFromAddress);
+        mimeMessageHelper.setTo(recipients.toArray(new String[recipients.size()]));
+
+        context.setVariable("title",subject);
+        variables.forEach(context::setVariable);
+
+        mimeMessageHelper.setText(templateEngine.process(emailTemplate, context),true);
+
+        return mimeMessageHelper;
     }
 
+
     /**
-     * Builds the message of the mail that has to be
-     * sent by an admin when he generates a new
-     * password for a blocked user.
+     * Sends an email to the blocked user when
+     * an admin generates a new password for him.
      *
      * @param blockedUser user whose password must
      *                    be generated
      * @param admin the admin who generates the password
      * @param newPassword the new generated password
-     * @return the message of the mail
      * */
-    public String sendMessageNewPassword(User blockedUser, User admin, String newPassword){
-        StringBuilder message = new StringBuilder();
-        message.append("Hello, ");
-        message.append(blockedUser.getFirstName());
-        message.append(" ");
-        message.append(blockedUser.getLastName());
-        message.append("!\n\n");
-        message.append("A new password has been set for you. You can now try to log in with" +
-                " the following credentials: \n");
-        message.append("Username: ");
-        message.append(blockedUser.getUsername());
-        message.append("\n");
-        message.append("Password: ");
-        message.append(newPassword);
-        message.append("\n");
-        message.append("I recommend you to log in and to change the new generated password immediately for security" +
-                " reasons! If there are any further problems don't hesitate to write me.\n\n");
-        message.append("Have a nice day,\n");
-        message.append(admin.getFirstName());
-        message.append(" ");
-        message.append(admin.getLastName());
-        return message.toString();
+    void sendEmailActivation(User admin, User blockedUser, String newPassword){
+        Map<String, Object> variables = new HashMap<>();
+        List<String> recipients = Lists.newArrayList(blockedUser.getEmail());
+        variables.put("firstName", blockedUser.getFirstName());
+        variables.put("lastName", blockedUser.getLastName());
+        variables.put("username", blockedUser.getUsername());
+        variables.put("password", newPassword);
+        variables.put("adminFirstName", admin.getFirstName());
+        variables.put("adminLastName", admin.getLastName());
+        EmailType emailType = EmailType.USER_ACTIVATION_EN; //default language
+        UserLanguage language = blockedUser.getLanguage();
+        if(language != null) {
+            switch (language) {
+                case GERMAN:
+                    emailType = EmailType.USER_ACTIVATION_DE;
+                    break;
+                case ENGLISH:
+                    emailType = EmailType.USER_ACTIVATION_EN;
+                    break;
+                case ROMANIAN:
+                    emailType = EmailType.USER_ACTIVATION_RO;
+                    break;
+            }
+        }
+        try {
+            MimeMessageHelper message = generateMimeMessage(emailType.template,emailType.getSubject(),
+                    recipients,variables);
+            mailSender.send(message.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     /**
-     * @return the subject of the mail which must
-     * be sent to an user when his password was
-     * newly generated.
-     * */
-    public String newPasswordSubject(){
-        return "Recover your password";
-    }
-
-    /**
-     * Builds the message of the email that has to be sent
-     * to an admin when a user's account has been
-     * deactivated to inform him that he has to
+     * Sends the email to an admin when a user's account
+     * has been deactivated to inform him that he has to
      * generate a new password for him.
      *
      * @param blockedUser the user whose password must
      *                    be generated
      * @param admin the admin who has to generate
      *              a new password for the user
-     * @return the message of the mail
      * */
-    public String sendMessageDeactivatedAccount(User blockedUser, User admin){
-        StringBuilder message = new StringBuilder();
-        message.append("Hi, ");
-        message.append(admin.getFirstName());
-        message.append(" ");
-        message.append(admin.getLastName());
-        message.append("!\n\n");
-        message.append("The account for the user with the following credentials has been deactivated: \n");
-        message.append("Username: ");
-        message.append(blockedUser.getUsername());
-        message.append("Email: ");
-        message.append(blockedUser.getEmail());
-        message.append("\n");
-        message.append("Please generate a new password and announce the blocked user.");
-        return message.toString();
+    //TODO call this method when a user's account is deactivated!!!
+    void sendEmailDeactivation(User admin, User blockedUser){
+        Map<String, Object> variables = new HashMap<>();
+        List<String> recipients = Lists.newArrayList(admin.getEmail());
+        variables.put("firstName", admin.getFirstName());
+        variables.put("lastName", admin.getLastName());
+        variables.put("username", blockedUser.getUsername());
+        variables.put("emailBlockedUser", blockedUser.getEmail());
+        EmailType emailType = EmailType.USER_DEACTIVATION_EN; //default language
+        UserLanguage language = blockedUser.getLanguage();
+        if(language != null) {
+            switch (language) {
+                case GERMAN:
+                    emailType = EmailType.USER_DEACTIVATION_DE;
+                    break;
+                case ENGLISH:
+                    emailType = EmailType.USER_DEACTIVATION_EN;
+                    break;
+                case ROMANIAN:
+                    emailType = EmailType.USER_DEACTIVATION_RO;
+                    break;
+            }
+        }
+        try {
+            MimeMessageHelper message = generateMimeMessage(emailType.template,emailType.getSubject(),
+                    recipients,variables);
+            mailSender.send(message.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
-    /**
-     * @return the subject of the mail which must
-     * be sent to an admin when a user's account
-     * has been deactivated
-     * */
-    public String accountDeactivatedSubject(){
-        return "User deactivated";
+    @Getter
+    @AllArgsConstructor
+    public enum EmailType{
+
+        FIRST_REGISTRATION("html/firstRegistration","Registration Confirmation"),
+        USER_ACTIVATION_DE("html/activationMailDe", "Konto Aktivierung Bestaetigung"),
+        USER_ACTIVATION_EN("html/activationMailEn","Account Activation Confirmation"),
+        USER_ACTIVATION_RO("html/activationMailRo","Confirmare activare cont"),
+        USER_DEACTIVATION_DE("html/deactivationMailDe","Konto deaktiviert"),
+        USER_DEACTIVATION_RO("html/deactivationMailRo","Cont dezactivat"),
+        USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated");
+
+        private String template;
+        private String subject;
     }
 }

@@ -48,17 +48,19 @@ public class UserService {
         Optional<User> admin = userRepository.findByUsername(adminUsername);
         if(deactivatedUser.isPresent() && admin.isPresent()){
             User userToBeActivated = deactivatedUser.get();
-            String newPassword = generateNewPassword();
-            String subject = mailService.newPasswordSubject();
-            String message = mailService.sendMessageNewPassword(userToBeActivated,
-                    admin.get(), newPassword);
-            mailService.sendMail(deactivatedUser.get().getEmail(), subject, message);
-            userToBeActivated.setFailedLoginAttempts(0); //activates the user
-            userToBeActivated.setPassword(bcryptEncoder.encode(newPassword));
-            userRepository.save(userToBeActivated);
-            return "User was successfully activated and a mail with the new password was sent to him!";
+            if(userToBeActivated.getFailedLoginAttempts() >= 3) {
+                String newPassword = generateNewPassword();
+                mailService.sendEmailActivation(admin.get(), userToBeActivated, newPassword);
+                userToBeActivated.setFailedLoginAttempts(0); //activates the user
+                userToBeActivated.setPassword(bcryptEncoder.encode(newPassword));
+                userRepository.save(userToBeActivated);
+                return "User was successfully activated and a mail with the new password was sent to him!";
+            }
+            else {
+                return "The user is already activated!";
+            }
         }
-        return "The user is already activated!";
+        return "Invalid username of admin/employee!";
     }
 
     /**
