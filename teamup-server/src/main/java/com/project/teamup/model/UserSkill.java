@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
 @Data
 @Entity
@@ -24,6 +25,7 @@ public class UserSkill {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "technology")
+    @Valid
     private Technology technology;
     @Column
     @Enumerated(EnumType.STRING)

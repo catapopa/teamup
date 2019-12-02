@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Service
@@ -31,7 +32,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(User user) {
+    public User save(@Valid User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
