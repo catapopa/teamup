@@ -1,8 +1,8 @@
 package com.project.teamup.dao;
 
 
-import com.project.teamup.model.UserSkill;
+import com.project.teamup.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserSkillRepository extends JpaRepository<UserSkill, Long> {
+public interface UserSkillRepository extends JpaRepository<Skill, Long> {
 }

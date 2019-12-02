@@ -287,3 +287,45 @@ databaseChangeLog:
               - column:
                   name: expiry_date
                   type: DATE
+  - changeSet:
+      id: 5
+      author: iosif
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: technologies
+        - addColumn:
+            columns:
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: technology_areas
+        - addColumn:
+            columns:
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: skills
+        - createTable:
+            tableName: users_skills
+            columns:
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_userSkills_users
+                    references: users(id)
+              - column:
+                  name: skill_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_userSkills_skills
+                    references: skills(id)

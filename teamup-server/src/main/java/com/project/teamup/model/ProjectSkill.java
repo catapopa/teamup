@@ -11,15 +11,15 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users_skills")
-public class UserSkill {
+@Table(name = "users_skills_projects")
+public class ProjectSkill {
     @EmbeddedId
-    private UserSkillId id;
-    @MapsId("userId")
+    private ProjectSkillId id;
+    @MapsId("projectUserExperienceId")
     @ToString.Exclude
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private User user;
+    private ProjectUserExperience projectUserExperience;
     @MapsId("skillId")
     @ToString.Exclude
     @JsonBackReference

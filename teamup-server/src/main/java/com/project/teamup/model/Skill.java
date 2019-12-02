@@ -1,28 +1,30 @@
 package com.project.teamup.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Data
 @Entity
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "technology_areas")
-public class TechnologyArea {
+@Table(name = "skills")
+public class Skill {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    @Size(max = 50)
     private String name;
     @Column
     @Enumerated(EnumType.STRING)
     private UserLanguage language;
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "technology")
+    private Technology technology;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserSkillLevel level;
 }

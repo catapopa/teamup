@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    //TODO: include supervisor
     private Long id;
     private String username;
     private String password;
@@ -30,6 +31,6 @@ public class UserDTO {
     private UserSeniority seniority;
     private LocationDTO location;
     private CompanyDTO company;
-    private List<UserSkillDTO> skills;
+    private List<SkillDTO> skills;
     private List<ProjectExperienceDTO> projectExperiences;
 }

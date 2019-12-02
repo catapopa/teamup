@@ -24,6 +24,9 @@ public class Technology {
     @Column
     @Size(max = 50)
     private String name;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserLanguage language;
     @ManyToOne
     @JoinColumn(name = "technology_area")
     @Valid
