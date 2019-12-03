@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Salut, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>
+    O nou&#259; parol&#259; a fost setat&#259; pentru tine. Po	&#539;i &#238;ncerca
+    acum s&#259; te loghezi &#238;n aplica&#539;ie cu urm&#259;toarele crediten&#539;iale:
+</p>
+<p>
+    <span th:text="'Nume utilizator: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Parol&#259;: ' + ${password}"></span>
+</p>
+<p>&#206;&#539;i recomand s&#259; te loghezi &#238;n aplica&#539;ie cu noua ta parol&#259; &#351;i s&#259;
+    o schimbi imediat din motive de securitate! Dac&#259; mai sunt probleme nu evita s&#259; &#238;mi
+    scri.
+</p>
+<p>
+</p>
+<p>O zi frumoas&#259;,</p>
+<p>
+    <span th:text="${adminFirstName} + ' '+ ${adminLastName}"></span>
+</p>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hello, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>The account for the user with the following credentials has been deactivated: </p>
+<p>
+    <span th:text="'Username: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Email: ' + ${emailBlockedUser}"></span>
+</p>
+<p>Please generate a new password and announce the blocked user.</p>
+</body>
+</html>

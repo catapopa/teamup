@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hallo, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>Ein neues Kennwort ist f&#252;r dich erzeugt. Du kannst jetzt versuchen, in
+    der Anwendung mit folgenden Referenzen einzuloggen: </p>
+<p>
+    <span th:text="'Nutzername: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Kennwort: ' + ${password}"></span>
+</p>
+<p>Ich schalge dir vor, dein Kennwort gleich nach dem Einloggen zu &#228;ndern, um die
+    Sicherheit der Anwendung zu gew&#228;hrleisten. Falls du noch Probleme hast, schreib
+    mir bitte so schnell wie m&#246;glich.
+</p>
+<p>
+</p>
+<p>Viele Gr&#252;&#223;e,</p>
+<p>
+    <span th:text="${adminFirstName} + ' '+ ${adminLastName}"></span>
+</p>
+</body>
+</html>
