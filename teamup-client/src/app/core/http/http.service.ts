@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 
 export class HttpService {
 
-  url;
+  url: string;
 
   constructor(private http: HttpClient) {
     this.url = environment.serviceHost;

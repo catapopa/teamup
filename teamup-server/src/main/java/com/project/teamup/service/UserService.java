@@ -1,20 +1,34 @@
 package com.project.teamup.service;
 
 import com.project.teamup.dao.UserRepository;
+import com.project.teamup.dao.VerificationTokenRepository;
 import com.project.teamup.model.User;
+import com.project.teamup.utils.MailService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.project.teamup.model.VerificationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.RandomStringUtils;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
+import java.util.UUID;
 
 @Service
 public class UserService {
+    private final static int VERIFICATION_TOKEN_VALIDITY = 60 * 60 * 1000;
+    private final static String WEB_APP_URL = "http://localhost:4200/registration/";
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PasswordEncoder bcryptEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
     @Autowired
     private MailService mailService;
 
@@ -22,9 +36,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User save(User user) {
-        user.setPassword(bcryptEncoder.encode(user.getPassword()));
+    public User save(@Valid User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    public String generateActivationLink(User user){
+        VerificationToken verificationToken = tokenRepository.findByUser(user);
+
+        return WEB_APP_URL+verificationToken.getToken();
     }
 
     public void delete(Long id) {
@@ -63,6 +83,19 @@ public class UserService {
         return "Invalid username of admin/employee!";
     }
 
+    public void createVerificationTokenForUser(User user) {
+        VerificationToken verificationToken = tokenRepository.findByUser(user);
+
+        if (verificationToken == null){
+            tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
+        }else {
+            if (verificationToken.getExpiryDate().after(new Timestamp(new Date().getTime()))){
+                tokenRepository.delete(verificationToken);
+                tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
+            }
+        }
+    }
+
     /**
      * Generates a random string of length 6
      * which represents the new password for
@@ -73,5 +106,17 @@ public class UserService {
         boolean useLetters = true;
         boolean useNumbers = true;
         return RandomStringUtils.random(length, useLetters, useNumbers);
+    }
+
+    public boolean isValidToken(String token) {
+
+        VerificationToken verificationToken = tokenRepository.findByToken(token);
+
+        if (verificationToken != null && verificationToken.getExpiryDate().before(new Timestamp(new Date().getTime()))){
+            tokenRepository.delete(verificationToken);
+            return true;
+        }
+
+        return false;
     }
 }

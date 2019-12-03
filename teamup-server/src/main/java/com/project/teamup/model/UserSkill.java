@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
 @Data
 @Entity
@@ -24,8 +25,11 @@ public class UserSkill {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "technology")
+    @Valid
     private Technology technology;
     @Column
     @Enumerated(EnumType.STRING)
     private UserSkillLevel level;
+    //TODO: separate user skill in another many to many table
+    //TODO: add i18n to the skill, technology, technology area
 }
