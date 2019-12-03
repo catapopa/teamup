@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Salut, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>Contul utilizatorului cu urm&#259;toarele crediten&#539;iale a fost dezactivat:
+</p>
+<p>
+    <span th:text="'Nume de utilizator: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Adres&#259; de email: ' + ${emailBlockedUser}"></span>
+</p>
+<p>Te rog genereaz&#259; o nou&#259; parol&#259; pentru acest utilizator &#219;i anun&#539;&#259;-l.</p>
+</body>
+</html>

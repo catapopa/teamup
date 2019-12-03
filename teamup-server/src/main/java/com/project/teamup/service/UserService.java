@@ -5,6 +5,7 @@ import com.project.teamup.dao.VerificationTokenRepository;
 import com.project.teamup.model.User;
 import com.project.teamup.model.UserRole;
 import com.project.teamup.model.VerificationToken;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private VerificationTokenRepository tokenRepository;
+    @Autowired
+    private MailService mailService;
 
     public List<User> getAll() {
         return userRepository.findAll();
@@ -51,6 +54,34 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    /**
+     * Activates a blocked user by setting him
+     * the number of login attempts to 0 and a new generated
+     * password which will be sent by email.
+     * @param adminUsername username of the admin who activates the blocked user
+     * @param emplUsername username of the user that becomes a new password
+     *                    via email from the admin
+     * */
+    public String activateUser(String adminUsername, String emplUsername){
+        Optional<User> deactivatedUser = userRepository.findByUsername(emplUsername);
+        Optional<User> admin = userRepository.findByUsername(adminUsername);
+        if(deactivatedUser.isPresent() && admin.isPresent()){
+            User userToBeActivated = deactivatedUser.get();
+            if(userToBeActivated.getFailedLoginAttempts() >= 3) {
+                String newPassword = generateNewPassword();
+                mailService.sendEmailActivation(admin.get(), userToBeActivated, newPassword);
+                userToBeActivated.setFailedLoginAttempts(0); //activates the user
+                userToBeActivated.setPassword(bCryptPasswordEncoder.encode(newPassword));
+                userRepository.save(userToBeActivated);
+                return "User was successfully activated and a mail with the new password was sent to him!";
+            }
+            else {
+                return "The user is already activated!";
+            }
+        }
+        return "Invalid username of admin/employee!";
+    }
+
     public void createVerificationTokenForUser(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
 
@@ -62,6 +93,18 @@ public class UserService {
                 tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime()+VERIFICATION_TOKEN_VALIDITY)));
             }
         }
+    }
+
+    /**
+     * Generates a random string of length 6
+     * which represents the new password for
+     * a user who must be activated.
+     * */
+    private String generateNewPassword(){
+        int length = 6;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        return RandomStringUtils.random(length, useLetters, useNumbers);
     }
 
     public boolean isValidToken(String token) {
