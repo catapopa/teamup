@@ -67,4 +67,11 @@ public class UserController {
                                @RequestParam(name="emplUsername") String emplUsername){
         return userService.activateUser(adminUsername, emplUsername);
     }
+
+    @GetMapping("/{id}/assignedEmployees")
+    public List<UserDTO> getAssignedEmployees(@PathVariable Long id){
+        return userService.getAssignedUsers(id)
+                .map(list -> userMapper.toDtoList(list))
+                .orElse(null);
+    }
 }
