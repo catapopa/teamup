@@ -3,9 +3,11 @@ package com.project.teamup.service;
 
 import com.project.teamup.dao.TechnologyRepository;
 import com.project.teamup.model.Technology;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +20,7 @@ public class TechnologyService {
         return technologyRepository.findAll();
     }
 
-    public Technology save(Technology technology) {
+    public Technology save(@Valid Technology technology) throws ObjectNotFoundException {
         return technologyRepository.save(technology);
     }
 

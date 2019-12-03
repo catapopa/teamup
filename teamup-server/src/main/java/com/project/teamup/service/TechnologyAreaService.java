@@ -6,6 +6,7 @@ import com.project.teamup.model.TechnologyArea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class TechnologyAreaService {
         return technologyAreaRepository.findAll();
     }
 
-    public TechnologyArea save(TechnologyArea technology) {
+    public TechnologyArea save(@Valid TechnologyArea technology) {
         return technologyAreaRepository.save(technology);
     }
 

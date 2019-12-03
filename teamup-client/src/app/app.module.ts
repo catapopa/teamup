@@ -1,42 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './common/login/login.component';
-import { DashboardComponent } from './common/dashboard/dashboard.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './core/interceptors/auth.interceptor';
-import { ProfileComponent } from './core/components/profile/profile.component';
-import { CompanyComponent } from './core/components/company/company.component';
-import { LocationComponent } from './core/components/location/location.component';
-import { IndustryComponent } from './core/components/industry/industry.component';
-import { TechAreaComponent } from './core/components/tech-area/tech-area.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {DropdownModule} from "primeng/primeng";
-import {InputTextModule} from 'primeng/inputtext';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { CoreModule } from './core/core.module';
+import { LoginComponent } from './modules/login/login.component';
+import { HomeComponent } from './modules/home/home.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
+  // components, directives and pipes
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent,
-    ProfileComponent,
-    CompanyComponent,
-    LocationComponent,
-    IndustryComponent,
-    TechAreaComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
+    CoreModule,
+    SharedModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    DropdownModule,
-    InputTextModule
   ],
+  // injectables
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

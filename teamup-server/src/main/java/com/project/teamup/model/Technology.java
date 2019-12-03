@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -20,8 +22,10 @@ public class Technology {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    @Size(max = 50)
     private String name;
     @ManyToOne
     @JoinColumn(name = "technology_area")
+    @Valid
     private TechnologyArea area;
 }

@@ -3,13 +3,13 @@ package com.project.teamup.controller;
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.User;
+import com.project.teamup.service.EmailService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 
@@ -21,10 +21,26 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping(value = "/save")
-    public UserDTO saveUser(@RequestBody UserDTO user) {
-        return userMapper.toDto(userService.save(userMapper.toEntity(user)));
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user, @RequestBody String token) {
+        if (userService.isValidToken(token)) {
+            return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @PostMapping(value = "/generateToken/{userId}")
+    public ResponseEntity generateToken(@PathVariable Long userId) {
+        User userEntity = userService.findById(userId).get();
+
+        userService.createVerificationTokenForUser(userEntity);
+        emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
