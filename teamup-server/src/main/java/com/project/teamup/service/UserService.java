@@ -3,19 +3,17 @@ package com.project.teamup.service;
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.dao.VerificationTokenRepository;
 import com.project.teamup.model.User;
-import com.project.teamup.utils.MailService;
+import com.project.teamup.model.VerificationToken;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.project.teamup.model.VerificationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.RandomStringUtils;
+
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.Valid;
 import java.util.UUID;
 
 @Service
@@ -72,7 +70,7 @@ public class UserService {
                 String newPassword = generateNewPassword();
                 mailService.sendEmailActivation(admin.get(), userToBeActivated, newPassword);
                 userToBeActivated.setFailedLoginAttempts(0); //activates the user
-                userToBeActivated.setPassword(bcryptEncoder.encode(newPassword));
+                userToBeActivated.setPassword(bCryptPasswordEncoder.encode(newPassword));
                 userRepository.save(userToBeActivated);
                 return "User was successfully activated and a mail with the new password was sent to him!";
             }
