@@ -60,4 +60,11 @@ public class UserController {
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
     }
+
+    @GetMapping("/{id}/assignedEmployees")
+    public List<UserDTO> getAssignedEmployees(@PathVariable Long id){
+        return userService.getAssignedUsers(id)
+                .map(list -> userMapper.toDtoList(list))
+                .orElse(null);
+    }
 }

@@ -3,17 +3,17 @@ package com.project.teamup.service;
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.dao.VerificationTokenRepository;
 import com.project.teamup.model.User;
+import com.project.teamup.model.UserRole;
 import com.project.teamup.model.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.Valid;
 import java.util.UUID;
 
 @Service
@@ -74,5 +74,24 @@ public class UserService {
         }
 
         return false;
+    }
+
+    /**
+     * Returns a list of users, to which the user with the corresponding ID is responsible of.
+     * @param id {@link Long}, to which the entity is identified by and represents a user.
+     * @return an {@link List<User>} of the corresponding User, if the {@link User} with the id exists and it is a {SUPERVISOR},
+     * an {@link Optional} that is empty, if the user does not exist/is not a supervisor or is responsible of no one.
+     * @author Sebastian
+     */
+    public Optional<List<User>> getAssignedUsers(Long id){
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            if (user.get().getRole().equals(UserRole.SUPERVISOR)){
+                return userRepository.findUsersBySupervisorId(id);
+            }
+        } else {
+            return Optional.empty();
+        }
+        return Optional.empty();
     }
 }
