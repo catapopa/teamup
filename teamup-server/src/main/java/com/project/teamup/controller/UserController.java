@@ -4,6 +4,7 @@ import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.User;
 import com.project.teamup.service.EmailService;
+import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,5 +60,18 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
+    }
+
+    @PostMapping(value = "/activate")
+    public String activateUser(@RequestParam(name="adminUsername") String adminUsername,
+                               @RequestParam(name="emplUsername") String emplUsername){
+        return userService.activateUser(adminUsername, emplUsername);
+    }
+
+    @GetMapping("/{id}/assignedEmployees")
+    public List<UserDTO> getAssignedEmployees(@PathVariable Long id){
+        return userService.getAssignedUsers(id)
+                .map(list -> userMapper.toDtoList(list))
+                .orElse(null);
     }
 }

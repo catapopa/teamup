@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hello, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>A new password has been set for you. You can now try to log in with the following credentials: </p>
+<p>
+    <span th:text="'Username: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Password: ' + ${password}"></span>
+</p>
+<p>I recommend you to log in and to change the new generated password immediately for security
+    reasons! If there are any further problems don't hesitate to write me.</p>
+<p>
+</p>
+<p>Have a nice day,</p>
+<p>
+    <span th:text="${adminFirstName} + ' '+ ${adminLastName}"></span>
+</p>
+</body>
+</html>
