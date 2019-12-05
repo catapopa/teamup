@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  serviceHost: 'https://localhost:1212',
+  serviceHost: 'http://localhost:1212/',
   whitelistedDomains: ['localhost:4200']
 };
