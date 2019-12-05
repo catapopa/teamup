@@ -11,13 +11,13 @@ import { CoreModule } from './core/core.module';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './components/home.module';
 
 @NgModule({
   // components, directives and pipes
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    HomeModule
   ],
   // injectables
   providers: [{
