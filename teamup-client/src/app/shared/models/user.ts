@@ -1,9 +1,9 @@
 import { UserRole } from './userRole';
-import { UserLanguage } from 'src/app/core/models/userLanguage';
-import { UserSeniority } from 'src/app/core/models/userSeniority';
-import { Company } from 'src/app/core/models/company';
-import { UserSkill } from 'src/app/core/models/userSkill';
-import { ProjectExperience } from 'src/app/core/models/projectExperience';
+import { UserLanguage } from 'src/app/shared/models/userLanguage';
+import { UserSeniority } from 'src/app/shared/models/userSeniority';
+import { Company } from 'src/app/shared/models/company';
+import { UserSkill } from 'src/app/shared/models/userSkill';
+import { ProjectExperience } from 'src/app/shared/models/projectExperience';
 
 export interface User {
     id: number;

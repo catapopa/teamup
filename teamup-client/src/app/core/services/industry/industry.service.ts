@@ -1,23 +1,17 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Industry} from "../../models/industry";
-import {Observable} from "rxjs";
-import {Company} from "../../models/company";
+import { HttpService } from '../../http/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndustryService {
-  baseUrl = environment.serviceHost;
+  url: string;
 
-  constructor(private httpClient: HttpClient) { }
+    constructor(private httpService: HttpService) {
+        this.url = 'industry/';
+    }
 
-  getAll(): Observable<Industry[]>{
-    return this.httpClient.get<Industry[]>(this.baseUrl+"industry")
-  }
-
-  save(industry: Industry){
-    this.httpClient.post<Industry>(this.baseUrl+"industry/save",industry);
-  }
+    getAll() {
+        return this.httpService.get(this.url);
+    }
 }
