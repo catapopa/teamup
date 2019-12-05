@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TechAreaService } from "../../core/services/techArea/tech-area.service";
 
 @Component({
-    selector: 'app-tech-area',
+    selector: 'teamup-tech-area',
     templateUrl: './tech-area.component.html',
     styleUrls: ['./tech-area.component.scss']
 })

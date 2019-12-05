@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from "../../core/services/company/company.service";
 
 @Component({
-  selector: 'app-company',
+  selector: 'teamup-company',
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.scss']
 })

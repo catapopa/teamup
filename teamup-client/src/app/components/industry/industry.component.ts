@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IndustryService } from "../../core/services/industry/industry.service";
 
 @Component({
-  selector: 'app-industry',
+  selector: 'teamup-industry',
   templateUrl: './industry.component.html',
   styleUrls: ['./industry.component.scss']
 })
