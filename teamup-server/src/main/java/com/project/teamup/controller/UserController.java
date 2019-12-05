@@ -25,13 +25,18 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
-    @PostMapping(value = "/save")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user, @RequestBody String token) {
+    @PostMapping(value = "/register")
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO user, @RequestBody String token) {
         if (userService.isValidToken(token)) {
             return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
         }
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @PostMapping(value = "/save")
+    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
+        return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
     }
 
     @PostMapping(value = "/generateToken/{userId}")
@@ -56,6 +61,13 @@ public class UserController {
                 .orElse(null);
     }
 
+    @GetMapping("/{username}")
+    public UserDTO findByUsername(@PathVariable("username") String username) {
+        return userService.findByUsername(username)
+                .map(user -> userMapper.toDto(user))
+                .orElse(null);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
@@ -63,13 +75,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/activate")
-    public String activateUser(@RequestParam(name="adminUsername") String adminUsername,
-                               @RequestParam(name="emplUsername") String emplUsername){
+    public String activateUser(@RequestParam(name = "adminUsername") String adminUsername,
+                               @RequestParam(name = "emplUsername") String emplUsername) {
         return userService.activateUser(adminUsername, emplUsername);
     }
 
     @GetMapping("/{id}/assignedEmployees")
-    public List<UserDTO> getAssignedEmployees(@PathVariable Long id){
+    public List<UserDTO> getAssignedEmployees(@PathVariable Long id) {
         return userService.getAssignedUsers(id)
                 .map(list -> userMapper.toDtoList(list))
                 .orElse(null);
