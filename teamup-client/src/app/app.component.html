@@ -1,3 +1,9 @@
 <!-- <teamup-top-bar></teamup-top-bar> -->
 
+<ng-container *ngFor="let language of languageList">
+    <a href="/{{language.code}}/">
+        <button class="button">{{language.label}}</button>
+    </a>
+</ng-container>
+
 <router-outlet></router-outlet>
