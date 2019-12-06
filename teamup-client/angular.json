@@ -62,33 +62,6 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
-            "en": {
-              "aot": true,
-              "outputPath": "dist/teamup-en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en",
-              "baseHref": "/en/",
-              "i18nMissingTranslation": "error"
-            },
-            "de": {
-              "aot": true,
-              "outputPath": "dist/teamup-de/",
-              "i18nFile": "src/locale/messages.de.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "de",
-              "baseHref": "/de/",
-              "i18nMissingTranslation": "error"
-            },
-            "ro": {
-              "aot": true,
-              "outputPath": "dist/teamup-ro/",
-              "i18nFile": "src/locale/messages.ro.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "ro",
-              "baseHref": "/ro/",
-              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -100,12 +73,6 @@
           "configurations": {
             "production": {
               "browserTarget": "teamup:build:production"
-            },
-            "de": {
-              "browserTarget": "teamup:build:de"
-            },
-            "ro": {
-              "browserTarget": "teamup:build:ro"
             }
           }
         },

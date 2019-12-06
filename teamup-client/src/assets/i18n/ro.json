@@ -1,0 +1,12 @@
+{
+  "login": {
+    "username": "Utilizator",
+    "password": "Parola",
+    "username.required": "Utilizator este obligatorie!",
+    "password.required": "Parola este obligatorie!",
+    "login": "Conectare"
+  },
+  "home": {
+    "logout": "Deconectare"
+  }
+}

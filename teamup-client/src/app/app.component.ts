@@ -1,4 +1,5 @@
-import {Component, Inject, LOCALE_ID} from '@angular/core';
+import { Component } from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'teamup-root',
@@ -7,16 +8,12 @@ import {Component, Inject, LOCALE_ID} from '@angular/core';
 })
 export class AppComponent {
   title = 'teamup';
-  languageList = [{
-    code: 'en',
-    label: 'English'
-  }, {
-    code: 'de',
-    label: 'Deutsch'
-  }, {
-    code: 'ro',
-    label: 'Romana'
-  }];
 
-  constructor(@Inject(LOCALE_ID) protected localeId: string) {}
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
+
+  useLanguage(language: string) {
+    this.translate.use(language);
+  }
 }

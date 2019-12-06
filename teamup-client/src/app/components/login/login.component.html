@@ -2,8 +2,8 @@
     <form [formGroup]="form" >
 
         <div class="form-group">
-            <label  i18n="@@Username"
-                    for="username">Username </label>
+            <label  translate
+                    for="username">login.username</label>
             <input type="text"
                    formControlName="username"
                    class="form-control"
@@ -11,16 +11,16 @@
                    id="username">
             <div class="alert alert-danger"
                  *ngIf="form.get('username').touched && form.get('username').invalid">
-                <div  i18n = "@@Username.required"
+                <div  translate
                       *ngIf="form.get('username').errors.required">
-                    Username is required!
+                    login.username.required
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label  i18n = "@@Password"
-                    for="password">Password </label>
+            <label  translate
+                    for="password">login.password</label>
             <input type="password"
                    class="form-control"
                    id="password"
@@ -29,18 +29,19 @@
             >
             <div class="alert alert-danger"
                  *ngIf="form.get('password').touched && form.get('password').invalid">
-                <div   i18n = "@@Password.required"
+                <div   translate
                        *ngIf="form.get('password').errors.required">
-                    Password is required!
+                    login.password.required
                 </div>
             </div>
         </div>
 
 
         <button
+                translate
                 type="button"
                 (click)="login()"
-                [disabled]="form.invalid">Login
+                [disabled]="form.invalid">login.login
         </button>
     </form>
 </div>

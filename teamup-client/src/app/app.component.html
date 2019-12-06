@@ -1,9 +1,7 @@
 <!-- <teamup-top-bar></teamup-top-bar> -->
 
-<ng-container *ngFor="let language of languageList">
-    <a href="/{{language.code}}/">
-        <button class="button">{{language.label}}</button>
-    </a>
-</ng-container>
+<button class="button" (click)="useLanguage('en')">English</button>
+<button class="button" (click)="useLanguage('de')">German</button>
+<button class="button" (click)="useLanguage('ro')">Romana</button>
 
 <router-outlet></router-outlet>

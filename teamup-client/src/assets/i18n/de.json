@@ -1,0 +1,12 @@
+{
+  "login": {
+    "username": "Benutzer",
+    "password": "Passwort",
+    "username.required": "Benutzer ist erforderlich!",
+    "password.required": "Passwort ist erforderlich!",
+    "login": "Login"
+  },
+  "home": {
+    "logout": "Logout"
+  }
+}
