@@ -6,7 +6,7 @@ import { MAT_SNACK_BAR_DATA } from '@angular/material';
     selector: 'teamup-snack',
     templateUrl: './snack.component.html'
 })
-export default class SnackComponent {
+export class SnackComponent {
 
     constructor(
         @Inject(MAT_SNACK_BAR_DATA) public data: any,

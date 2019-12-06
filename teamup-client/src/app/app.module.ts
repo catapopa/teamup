@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { SharedModule } from './shared/shared.module';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   // components, directives and pipes
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     CoreModule,
     SharedModule,
+    ComponentsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,

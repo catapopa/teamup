@@ -1,5 +1,5 @@
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-import SnackComponent from './snack.component';
+import { SnackComponent } from './snack.component';
 
 
 export class ConfirmPromptService {
