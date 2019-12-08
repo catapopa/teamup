@@ -2,6 +2,7 @@ package com.project.teamup.controller;
 
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
+import com.project.teamup.model.FilterCriterias;
 import com.project.teamup.model.User;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -59,5 +61,10 @@ public class UserController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @GetMapping("/filter")
+    public List<UserDTO> filterUsers(@RequestBody Map<FilterCriterias, String> criterias) {
+        return userMapper.toDtoList(userService.filterUser(criterias));
     }
 }

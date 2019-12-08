@@ -1,15 +1,17 @@
 package com.project.teamup.service;
 
 import com.project.teamup.dao.UserRepository;
+import com.project.teamup.model.FilterCriterias;
 import com.project.teamup.model.User;
+import com.project.teamup.model.UserSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -71,5 +73,68 @@ public class UserService {
         }
 
         return userRepository.save(userToUpdate);
+    }
+
+    public List<User> filterUser(Map<FilterCriterias, String> criteria) {
+        List<User> userList = new ArrayList<>();
+        for (Map.Entry<FilterCriterias, String> entry : criteria.entrySet()) {
+            switch (entry.getKey()) {
+                case ROLE:
+                    userList.addAll(getAll().stream()
+                            .filter(user -> user.getRole() != null)
+                            .filter(user -> String.valueOf(user.getRole()).equalsIgnoreCase(String.valueOf(entry.getValue())))
+                            .collect(Collectors.toList()));
+                    break;
+                case SENIORITY:
+                    userList.addAll(getAll().stream()
+                            .filter(user -> user.getSeniority() != null)
+                            .filter(user -> String.valueOf(user.getSeniority()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                    break;
+                case TECHNOLOGY: {
+                    List<User> users = getAll();
+                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
+                    userList.addAll(users);
+//                    for (User user : getAll()) {
+//                        if (user.getSkills() != null) {
+//                            for (UserSkill skill : user.getSkills()) {
+//                                if (String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+//                                    userList.add(user);
+//                                }
+//                            }
+//                        }
+//                    }
+                    break;
+                }
+                case SKILL_LEVEL: {
+                    List<User> users = getAll();
+                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
+                    userList.addAll(users);
+//                    for (User user : getAll()) {
+//                        if (user.getSkills() != null) {
+//                            for (UserSkill skill : user.getSkills()) {
+//                                if (String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+//                                    userList.add(user);
+//                                }
+//                            }
+//                        }
+//                    }
+                    break;
+                }
+                case LOCATION:
+                    userList.addAll(getAll().stream()
+                            .filter(user -> user.getLocation() != null)
+                            .filter(user -> String.valueOf(user.getLocation().getCity()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                    break;
+                case LANGUAGE:
+                    userList.addAll(getAll().stream()
+                            .filter(user -> user.getLanguage() != null)
+                            .filter(user -> String.valueOf(user.getLanguage()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                    break;
+            }
+        }
+        userList.forEach(System.out::println);
+        return userList.stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
