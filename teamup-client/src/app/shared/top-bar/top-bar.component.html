@@ -1,5 +1,5 @@
 <mat-toolbar *ngIf="this.authService.isAuthenticated()" color="primary">
-	<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'topBar.users'}}</a>
+	<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'topBar.profile'}}</a>
 	<span class="fill-remaining-space"></span>
 	<a mat-button (click)="signOut();">Sign out</a>
 </mat-toolbar>
