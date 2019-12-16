@@ -2,7 +2,8 @@
 	<nav>
 		<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
 		<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
-		<span class="fill-remaining-space"></span>
-		<a mat-button (click)="signOut();">Sign out</a>
 	</nav>
+
+	<span class="fill-remaining-space"></span>
+	<a mat-button (click)="signOut();">Sign out</a>
 </mat-toolbar>
