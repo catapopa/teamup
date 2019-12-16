@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/authentication/auth.service';
 
 @Component({
   selector: 'teamup-home',
@@ -8,12 +7,8 @@ import { AuthService } from 'src/app/core/authentication/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  signOut() {
-    this.authService.signOut();
   }
 }

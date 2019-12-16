@@ -8,9 +8,12 @@ import { AuthService } from 'src/app/core/authentication/auth.service';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor(authService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  signOut() {
+    this.authService.signOut();
+  }
 }

@@ -9,6 +9,9 @@ const homeRoutes: Routes = [
   {
     path: 'profile', component: ProfileComponent
   },
+  {
+    path: 'users', component: UsersComponent
+  },
   { path: '', component: HomeComponent }
 ];
 
