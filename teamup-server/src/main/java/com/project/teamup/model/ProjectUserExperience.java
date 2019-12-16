@@ -2,10 +2,12 @@ package com.project.teamup.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,5 +34,8 @@ public class ProjectUserExperience {
     private LocalDate endDate;
     @Column
     private String description;
-    //TODO: Add skills here
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ProjectUserSkill> skills;
 }

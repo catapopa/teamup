@@ -326,3 +326,48 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_userSkills_skills
                     references: skills(id)
+  - changeSet:
+      id: 5
+      author: iosif
+      changes:
+        - createTable:
+            tableName: project_user_skills
+            columns:
+              - column:
+                  name: project_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_projectUserSkills_projects
+                    references: projects(id)
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_projectUserSkills_users
+                    references: users(id)
+              - column:
+                  name: skill_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_projectUserSkills_skills
+                    references: skills(id)
+        - dropColumn:
+            columns:
+              - column:
+                  name: language
+            tableName: technologies
+        - dropColumn:
+            columns:
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: technology_areas
+        - dropColumn:
+            columns:
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+            tableName: skills

@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,10 +19,6 @@ public class TechnologyArea {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    @Size(max = 50)
-    private String name;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserLanguage language;
+    @ElementCollection
+    private List<Translation> translations;
 }

@@ -3,6 +3,7 @@ package com.project.teamup.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,11 +16,6 @@ public class Skill {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String name;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserLanguage language;
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "technology")
@@ -27,4 +23,6 @@ public class Skill {
     @Column
     @Enumerated(EnumType.STRING)
     private UserSkillLevel level;
+    @ElementCollection
+    private List<Translation> translations;
 }

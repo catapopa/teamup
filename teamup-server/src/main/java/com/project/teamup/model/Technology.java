@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,14 +21,10 @@ public class Technology {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    @Size(max = 50)
-    private String name;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserLanguage language;
     @ManyToOne
     @JoinColumn(name = "technology_area")
     @Valid
     private TechnologyArea area;
+    @ElementCollection
+    private List<Translation> translations;
 }
