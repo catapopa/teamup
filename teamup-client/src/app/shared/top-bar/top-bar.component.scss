@@ -1,0 +1,17 @@
+mat-toolbar {
+	padding: 0 2%;
+}
+
+mat-button {
+	font-size: 20px;
+}
+
+.fill-remaining-space {
+	/* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+	flex: 1 1 auto;
+}
+
+.is-active {
+	background: #ffffff1a;
+}

@@ -1,13 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UsersComponent } from './components/users/users.component';
 
+
+const homeRoutes: Routes = [
+  {
+    path: 'profile', component: ProfileComponent
+  },
+  {
+    path: 'users', component: UsersComponent
+  },
+  {
+    path: '',
+    redirectTo: 'profile',
+    pathMatch: 'full',
+  },
+];
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -16,15 +31,13 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
-  }
+    children: homeRoutes
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)],
-  exports: [
-    RouterModule
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule
   ]
 })
 export class AppRoutingModule { }
