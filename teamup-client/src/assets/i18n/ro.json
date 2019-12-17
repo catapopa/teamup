@@ -2,8 +2,8 @@
   "login": {
     "username": "Utilizator",
     "password": "Parola",
-    "username.required": "Utilizator este obligatorie!",
-    "password.required": "Parola este obligatorie!",
+    "username.required": "Nume utilizator obligatoriu!",
+    "password.required": "Parola obligatorie!",
     "login": "Conectare"
   },
   "home": {
