@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.project.teamup.model.User;
+import com.project.teamup.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -18,8 +21,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -3472430070998029466L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final String CLAIM_KEY_ROLE = "role";
+    public static final String CLAIM_KEY_USERNAME = "username";
     @Value("${jwt.secret}")
     private String secret;
+    @Autowired
+    private UserService userService;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -45,6 +52,9 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        User user = userService.findByUsername(userDetails.getUsername()).get();
+        claims.put(CLAIM_KEY_ROLE, user.getRole());
+        claims.put(CLAIM_KEY_USERNAME, user.getUsername());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
