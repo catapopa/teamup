@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -25,6 +26,9 @@ public class Technology {
     @JoinColumn(name = "technology_area")
     @Valid
     private TechnologyArea area;
-    @ElementCollection
-    private List<Translation> translations;
+    @ElementCollection(targetClass = String.class)
+    @MapKeyColumn(name = "language")
+    @CollectionTable(name = "technology_translations",
+            joinColumns = @JoinColumn(name = "technology_id", referencedColumnName = "id"))
+    private Map<UserLanguage, String> translations;
 }

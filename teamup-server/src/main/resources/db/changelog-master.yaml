@@ -327,7 +327,7 @@ databaseChangeLog:
                     foreignKeyName: fk_userSkills_skills
                     references: skills(id)
   - changeSet:
-      id: 5
+      id: 6
       author: iosif
       changes:
         - createTable:
@@ -371,3 +371,56 @@ databaseChangeLog:
                   name: language
                   type: VARCHAR(50)
             tableName: skills
+  - changeSet:
+      id: 7
+      author: iosif
+      changes:
+        - createTable:
+            tableName: skill_translations
+            columns:
+              - column:
+                  name: skill_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_skillTranslations_skills
+                    references: skills(id)
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+              - column:
+                  name: translation
+                  type: VARCHAR(50)
+        - createTable:
+            tableName: technology_translations
+            columns:
+              - column:
+                  name: technology_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_technologyTranslations_technology
+                    references: technologies(id)
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+              - column:
+                  name: translation
+                  type: VARCHAR(50)
+        - createTable:
+            tableName: technology_area_translations
+            columns:
+              - column:
+                  name: technology_area_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_technologyAreaTranslations_technologyArea
+                    references: technology_areas(id)
+              - column:
+                  name: language
+                  type: VARCHAR(50)
+              - column:
+                  name: translation
+                  type: VARCHAR(50)
+

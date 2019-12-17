@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -19,6 +20,9 @@ public class TechnologyArea {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ElementCollection
-    private List<Translation> translations;
+    @ElementCollection(targetClass = String.class)
+    @MapKeyColumn(name = "language")
+    @CollectionTable(name = "technology_area_translations",
+            joinColumns = @JoinColumn(name = "technology_area_id", referencedColumnName = "id"))
+    private Map<UserLanguage, String> translations;
 }

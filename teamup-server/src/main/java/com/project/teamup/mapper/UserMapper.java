@@ -18,6 +18,7 @@ public abstract class UserMapper {
     @Autowired
     private SkillMapper skillMapper;
 
+    //TODO: Add project user skill mapper.
     @Mapping(target = "skills", ignore = true)
     public abstract User toBaseEntity(UserDTO dto);
 

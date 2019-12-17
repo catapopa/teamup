@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -23,6 +24,9 @@ public class Skill {
     @Column
     @Enumerated(EnumType.STRING)
     private UserSkillLevel level;
-    @ElementCollection
-    private List<Translation> translations;
+    @ElementCollection(targetClass = String.class)
+    @MapKeyColumn(name = "language")
+    @CollectionTable(name = "skill_translations",
+            joinColumns = @JoinColumn(name = "skill_id", referencedColumnName = "id"))
+    private Map<UserLanguage, String> translations;
 }
