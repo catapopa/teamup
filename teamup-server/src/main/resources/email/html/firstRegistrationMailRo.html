@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>Contul dvs. a fost creat cu succes. Activați contul făcând clic pe următorul <a th:href="@{${activationLink}}">link</a>.</p>
+</body>
+</html>
