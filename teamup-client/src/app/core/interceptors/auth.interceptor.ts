@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
             req = req.clone({
                 setHeaders: {
                     Authorization: sessionStorage.getItem('token'),
-                    'Access-Control-Allow-Origin': 'http://localhost:4200',
+                    'Access-Control-Allow-Origin': 'http://localhost:4200/',
                     'Access-Control-Allow-Methods': '*',
                     'Access-Control-Allow-Headers': '*',
                     'Access-Control-Expose-Headers': 'Authorization'

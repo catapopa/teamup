@@ -9,7 +9,7 @@ export class CompanyService {
     url: string;
 
     constructor(private httpService: HttpService) {
-        this.url = 'company/';
+        this.url = 'company';
     }
 
     getAll() {

@@ -5,6 +5,7 @@ import { HttpService } from '../../http/http.service';
     providedIn: 'root'
 })
 export class TechAreaService {
+
     url: string;
 
     constructor(private httpService: HttpService) {
@@ -14,5 +15,4 @@ export class TechAreaService {
     getAll() {
         return this.httpService.get(this.url);
     }
-
 }
