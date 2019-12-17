@@ -1,8 +1,38 @@
 <mat-toolbar *ngIf="this.authService.isAuthenticated()" color="primary">
-	<nav>
-		<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
-		<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
-	</nav>
+
+	<a routerLink="/home">
+		<img id="icon" src="../../../assets/logo.png" alt="teamup logo" width="70">
+	</a>
+
+	<span class="menu-spacer"></span>
+
+	<div *ngIf="this.authService.getRole()==='ADMIN'">
+		<nav>
+			<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
+			<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
+		</nav>
+	</div>
+
+	<div *ngIf="this.authService.getRole()==='CUSTOMER'">
+		<nav>
+			<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
+			<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
+		</nav>
+	</div>
+
+	<div *ngIf="this.authService.getRole()==='SUPERVISOR'">
+		<nav>
+			<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
+			<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
+		</nav>
+	</div>
+
+	<div *ngIf="this.authService.getRole()==='EMPLOYEE'">
+		<nav>
+			<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
+			<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
+		</nav>
+	</div>
 
 	<span class="fill-remaining-space"></span>
 	<a mat-button (click)="signOut();">Sign out</a>

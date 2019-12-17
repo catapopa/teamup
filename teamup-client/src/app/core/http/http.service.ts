@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../authentication/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,11 @@ import { environment } from '../../../environments/environment';
 export class HttpService {
 
   url: string;
+  // token: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
     this.url = environment.serviceHost;
+    // this.token = localStorage.getItem('token');
   }
 
   get(path: string) {
