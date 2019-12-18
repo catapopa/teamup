@@ -13,18 +13,19 @@ import { CoreModule } from './core/core.module';
 import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { LoginModule } from './components/login/login.module';
 
 @NgModule({
   // components, directives and pipes
   declarations: [
     AppComponent,
-    LoginComponent,
     UserDetailsComponent
   ],
   imports: [
     BrowserModule,
     CoreModule,
     SharedModule,
+    LoginModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
