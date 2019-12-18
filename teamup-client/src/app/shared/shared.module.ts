@@ -7,7 +7,7 @@ import {
   MatIconModule, MatInputModule, MatFormFieldModule,
   MatAutocompleteModule, MatToolbarModule, MatButtonModule,
   MatTableModule, MatSelectModule, MatPaginatorModule, MatSortModule,
-  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule
+  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule, MatCardModule
 } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -17,6 +17,7 @@ import { LocationComponent } from '../components/location/location.component';
 import { TechAreaComponent } from '../components/tech-area/tech-area.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersComponent } from '../components/users/users.component';
+import { LoginComponent } from '../components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { UsersComponent } from '../components/users/users.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    // Mat
     MatTableModule,
     MatSelectModule,
     MatPaginatorModule,
@@ -54,7 +56,8 @@ import { UsersComponent } from '../components/users/users.component';
     MatTooltipModule,
     MatSnackBarModule,
     MatToolbarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatCardModule
   ],
   providers: [
     TopBarComponent
