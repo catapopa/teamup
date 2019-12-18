@@ -1,1 +1,29 @@
-<p>users works!</p>
+<div class="table-wrapper">
+	<div class="filter-wrapper">
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+		</mat-form-field>
+	</div>
+
+	<div class="mat-elevation-z8">
+		<mat-table [dataSource]="dataSource" matSort>
+			<ng-container matColumnDef="firstName">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.firstName}}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="lastName">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.lastName}}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="email">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getDetails(row)"></mat-row>
+		</mat-table>
+
+		<mat-paginator pageSize="10"></mat-paginator>
+	</div>
+</div>

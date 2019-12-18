@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/authentication/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'teamup-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss']
 })
-export class TopBarComponent implements OnInit {
+export class TopBarComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(private translate: TranslateService, private authService: AuthService) {
+    translate.setDefaultLang('en');
+  }
 
-  ngOnInit() {
+  useLanguage(language: string) {
+    this.translate.use(language);
   }
 
   signOut() {

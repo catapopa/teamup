@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'teamup-root',
@@ -9,11 +8,6 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent {
   title = 'teamup';
 
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
-  }
-
-  useLanguage(language: string) {
-    this.translate.use(language);
+  constructor() {
   }
 }
