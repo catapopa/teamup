@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/core/services/user/user.service';
-import { ConfirmPromptService } from 'src/app/shared/snack/snack.service';
 
 @Component({
   selector: 'teamup-users',
@@ -13,9 +12,8 @@ export class UsersComponent {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  selectedRole = 'all';
   dataSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['firstName'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email'];
 
   constructor(private userService: UserService, private userDetails: MatDialog) {
     this.getData();
@@ -24,6 +22,7 @@ export class UsersComponent {
   getData() {
     this.userService.getAll().subscribe((data) => {
       this.dataSource = new MatTableDataSource<User>(data as User[]);
+      this.dataSource.sort = this.sort;
     });
   }
 

@@ -4,8 +4,10 @@ import { RouterModule } from '@angular/router';
 import SnackComponent from './snack/snack.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import {
-  MatIconModule, MatInputModule, MatFormFieldModule, MatOptionModule,
-  MatAutocompleteModule, MatToolbarModule, MatButton, MatButtonModule, MatTableModule, MatSelectModule, MatPaginatorModule, MatSortModule, MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule
+  MatIconModule, MatInputModule, MatFormFieldModule,
+  MatAutocompleteModule, MatToolbarModule, MatButtonModule,
+  MatTableModule, MatSelectModule, MatPaginatorModule, MatSortModule,
+  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule
 } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -15,7 +17,6 @@ import { LocationComponent } from '../components/location/location.component';
 import { TechAreaComponent } from '../components/tech-area/tech-area.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersComponent } from '../components/users/users.component';
-import { ConfirmPromptService } from './snack/snack.service';
 
 @NgModule({
   declarations: [

@@ -11,12 +11,14 @@ import { CoreModule } from './core/core.module';
 import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { UsersComponent } from './components/users/users.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   // components, directives and pipes
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
