@@ -21,7 +21,7 @@
 	transform: translate(-50%, -50%);
 	width: 30%;
 	height: 55%;
-	padding: 10px 8px 0px;
+	padding: 30px 8px;
 	background-color: whitesmoke;
 	border-radius: 10px;
 	box-shadow: 0 30px 38px #1a2e314d, 0 30px 30px #1a2e314d;
@@ -44,6 +44,11 @@ mat-form-field {
 	width: 70%;
 }
 
+mat-card-actions {
+	margin-top: 60px;
+}
+
 img {
+	margin-bottom: 25px;
 	width: 60%;
 }
