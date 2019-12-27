@@ -1,7 +1,10 @@
+import { ProjectExperience } from './../../shared/models/projectExperience';
+import { Company } from './../../shared/models/company';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { UserDetailsComponent } from '../user-details/user-details.component';
 
 @Component({
   selector: 'teamup-users',
@@ -28,6 +31,25 @@ export class UsersComponent {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getDetails(element) {
+    this.userDetails.open(UserDetailsComponent, {
+      data: {
+        id: element.id,
+        firstName: element.firstName,
+        lastName: element.lastName,
+        email: element.email,
+        birthDate: element.birthDate,
+        seniority: element.seniority,
+        company: element.company,
+        skills: element.skills,
+        location: element.location,
+        projectExperiences: element.projectExperiences
+      }
+    }).afterClosed().subscribe(() => {
+      this.getData();
+    });
   }
 
 }

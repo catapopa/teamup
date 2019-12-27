@@ -1,1 +1,31 @@
-<p>user-details works!</p>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="First name" formControlName="firstName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Last name" formControlName="lastName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Birth date" formControlName="birthDate">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Seniority" formControlName="seniority">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Location" formControlName="location">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Company" formControlName="company">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Skills" formControlName="skills">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Project experiences" formControlName="projectExperiences">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <!-- <button class="mat-raised-button" (click)="save()">Save</button> -->
+</mat-dialog-actions>
