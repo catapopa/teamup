@@ -49,7 +49,9 @@ public class UserController {
 
         userService.createVerificationTokenForUser(userEntity);
 
-        if (userEntity.getLanguage().equals(UserLanguage.ENGLISH)){
+        if (userEntity.getLanguage() == null){
+            emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
+        }else if (userEntity.getLanguage().equals(UserLanguage.ENGLISH)){
             emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
         }else if (userEntity.getLanguage().equals(UserLanguage.GERMAN)){
             emailService.sendEmail(userEntity,EmailService.EmailType.FIRST_REGISTRATION_DE);
