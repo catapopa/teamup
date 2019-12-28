@@ -10,13 +10,15 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { CoreModule } from './core/core.module';
 import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
-import { UsersComponent } from './components/users/users.component';
+import {MatButtonModule} from "@angular/material";
+
 
 @NgModule({
   // components, directives and pipes
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,7 @@ import { UsersComponent } from './components/users/users.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   // injectables
   providers: [

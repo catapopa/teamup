@@ -1,0 +1,33 @@
+<form [formGroup]="technicalInfoForm">
+    <mat-label>Seniority</mat-label>
+    <teamup-user-seniority formControlName="seniority"></teamup-user-seniority>
+
+    <mat-label>Location</mat-label>
+
+
+    <mat-label>Company</mat-label>
+    <teamup-company formControlName="company"></teamup-company>
+
+    <mat-label>Skills</mat-label>
+    <div formArrayName="skills"
+         *ngFor="let skill of technicalInfoForm.get('skills').controls; let i = index;">
+        <div [formGroupName]="i">
+            <teamup-user-skill [formControl]="skill"></teamup-user-skill>
+        </div>
+        <button (click)="addSkill()">Add skill</button>
+        <button (click)="removeSkill(i)" *ngIf="technicalInfoForm.get('skills').controls.length >1">Remove skill</button>
+    </div>
+    <br>
+
+    <mat-label>Project Experience</mat-label>
+    <div formArrayName="projectExperiences"
+         *ngFor="let exp of technicalInfoForm.get('projectExperiences').controls; let i = index;">
+        <div [formGroupName]="i">
+            <teamup-project-experience [formControl]="exp" ></teamup-project-experience>
+        </div>
+        <button (click)="addProjectExperience()">Add project experience</button>
+        <button (click)="removeProjectExperience(i)" *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1">Remove project experience</button>
+    </div>
+
+    <br>
+</form>

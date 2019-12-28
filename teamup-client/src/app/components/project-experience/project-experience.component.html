@@ -1,0 +1,13 @@
+<form [formGroup]="projectExperienceForm">
+    <mat-label>Project</mat-label>
+    <teamup-project formControlName="project"></teamup-project>
+    <mat-form-field>
+        <input matInput placeholder="Start date" formControlName="startDate" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="End date" formControlName="endDate" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Description" formControlName="description" required>
+    </mat-form-field>
+</form>

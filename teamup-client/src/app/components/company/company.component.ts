@@ -1,7 +1,6 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'teamup-company',
@@ -26,22 +25,24 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.companyService.getAll().subscribe((data) => {
-      this.companies = data;
-      console.log(this.companies);
-    });
+    // this.companyService.getAll().subscribe((data) => {
+    //   this.companies = data;
+    // });
   }
 
-  writeValue(obj: any): void {
-    throw new Error("Method not implemented.");
+  onTouched: any = () => { };
+
+  writeValue(val: any): void {
+    val && this.companyForm.setValue(val, {emitEvent:false});
   }
   registerOnChange(fn: any): void {
-    throw new Error("Method not implemented.");
+    this.companyForm.valueChanges.subscribe(fn)
   }
   registerOnTouched(fn: any): void {
-    throw new Error("Method not implemented.");
+    this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+    isDisabled ? this.companyForm.disable() : this.companyForm.enable();
   }
+
 }

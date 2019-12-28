@@ -13,15 +13,16 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService, formBuilder: FormBuilder) {
     this.profileForm = formBuilder.group({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      birthDate: new FormControl('', [Validators.required]),
-      company: new FormControl('', [Validators.required])
+      basicInfo: new FormControl('', [Validators.required]),
+      technicalInfo: new FormControl('', [Validators.required]),
     });
   }
 
   ngOnInit() {
+  }
+
+  public onSubmit(){
+    console.log("Val", this.profileForm.value);
   }
 
 }
