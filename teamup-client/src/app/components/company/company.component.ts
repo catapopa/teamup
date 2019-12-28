@@ -25,9 +25,9 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    // this.companyService.getAll().subscribe((data) => {
-    //   this.companies = data;
-    // });
+    this.companyService.getAll().subscribe((data) => {
+      this.companies = data;
+    });
   }
 
   onTouched: any = () => { };

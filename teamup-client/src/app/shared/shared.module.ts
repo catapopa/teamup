@@ -4,8 +4,16 @@ import { RouterModule } from '@angular/router';
 import SnackComponent from './snack/snack.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import {
-  MatIconModule, MatInputModule, MatFormFieldModule, MatOptionModule,
-  MatAutocompleteModule, MatToolbarModule, MatButtonModule, MatSelectModule
+  MatIconModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatOptionModule,
+  MatAutocompleteModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -45,6 +53,7 @@ import {TechnicalUserInfoComponent} from "../components/technical-user-info/tech
     ProjectExperienceComponent,
     BasicUserInfoComponent,
     TechnicalUserInfoComponent,
+
   ],
   exports: [
     CommonModule,
@@ -63,7 +72,10 @@ import {TechnicalUserInfoComponent} from "../components/technical-user-info/tech
     MatAutocompleteModule,
     MatToolbarModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+
   ],
   providers: [
     TopBarComponent

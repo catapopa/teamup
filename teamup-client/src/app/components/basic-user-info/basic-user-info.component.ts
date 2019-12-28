@@ -1,5 +1,7 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {UserSkillLevel} from "../../shared/models/userSkillLevel";
+import {UserLanguage} from "../../shared/models/userLanguage";
 
 @Component({
   selector: 'teamup-basic-user-info',
@@ -15,6 +17,8 @@ import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCE
 export class BasicUserInfoComponent implements OnInit, ControlValueAccessor {
 
   basicInfoForm: FormGroup;
+  language = UserLanguage;
+  keys = Object.keys(this.language);
 
   constructor(private formBuilder: FormBuilder) {
     this.basicInfoForm = formBuilder.group({
