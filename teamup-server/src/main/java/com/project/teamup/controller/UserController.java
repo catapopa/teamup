@@ -6,7 +6,6 @@ import com.project.teamup.model.User;
 import com.project.teamup.model.UserLanguage;
 import com.project.teamup.model.UserStatus;
 import com.project.teamup.service.EmailService;
-import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,5 +98,16 @@ public class UserController {
         return userService.getAssignedUsers(id)
                 .map(list -> userMapper.toDtoList(list))
                 .orElse(null);
+    }
+
+    @PostMapping(value = "/createAccount")
+    public ResponseEntity createAccount(@RequestBody UserDTO user) {
+        try {
+            return ResponseEntity.ok(userMapper.toDto(userService.createNewAccount(userMapper.toEntity(user))));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
     }
 }

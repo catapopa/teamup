@@ -35,7 +35,6 @@ public class MailService {
     @Qualifier("emailTemplateEngine")
     private TemplateEngine templateEngine;
 
-
     @Value("${spring.mail.username}")
     private String emailFromAddress;
 
@@ -57,7 +56,6 @@ public class MailService {
 
         return mimeMessageHelper;
     }
-
 
     /**
      * Sends an email to the blocked user when
@@ -92,13 +90,7 @@ public class MailService {
                     break;
             }
         }
-        try {
-            MimeMessageHelper message = generateMimeMessage(emailType.template,emailType.getSubject(),
-                    recipients,variables);
-            mailSender.send(message.getMimeMessage());
-        } catch (MessagingException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        sendMail(variables, recipients, emailType);
     }
 
     /**
@@ -134,9 +126,37 @@ public class MailService {
                     break;
             }
         }
+        sendMail(variables, recipients, emailType);
+    }
+
+    void sendEmailNewAccount(User newUser){
+        Map<String, Object> variables = new HashMap<>();
+        List<String> recipients = Lists.newArrayList(newUser.getEmail());
+        variables.put("username", newUser.getUsername());
+        variables.put("password", newUser.getPassword());
+        variables.put("link", "http://localhost:4200/webpack-dev-server/");
+        EmailType emailType = EmailType.USER_NEW_ACCOUNT_EN; //default language
+        UserLanguage language = newUser.getLanguage();
+        if(language != null) {
+            switch (language) {
+                case GERMAN:
+                    emailType = EmailType.USER_NEW_ACCOUNT_DE;
+                    break;
+                case ENGLISH:
+                    emailType = EmailType.USER_NEW_ACCOUNT_EN;
+                    break;
+                case ROMANIAN:
+                    emailType = EmailType.USER_NEW_ACCOUNT_RO;
+                    break;
+            }
+        }
+        sendMail(variables, recipients, emailType);
+    }
+
+    private void sendMail(Map<String, Object> variables, List<String> recipients, EmailType emailType) {
         try {
-            MimeMessageHelper message = generateMimeMessage(emailType.template,emailType.getSubject(),
-                    recipients,variables);
+            MimeMessageHelper message = generateMimeMessage(emailType.template, emailType.getSubject(),
+                    recipients, variables);
             mailSender.send(message.getMimeMessage());
         } catch (MessagingException e) {
             throw new RuntimeException(e.getMessage());
@@ -153,7 +173,10 @@ public class MailService {
         USER_ACTIVATION_RO("html/activationMailRo","Confirmare activare cont"),
         USER_DEACTIVATION_DE("html/deactivationMailDe","Konto deaktiviert"),
         USER_DEACTIVATION_RO("html/deactivationMailRo","Cont dezactivat"),
-        USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated");
+        USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated"),
+        USER_NEW_ACCOUNT_DE("html/newAccountDe", "Neues Konto TeamUp"),
+        USER_NEW_ACCOUNT_RO("html/newAccountRo", "Cont nou TeamUp"),
+        USER_NEW_ACCOUNT_EN("html/newAccountEn", "New account TeamUp");
 
         private String template;
         private String subject;

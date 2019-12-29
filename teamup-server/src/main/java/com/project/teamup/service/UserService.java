@@ -141,4 +141,23 @@ public class UserService {
         }
         return Optional.empty();
     }
+
+    /**
+     * Admin creates a new username and password for a
+     * new account of an employee.
+     * @param user the new created user
+     * @throws Exception if the username is not unique
+     * @author Sonya
+     * */
+    public User createNewAccount(User user) throws Exception{
+        if(!userRepository.findByUsername(user.getUsername()).isPresent()) {
+            mailService.sendEmailNewAccount(user);
+            String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+            return userRepository.save(user);
+        }
+        else{
+            throw new Exception("This username already exists!");
+        }
+    }
 }
