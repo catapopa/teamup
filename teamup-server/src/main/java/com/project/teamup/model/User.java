@@ -58,6 +58,9 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private UserLanguage language;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
