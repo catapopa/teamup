@@ -2,14 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import {User} from "../../shared/models/user";
-import {UserLanguage} from "../../shared/models/userLanguage";
-import {UserRole} from "../../shared/models/userRole";
-import {UserSeniority} from "../../shared/models/userSeniority";
-import {Company} from "../../shared/models/company";
 import {UserSkill} from "../../shared/models/userSkill";
 import {ProjectExperience} from "../../shared/models/projectExperience";
 import {Technology} from "../../shared/models/technology";
-import {TechnologyArea} from "../../shared/models/technologyArea";
 import {Project} from "../../shared/models/project";
 import {UserExperience} from "../../shared/models/userExperience";
 
@@ -42,7 +37,7 @@ export class ProfileComponent implements OnInit {
       firstName: this.profileForm.get('basicInfo').value.firstName,
       lastName: this.profileForm.get('basicInfo').value.lastName,
       birthDate: this.profileForm.get('basicInfo').value.birthDate,
-      picture: null,
+      picture: this.profileForm.get('basicInfo').value.picture.blob,
       language: this.profileForm.get('basicInfo').value.language,
       role: null,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,

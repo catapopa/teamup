@@ -32,6 +32,7 @@ import {ProjectComponent} from "../components/project/project.component";
 import {ProjectExperienceComponent} from "../components/project-experience/project-experience.component";
 import {BasicUserInfoComponent} from "../components/basic-user-info/basic-user-info.component";
 import {TechnicalUserInfoComponent} from "../components/technical-user-info/technical-user-info.component";
+import {PictureComponent} from "../components/picture/picture.component";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {TechnicalUserInfoComponent} from "../components/technical-user-info/tech
     ProjectExperienceComponent,
     BasicUserInfoComponent,
     TechnicalUserInfoComponent,
+    PictureComponent,
 
   ],
   exports: [
