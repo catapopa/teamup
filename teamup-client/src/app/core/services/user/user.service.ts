@@ -19,4 +19,12 @@ export class UserService {
   getById(id: number) {
     return this.httpService.get(this.url + id);
   }
+
+  delete(id: number) {
+    return this.httpService.delete(this.url, id);
+  }
+
+  update(path: string, data: any) {
+    return this.httpService.put(this.url + path, data);
+  }
 }

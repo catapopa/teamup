@@ -23,7 +23,7 @@
 			<ng-container matColumnDef="menu" align="end">
 				<mat-header-cell *matHeaderCellDef></mat-header-cell>
 				<mat-cell id="menu" class="cn-table-action" *matCellDef="let row" (click)="$event.stopPropagation()">
-					<button mat-icon-button (click)="openConfirmDialog(row)" aria-label="menu">
+					<button mat-icon-button (click)="delete(row)" aria-label="menu">
 						<mat-icon matTooltip="Delete">delete</mat-icon>
 					</button>
 				</mat-cell>
