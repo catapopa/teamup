@@ -27,7 +27,6 @@ export class BasicUserInfoComponent implements OnInit, ControlValueAccessor {
       birthDate: new FormControl('', [Validators.required]),
       picture: new FormControl('', [Validators.required]),
       language: new FormControl('', [Validators.required]),
-      location: new FormControl('', [Validators.required]),
     })
   }
 

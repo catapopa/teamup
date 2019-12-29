@@ -26,6 +26,7 @@ export class TechnicalUserInfoComponent implements OnInit, ControlValueAccessor 
 
   constructor(private formBuilder: FormBuilder) {
     this.technicalInfoForm = formBuilder.group({
+      location: new FormControl('', [Validators.required]),
       seniority: new FormControl('', [Validators.required]),
       company: new FormControl('', [Validators.required]),
       skills: this.formBuilder.array([]),

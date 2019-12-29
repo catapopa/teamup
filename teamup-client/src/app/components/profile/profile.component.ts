@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
   }
 
   public onSubmit(){
-    console.log("Val", this.profileForm.value);
     const basicInfoFormValue = this.profileForm.get('basicInfo').value;
     const technicalInfoFormValue = this.profileForm.get('technicalInfo').value;
     const user : User ={
@@ -43,7 +42,7 @@ export class ProfileComponent implements OnInit {
       language: basicInfoFormValue.language,
       role: null,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,
-      location: basicInfoFormValue.location.location,
+      location: technicalInfoFormValue.location.location,
       company: {
         id: technicalInfoFormValue.company.company.id ? technicalInfoFormValue.company.company.id : 0,
         name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name : technicalInfoFormValue.company.company
@@ -102,7 +101,7 @@ export class ProfileComponent implements OnInit {
       projectExperiencesArray.push(projectExperience)
     });
     user.projectExperiences = projectExperiencesArray;
-    console.log(user);
+
   }
 
 }
