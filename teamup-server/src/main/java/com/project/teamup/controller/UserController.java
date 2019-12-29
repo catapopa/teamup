@@ -3,6 +3,8 @@ package com.project.teamup.controller;
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.User;
+import com.project.teamup.model.UserLanguage;
+import com.project.teamup.model.UserStatus;
 import com.project.teamup.service.EmailService;
 import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
@@ -28,6 +30,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO user, @RequestBody String token) {
         if (userService.isValidToken(token)) {
+            user.setStatus(UserStatus.VERIFIED);
             return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
         }
 
@@ -36,6 +39,7 @@ public class UserController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
+        user.setStatus(UserStatus.NOT_VERIFIED);
         return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
     }
 
@@ -44,7 +48,17 @@ public class UserController {
         User userEntity = userService.findById(userId).get();
 
         userService.createVerificationTokenForUser(userEntity);
-        emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION);
+
+        if (userEntity.getLanguage() == null){
+            emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
+        }else if (userEntity.getLanguage().equals(UserLanguage.ENGLISH)){
+            emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
+        }else if (userEntity.getLanguage().equals(UserLanguage.GERMAN)){
+            emailService.sendEmail(userEntity,EmailService.EmailType.FIRST_REGISTRATION_DE);
+        }else if (userEntity.getLanguage().equals(UserLanguage.ROMANIAN)){
+            emailService.sendEmail(userEntity,EmailService.EmailType.FIRST_REGISTRATION_RO);
+        }
+
 
         return ResponseEntity.ok().build();
     }

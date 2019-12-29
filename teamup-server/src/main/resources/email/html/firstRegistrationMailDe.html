@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>Ihr Account wurde erfolgreich erstellt. Aktivieren Sie Ihr Konto, indem Sie auf dem folgenden <a th:href="@{${activationLink}}">Link</a> klicken.</p>
+</body>
+</html>
