@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TechAreaService } from "../../core/services/techArea/tech-area.service";
+import { TechAreaService } from '../../core/services/techArea/tech-area.service';
 
 @Component({
     selector: 'teamup-tech-area',

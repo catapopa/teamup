@@ -1,10 +1,11 @@
-import { ProjectExperience } from './../../shared/models/projectExperience';
-import { Company } from './../../shared/models/company';
+import { ProjectExperience } from '../../shared/models/projectExperience';
+import { Company } from '../../shared/models/company';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { UserDetailsComponent } from '../user-details/user-details.component';
+import { ConfirmPromptService } from 'src/app/shared/snack/snack.service';
 
 @Component({
   selector: 'teamup-users',
@@ -16,7 +17,7 @@ export class UsersComponent {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   dataSource: MatTableDataSource<User>;
-  displayedColumns: string[] = ['firstName', 'lastName', 'email'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'menu'];
 
   constructor(private userService: UserService, private userDetails: MatDialog) {
     this.getData();
@@ -34,6 +35,7 @@ export class UsersComponent {
   }
 
   getDetails(element) {
+    console.log(element);
     this.userDetails.open(UserDetailsComponent, {
       data: {
         id: element.id,
@@ -42,7 +44,7 @@ export class UsersComponent {
         email: element.email,
         birthDate: element.birthDate,
         seniority: element.seniority,
-        company: element.company,
+        company: element.company.name,
         skills: element.skills,
         location: element.location,
         projectExperiences: element.projectExperiences
@@ -51,5 +53,16 @@ export class UsersComponent {
       this.getData();
     });
   }
+
+  // openConfirmDialog(user: User): void {
+  //   const dialogRef = this.confirmDelete.open(ConfirmationDialogComponent, {
+  //     data: { messageKey: 'comfirmationDialog.deleteUser' }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.delete(user);
+  //     }
+  //   });
+  // }
 
 }

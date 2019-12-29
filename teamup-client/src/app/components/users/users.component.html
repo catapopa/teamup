@@ -20,6 +20,15 @@
 				<mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
 			</ng-container>
 
+			<ng-container matColumnDef="menu" align="end">
+				<mat-header-cell *matHeaderCellDef></mat-header-cell>
+				<mat-cell id="menu" class="cn-table-action" *matCellDef="let row" (click)="$event.stopPropagation()">
+					<button mat-icon-button (click)="openConfirmDialog(row)" aria-label="menu">
+						<mat-icon matTooltip="Delete">delete</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
+
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getDetails(row)"></mat-row>
 		</mat-table>

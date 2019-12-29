@@ -20,6 +20,6 @@ export interface User {
   location: Location;
   company: Company;
   skills: UserSkill[];
-  projectExperiences: ProjectExperience[]
+  projectExperiences: ProjectExperience[];
 }
 

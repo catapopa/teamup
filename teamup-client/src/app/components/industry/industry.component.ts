@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IndustryService } from "../../core/services/industry/industry.service";
+import { IndustryService } from '../../core/services/industry/industry.service';
 
 @Component({
   selector: 'teamup-industry',

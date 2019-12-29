@@ -1,4 +1,5 @@
-import { UserDetailsComponent } from './../components/user-details/user-details.component';
+import { ConfirmPromptService } from './snack/snack.service';
+import { UserDetailsComponent } from '../components/user-details/user-details.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,7 +9,7 @@ import {
   MatIconModule, MatInputModule, MatFormFieldModule,
   MatAutocompleteModule, MatToolbarModule, MatButtonModule,
   MatTableModule, MatSelectModule, MatPaginatorModule, MatSortModule,
-  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule, MatCardModule
+  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule, MatCardModule, MatDialogTitle
 } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -61,7 +62,8 @@ import { UsersComponent } from '../components/users/users.component';
     MatCardModule
   ],
   providers: [
-    TopBarComponent
+    TopBarComponent,
+    // ConfirmPromptService
   ],
   entryComponents: [
     UserDetailsComponent
