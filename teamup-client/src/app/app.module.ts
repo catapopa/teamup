@@ -14,6 +14,8 @@ import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { LoginModule } from './components/login/login.module';
+import {MatButtonModule} from "@angular/material";
+
 
 @NgModule({
   // components, directives and pipes
