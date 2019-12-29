@@ -1,6 +1,5 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {UserSkillLevel} from "../../shared/models/userSkillLevel";
 import {UserLanguage} from "../../shared/models/userLanguage";
 
 @Component({
@@ -27,7 +26,8 @@ export class BasicUserInfoComponent implements OnInit, ControlValueAccessor {
       email: new FormControl('', [Validators.required]),
       birthDate: new FormControl('', [Validators.required]),
       picture: new FormControl('', [Validators.required]),
-      language: new FormControl('', [Validators.required])
+      language: new FormControl('', [Validators.required]),
+      location: new FormControl('', [Validators.required]),
     })
   }
 

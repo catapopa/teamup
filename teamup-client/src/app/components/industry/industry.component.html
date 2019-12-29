@@ -1,9 +1,9 @@
 <form [formGroup]="industryForm" class="industry-form">
     <mat-form-field>
-        <input type="text" placeholder="Industry" aria-label="Number" matInput formControlName="name"
+        <input type="text" placeholder="Industry" aria-label="Number" matInput formControlName="industry"
                [matAutocomplete]="auto" required>
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of industries" [value]="option.name">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of industries" [value]="option">
                 {{option.name}}
             </mat-option>
         </mat-autocomplete>

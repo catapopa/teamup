@@ -29,22 +29,24 @@ export class ProfileComponent implements OnInit {
 
   public onSubmit(){
     console.log("Val", this.profileForm.value);
+    const basicInfoFormValue = this.profileForm.get('basicInfo').value;
+    const technicalInfoFormValue = this.profileForm.get('technicalInfo').value;
     const user : User ={
       id: 0,
       username: null,
       password: null,
-      email: null,
-      firstName: this.profileForm.get('basicInfo').value.firstName,
-      lastName: this.profileForm.get('basicInfo').value.lastName,
-      birthDate: this.profileForm.get('basicInfo').value.birthDate,
-      picture: this.profileForm.get('basicInfo').value.picture.blob,
-      language: this.profileForm.get('basicInfo').value.language,
+      email: basicInfoFormValue.email,
+      firstName: basicInfoFormValue.firstName,
+      lastName: basicInfoFormValue.lastName,
+      birthDate: basicInfoFormValue.birthDate,
+      picture: basicInfoFormValue.picture.blob,
+      language: basicInfoFormValue.language,
       role: null,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,
-      location: null,
+      location: basicInfoFormValue.location.location,
       company: {
-        id: 0,
-        name: this.profileForm.get('technicalInfo').value.company.name
+        id: technicalInfoFormValue.company.company.id ? technicalInfoFormValue.company.company.id : 0,
+        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name : technicalInfoFormValue.company.company
       },
       skills: null,
       projectExperiences: null,
@@ -56,8 +58,8 @@ export class ProfileComponent implements OnInit {
         id: 0,
         name: skill.technology.techName,
         area:{
-          id: 0,
-          name: skill.technology.techArea.name
+          id: skill.technology.techArea.id ? skill.technology.techArea.id : 0,
+          name: skill.technology.techArea.name ? skill.technology.techArea.name : skill.technology.techArea.techArea
         }
       };
       const skillLevel = skill.skillLevel.skillLevel;
@@ -82,12 +84,12 @@ export class ProfileComponent implements OnInit {
         name: projectExp.project.name,
         description: projectExp.project.description,
         industry:{
-          id: 0,
-          name: projectExp.project.industry.name,
+          id: projectExp.project.industry.id ? projectExp.project.industry.id : 0,
+          name: projectExp.project.industry.name ? projectExp.project.industry.name: projectExp.project.industry.industry,
         },
         company: {
-          id:0,
-          name: projectExp.project.company.name,
+          id: projectExp.project.company.company.id ? projectExp.project.company.company.id : 0,
+          name: projectExp.project.company.company.name ? projectExp.project.company.company.name : projectExp.project.company.company
         },
         userExperience: userExperienceArray
       };

@@ -1,6 +1,7 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import { TechAreaService } from "../../core/services/techArea/tech-area.service";
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {TechnologyArea} from "../../shared/models/technologyArea";
 
 @Component({
     selector: 'teamup-tech-area',
@@ -20,14 +21,18 @@ export class TechAreaComponent implements OnInit, ControlValueAccessor {
 
     constructor(private techAreaService: TechAreaService,formBuilder: FormBuilder) {
         this.techAreaForm = formBuilder.group({
-            name: new FormControl('', [Validators.required])
+            techArea: new FormControl('', [Validators.required])
         });
     }
 
     ngOnInit() {
-        // this.techAreaService.getAll().subscribe((data) => {
-        //     this.techAreas = data;
-        // });
+        this.techAreaService.getAll().subscribe((data) => {
+            this.techAreas = data;
+        });
+    }
+
+    displayFn(techArea?: TechnologyArea): string | undefined {
+        return techArea ? techArea.name : undefined;
     }
 
     onTouched: any = () => { };

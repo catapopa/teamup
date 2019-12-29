@@ -1,6 +1,7 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import { IndustryService } from "../../core/services/industry/industry.service";
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {Industry} from "../../shared/models/industry";
 
 @Component({
   selector: 'teamup-industry',
@@ -20,14 +21,18 @@ export class IndustryComponent implements OnInit, ControlValueAccessor {
 
   constructor(private industryService: IndustryService,formBuilder: FormBuilder) {
     this.industryForm = formBuilder.group({
-      name: new FormControl('', [Validators.required])
+      industry: new FormControl('', [Validators.required])
     });
   }
 
   ngOnInit() {
-    // this.industryService.getAll().subscribe((data) => {
-    //   this.industries = data;
-    // });
+    this.industryService.getAll().subscribe((data) => {
+      this.industries = data;
+    });
+  }
+
+  displayFn(industry?: Industry): string | undefined {
+    return industry ? industry.name : undefined;
   }
 
   onTouched: any = () => { };

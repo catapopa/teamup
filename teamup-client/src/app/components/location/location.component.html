@@ -1,10 +1,10 @@
-<!--<form [formGroup]="locationForm">-->
-    <!--<mat-form-field>-->
-        <!--<mat-label>Seniority</mat-label>-->
-        <!--<mat-select formControlName="location">-->
-            <!--<mat-option *ngFor="let key of keys" [value]="userSeniority[key]">-->
-                <!--{{userSeniority[key]}}-->
-            <!--</mat-option>-->
-        <!--</mat-select>-->
-    <!--</mat-form-field>-->
-<!--</form>-->
+<form [formGroup]="locationForm">
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location" >
+            <mat-option *ngFor="let location of locations" [value]="location">
+                {{location.country }}, {{location.state }}, {{location.city}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>
