@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import SnackComponent from './snack/snack.component';
+import { SnackComponent } from './snack/snack.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import {
   MatIconModule,
@@ -14,6 +14,10 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule
+  MatIconModule, MatInputModule, MatFormFieldModule,
+  MatAutocompleteModule, MatToolbarModule, MatButtonModule,
+  MatTableModule, MatSelectModule, MatPaginatorModule, MatSortModule,
+  MatDialogModule, MatMenuModule, MatTooltipModule, MatSnackBarModule, MatCardModule
 } from '@angular/material';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -21,8 +25,9 @@ import { CompanyComponent } from '../components/company/company.component';
 import { IndustryComponent } from '../components/industry/industry.component';
 import { LocationComponent } from '../components/location/location.component';
 import { TechAreaComponent } from '../components/tech-area/tech-area.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersComponent } from '../components/users/users.component';
+import { LoginComponent } from '../components/login/login.component';
 import {UserSeniorityComponent} from "../components/user-seniority/user-seniority.component";
 import {TechnologyComponent} from "../components/technology/technology.component";
 import {UserSkillLevelComponent} from "../components/user-skill-level/user-skill-level.component";
@@ -66,18 +71,29 @@ import {PictureComponent} from "../components/picture/picture.component";
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     ReactiveFormsModule,
-    MatIconModule,
-    MatInputModule,
+    // Mat
+    MatTableModule,
+    MatSelectModule,
+    MatPaginatorModule,
     MatFormFieldModule,
-    MatOptionModule,
-    MatAutocompleteModule,
+    MatInputModule,
+    MatSortModule,
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     MatToolbarModule,
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule
 
+    MatAutocompleteModule,
+    MatCardModule
   ],
   providers: [
     TopBarComponent
