@@ -1,0 +1,10 @@
+<form [formGroup]="locationForm">
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location" >
+            <mat-option *ngFor="let location of locations" [value]="location">
+                {{location.country }}, {{location.state }}, {{location.city}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

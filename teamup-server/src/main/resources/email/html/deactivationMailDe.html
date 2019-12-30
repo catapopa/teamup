@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hallo, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>Das Konto f&#252;r den Benutzer mit den folgenden Referenzen wurde blockiert:</p>
+<p>
+    <span th:text="'Nutzername: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Email Adresse: ' + ${emailBlockedUser}"></span>
+</p>
+<p>Bitte erzeuge ein neues Kennwort und benachrichige den Benutzer.</p>
+</body>
+</html>
