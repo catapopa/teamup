@@ -94,30 +94,12 @@ public class UserService {
                     List<User> users = getAll();
                     users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
                     userList.addAll(users);
-//                    for (User user : getAll()) {
-//                        if (user.getSkills() != null) {
-//                            for (UserSkill skill : user.getSkills()) {
-//                                if (String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
-//                                    userList.add(user);
-//                                }
-//                            }
-//                        }
-//                    }
                     break;
                 }
                 case SKILL_LEVEL: {
                     List<User> users = getAll();
                     users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
                     userList.addAll(users);
-//                    for (User user : getAll()) {
-//                        if (user.getSkills() != null) {
-//                            for (UserSkill skill : user.getSkills()) {
-//                                if (String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
-//                                    userList.add(user);
-//                                }
-//                            }
-//                        }
-//                    }
                     break;
                 }
                 case LOCATION:
