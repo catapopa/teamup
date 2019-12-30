@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "http-headers": "^3.0.2",
     "jwt-decode": "^2.2.0",
+    "prettier": "^1.19.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
