@@ -100,6 +100,12 @@ public class UserController {
                 .orElse(null);
     }
 
+    /**
+     * Admin sends a new username, password and email
+     * for a new account and the new employee
+     * receives an email with them.
+     * @author Sonya
+     * */
     @PostMapping(value = "/createAccount")
     public ResponseEntity createAccount(@RequestBody UserDTO user) {
         try {

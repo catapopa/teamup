@@ -134,7 +134,7 @@ public class MailService {
         List<String> recipients = Lists.newArrayList(newUser.getEmail());
         variables.put("username", newUser.getUsername());
         variables.put("password", newUser.getPassword());
-        variables.put("link", "http://localhost:4200/webpack-dev-server/");
+        variables.put("link", "http://localhost:4200/login");
         EmailType emailType = EmailType.USER_NEW_ACCOUNT_EN; //default language
         UserLanguage language = newUser.getLanguage();
         if(language != null) {
