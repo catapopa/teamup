@@ -101,7 +101,7 @@ public class MailService {
     }
 
     /**
-     * Sends an email to the superviser when an employee has
+     * Sends an email to the supervisor when an employee has
      * created his profile, so that he can validate/invalidate
      * it.
      *
