@@ -44,8 +44,7 @@ export class UsersComponent {
         );
     }
 
-    getDetails(element: { skills: UserSkill; }) {
-        console.log(element);
+    getDetails(element) {
         this.userDetails.open(UserDetailsComponent, {
             data: {
                 skills: element.skills

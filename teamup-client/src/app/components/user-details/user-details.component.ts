@@ -1,6 +1,6 @@
 import { UserSkill } from './../../shared/models/userSkill';
 import { Component, ViewChild, Inject } from '@angular/core';
-import { MatSort, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatSort, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'teamup-user-details',
@@ -12,11 +12,11 @@ export class UserDetailsComponent {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   dataSource: MatTableDataSource<UserSkill>;
-  displayedColumns: string[] = ['technology'];
+  displayedColumns: string[] = ['name', 'area', 'level'];
 
-  constructor(private dialogRef: MatDialogRef<UserDetailsComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.dataSource = new MatTableDataSource<UserSkill>(this.data as UserSkill[]);
-    console.log(this.data)
-
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.dataSource = new MatTableDataSource<UserSkill>(this.data.skills as UserSkill[]);
+    const skills = this.data.skills;
+    console.log(skills)
   }
 }
