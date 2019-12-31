@@ -1,12 +1,12 @@
-import {Industry} from "./industry";
-import {Company} from "./company";
-import {UserExperience} from "./userExperience";
+import {Industry} from './industry';
+import {Company} from './company';
+import {UserExperience} from './userExperience';
 
-export interface Project{
-    id: number,
-    name: string,
-    description: string,
-    industry: Industry,
-    company: Company,
-    userExperience: UserExperience[]
+export interface Project {
+    id: number;
+    name: string;
+    description: string;
+    industry: Industry;
+    company: Company;
+    userExperience: UserExperience[];
 }

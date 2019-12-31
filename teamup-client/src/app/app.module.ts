@@ -10,9 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { CoreModule } from './core/core.module';
-import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
-import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { LoginModule } from './components/login/login.module';
 import {MatButtonModule} from "@angular/material";
 
@@ -20,8 +18,7 @@ import {MatButtonModule} from "@angular/material";
 @NgModule({
   // components, directives and pipes
   declarations: [
-    AppComponent,
-    UserDetailsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

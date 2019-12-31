@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { CompanyService } from 'src/app/core/services/company/company.service';
 import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, Validators, FormBuilder, FormControl } from '@angular/forms';
-import {Company} from "../../shared/models/company";
+import { Company } from '../../shared/models/company';
 
 @Component({
   selector: 'teamup-company',
@@ -38,12 +38,12 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    val && this.companyForm.setValue(val, {emitEvent:false});
+    val && this.companyForm.setValue(val, { emitEvent: false });
   }
   registerOnChange(fn: any): void {
     this.companyForm.valueChanges
-       //.pipe(map(company=>{}))
-        .subscribe(fn)
+      // .pipe(map(company=>{}))
+      .subscribe(fn);
   }
   registerOnTouched(fn: any): void {
     this.onTouched = fn;

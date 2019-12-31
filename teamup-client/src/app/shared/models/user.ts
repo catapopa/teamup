@@ -6,20 +6,20 @@ import { UserSkill } from 'src/app/shared/models/userSkill';
 import { ProjectExperience } from 'src/app/shared/models/projectExperience';
 
 export interface User {
-    id: number;
-    username: string;
-    password: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthDate: Date;
-    picture: string;
-    language: UserLanguage;
-    role: UserRole;
-    seniority: UserSeniority;
-    location: Location;
-    company: Company;
-    skills: UserSkill[];
-    projectExperiences: ProjectExperience[]
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  birthDate: Date;
+  picture: string;
+  language: UserLanguage;
+  role: UserRole;
+  seniority: UserSeniority;
+  location: Location;
+  company: Company;
+  skills: UserSkill[];
+  projectExperiences: ProjectExperience[];
 }
 
