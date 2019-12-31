@@ -1,0 +1,11 @@
+<form [formGroup]="pictureForm">
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           (change)="processFile(imageInput)"
+
+            >
+    <input type="hidden" formControlName="blob" >
+</form>
+
+

@@ -2,7 +2,10 @@ package com.project.teamup.controller;
 
 import com.project.teamup.dto.UserDTO;
 import com.project.teamup.mapper.UserMapper;
+import com.project.teamup.model.FilterCriterias;
 import com.project.teamup.model.User;
+import com.project.teamup.model.UserLanguage;
+import com.project.teamup.model.UserStatus;
 import com.project.teamup.service.EmailService;
 import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
@@ -10,8 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -28,6 +37,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO user, @RequestBody String token) {
         if (userService.isValidToken(token)) {
+            user.setStatus(UserStatus.VERIFIED);
             return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
         }
 
@@ -36,6 +46,7 @@ public class UserController {
 
     @PostMapping(value = "/save")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO user) {
+        user.setStatus(UserStatus.NOT_VERIFIED);
         return ResponseEntity.ok(userMapper.toDto(userService.save(userMapper.toEntity(user))));
     }
 
@@ -44,7 +55,17 @@ public class UserController {
         User userEntity = userService.findById(userId).get();
 
         userService.createVerificationTokenForUser(userEntity);
-        emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION);
+
+        if (userEntity.getLanguage() == null){
+            emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
+        }else if (userEntity.getLanguage().equals(UserLanguage.ENGLISH)){
+            emailService.sendEmail(userEntity, EmailService.EmailType.FIRST_REGISTRATION_EN);
+        }else if (userEntity.getLanguage().equals(UserLanguage.GERMAN)){
+            emailService.sendEmail(userEntity,EmailService.EmailType.FIRST_REGISTRATION_DE);
+        }else if (userEntity.getLanguage().equals(UserLanguage.ROMANIAN)){
+            emailService.sendEmail(userEntity,EmailService.EmailType.FIRST_REGISTRATION_RO);
+        }
+
 
         return ResponseEntity.ok().build();
     }
@@ -72,6 +93,25 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
+    }
+
+    @PutMapping(value = "/createProfile/{id}")
+    public UserDTO createUserProfile(@RequestBody UserDTO entity, @PathVariable("id") Long id, @RequestParam("bitmap") MultipartFile file) {
+        try {
+            byte[] array = file.getBytes();
+            Blob blob = new SerialBlob(array);
+            User user = userMapper.toEntity(entity);
+            userService.createProfile(user, id, blob);
+            return userMapper.toDto(userService.createProfile(user, id, blob));
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping("/filter")
+    public List<UserDTO> filterUsers(@RequestBody Map<FilterCriterias, String> criterias) {
+        return userMapper.toDtoList(userService.filterUser(criterias));
     }
 
     @PostMapping(value = "/activate")

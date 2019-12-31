@@ -58,7 +58,13 @@ public class EmailService {
         List<String> recipients = Lists.newArrayList(user.getEmail());
 
         switch (emailType){
-            case FIRST_REGISTRATION:
+            case FIRST_REGISTRATION_EN:
+                variables.put("activationLink",userService.generateActivationLink(user));
+                break;
+            case FIRST_REGISTRATION_DE:
+                variables.put("activationLink",userService.generateActivationLink(user));
+                break;
+            case FIRST_REGISTRATION_RO:
                 variables.put("activationLink",userService.generateActivationLink(user));
                 break;
         }
@@ -75,7 +81,9 @@ public class EmailService {
     @AllArgsConstructor
     public enum EmailType{
 
-        FIRST_REGISTRATION("html/firstRegistration","Registration Confirmation");
+        FIRST_REGISTRATION_EN("html/firstRegistrationMailEn","Registration Confirmation"),
+        FIRST_REGISTRATION_DE("html/firstRegistrationMailDe","Bestätigung der Anmeldung"),
+        FIRST_REGISTRATION_RO("html/firstRegistrationMailRo","Confirmarea înregistrării");
 
         private String template;
         private String subject;
