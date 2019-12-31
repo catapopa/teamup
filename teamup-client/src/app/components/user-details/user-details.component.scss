@@ -2,11 +2,12 @@
   width: 400px;
 }
 
-.mat-dialog.title {
-  position: relative;
+.mat-dialog-title {
+  justify-content: space-between;
+  display: flex;
 }
 
 .button {
-  position: absolute;
-  right: 0;
+  justify-content: flex-end;
+  display: flex;
 }
