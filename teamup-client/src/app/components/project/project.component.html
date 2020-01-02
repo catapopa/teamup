@@ -5,16 +5,19 @@
     <mat-form-field>
         <input matInput placeholder="Description" formControlName="description" required>
     </mat-form-field>
+
     <teamup-industry formControlName="industry"></teamup-industry>
     <teamup-company formControlName="company"></teamup-company>
-    <mat-label>User experience</mat-label>
+    
+    <h4>User experience</h4>
     <div formArrayName="userExperience"
-         *ngFor="let userexp of projectForm.get('userExperience').controls; let i = index;">
+        *ngFor="let userexp of projectForm.get('userExperience').controls; let i = index;">
         <div [formGroupName]="i">
             <teamup-user-experience [formControl]="userexp"></teamup-user-experience>
         </div>
-        <button (click)="addUserExperience()">Add user experience</button>
-        <button (click)="removeUserExperience(i)" *ngIf="projectForm.get('userExperience').controls.length >1">Remove user experience</button>
+        <button mat-raised-button color="primary" (click)="addUserExperience()">Add user experience</button>
+        <button mat-raised-button (click)="removeUserExperience(i)"
+            *ngIf="projectForm.get('userExperience').controls.length >1">Remove
+            user experience</button>
     </div>
-
 </form>
