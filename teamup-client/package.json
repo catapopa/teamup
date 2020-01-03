@@ -25,6 +25,7 @@
     "@auth0/angular-jwt": "^3.0.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "hammerjs": "^2.0.8",
     "http-headers": "^3.0.2",
     "jwt-decode": "^2.2.0",
     "prettier": "^1.19.1",

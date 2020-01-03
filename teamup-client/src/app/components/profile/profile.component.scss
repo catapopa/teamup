@@ -1,0 +1,31 @@
+:host {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 60%;
+  padding: 50px;
+
+  .mat-card-header {
+    justify-content: center;
+    padding: 20px;
+  }
+}
+
+.save{
+  margin: 50px 0 0;
+}
+
+button {
+  width: 100%;
+	margin: 0 auto;
+	color: whitesmoke;
+	background-color: #320b86;
+}
+
+button:hover {
+	box-shadow: 0 19px 38px #0000004d, 0 15px 12px #00000038;
+}

@@ -1,6 +1,6 @@
 import { BasicUserInfoComponent } from './../components/basic-user-info/basic-user-info.component';
 import { UserDetailsComponent } from '../components/user-details/user-details.component';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -49,13 +49,13 @@ import { PictureComponent } from '../components/picture/picture.component';
         ProjectComponent,
         ProjectExperienceComponent,
         TechnicalUserInfoComponent,
-        PictureComponent,
+        PictureComponent
     ],
     exports: [
         CommonModule,
         RouterModule,
         TopBarComponent,
-        CompanyComponent,
+        CompanyComponent
     ],
     imports: [
         CommonModule,
