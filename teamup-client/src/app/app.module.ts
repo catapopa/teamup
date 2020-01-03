@@ -12,7 +12,6 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './components/login/login.module';
-import {MatButtonModule} from "@angular/material";
 
 
 @NgModule({
