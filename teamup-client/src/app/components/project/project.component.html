@@ -15,9 +15,11 @@
         <div [formGroupName]="i">
             <teamup-user-experience [formControl]="userexp"></teamup-user-experience>
         </div>
-        <button mat-raised-button color="primary" (click)="addUserExperience()">Add user experience</button>
-        <button mat-raised-button (click)="removeUserExperience(i)"
-            *ngIf="projectForm.get('userExperience').controls.length >1">Remove
-            user experience</button>
+        <mat-card-actions class="add-button">
+            <button mat-raised-button color="primary" (click)="addUserExperience()">Add user experience</button>
+            <button mat-raised-button (click)="removeUserExperience(i)"
+                *ngIf="projectForm.get('userExperience').controls.length >1">Remove user experience</button>
+        </mat-card-actions>
+
     </div>
 </form>
