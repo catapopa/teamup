@@ -2,14 +2,14 @@ package com.project.teamup.service;
 
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.dao.VerificationTokenRepository;
-import com.project.teamup.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import com.project.teamup.dao.VerificationTokenRepository;
+import com.project.teamup.model.FilterCriterias;
+import com.project.teamup.model.User;
 import com.project.teamup.model.UserRole;
 import com.project.teamup.model.VerificationToken;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.sql.Blob;
@@ -187,7 +187,7 @@ public class UserService {
      * which represents the new password for
      * a user who must be activated.
      */
-    private String generateNewPassword() {
+    String generateNewPassword() {
         int length = 6;
         boolean useLetters = true;
         boolean useNumbers = true;
