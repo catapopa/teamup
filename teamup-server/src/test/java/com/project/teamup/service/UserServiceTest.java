@@ -47,6 +47,9 @@ public class UserServiceTest {
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Mock
+    private MailService mailService;
+
     private User user1;
     private User user2;
     private VerificationToken verificationToken;
@@ -147,6 +150,25 @@ public class UserServiceTest {
 
     @Test
     public void activateUser() {
+        User activatedUser = new User();
+        activatedUser.setUsername("activated");
+        activatedUser.setFailedLoginAttempts(0);
+        User deactivatedUser = new User();
+        deactivatedUser.setUsername("deactivated");
+        deactivatedUser.setFailedLoginAttempts(3);
+        when(bCryptPasswordEncoder.encode(any())).thenReturn("encr pass");
+        User admin = new User();
+        admin.setUsername("admin");
+
+        when(userRepository.findByUsername("admin")).thenReturn(Optional.of(admin));
+        when(userRepository.findByUsername("activated")).thenReturn(Optional.of(activatedUser));
+        when(userRepository.findByUsername("deactivated")).thenReturn(Optional.of(deactivatedUser));
+        when(userRepository.findByUsername("invalid")).thenReturn(Optional.empty());
+
+        assertEquals("The user is already activated!", userService.activateUser("admin","activated"));
+        assertEquals("Invalid username of admin/employee!", userService.activateUser("admin","invalid"));
+        assertEquals("User was successfully activated and a mail with the new password was sent to him!",
+                userService.activateUser("admin","deactivated"));
     }
 
     @Test
@@ -226,57 +248,57 @@ public class UserServiceTest {
     private Blob mockBlob(){
        return new Blob() {
             @Override
-            public long length() throws SQLException {
+            public long length(){
                 return 0;
             }
 
             @Override
-            public byte[] getBytes(long pos, int length) throws SQLException {
+            public byte[] getBytes(long pos, int length){
                 return new byte[0];
             }
 
             @Override
-            public InputStream getBinaryStream() throws SQLException {
+            public InputStream getBinaryStream(){
                 return null;
             }
 
             @Override
-            public long position(byte[] pattern, long start) throws SQLException {
+            public long position(byte[] pattern, long start){
                 return 0;
             }
 
             @Override
-            public long position(Blob pattern, long start) throws SQLException {
+            public long position(Blob pattern, long start){
                 return 0;
             }
 
             @Override
-            public int setBytes(long pos, byte[] bytes) throws SQLException {
+            public int setBytes(long pos, byte[] bytes){
                 return 0;
             }
 
             @Override
-            public int setBytes(long pos, byte[] bytes, int offset, int len) throws SQLException {
+            public int setBytes(long pos, byte[] bytes, int offset, int len){
                 return 0;
             }
 
             @Override
-            public OutputStream setBinaryStream(long pos) throws SQLException {
+            public OutputStream setBinaryStream(long pos){
                 return null;
             }
 
             @Override
-            public void truncate(long len) throws SQLException {
+            public void truncate(long len){
 
             }
 
             @Override
-            public void free() throws SQLException {
+            public void free(){
 
             }
 
             @Override
-            public InputStream getBinaryStream(long pos, long length) throws SQLException {
+            public InputStream getBinaryStream(long pos, long length){
                 return null;
             }
         };
