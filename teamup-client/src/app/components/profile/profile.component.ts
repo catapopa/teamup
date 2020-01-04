@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   public onSubmit() {
     const basicInfoFormValue = this.profileForm.get('basicInfo').value;
     const technicalInfoFormValue = this.profileForm.get('technicalInfo').value;
+
     const user: User = {
       id: 0,
       username: null,
@@ -45,13 +46,16 @@ export class ProfileComponent implements OnInit {
       location: technicalInfoFormValue.location.location,
       company: {
         id: technicalInfoFormValue.company.company.id ? technicalInfoFormValue.company.company.id : 0,
-        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name : technicalInfoFormValue.company.company
+        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name :
+          technicalInfoFormValue.company.company
       },
       skills: null,
       projectExperiences: null,
     };
+
     const skills = this.profileForm.get('technicalInfo').value.skills;
     const skillArray: UserSkill[] = [];
+
     skills.forEach(skill => {
       const technology: Technology = {
         id: 0,
@@ -61,7 +65,9 @@ export class ProfileComponent implements OnInit {
           name: skill.technology.techArea.name ? skill.technology.techArea.name : skill.technology.techArea.techArea
         }
       };
+
       const skillLevel = skill.skillLevel.skillLevel;
+
       const userSkill: UserSkill = {
         id: 0,
         technology: technology,
@@ -69,15 +75,20 @@ export class ProfileComponent implements OnInit {
       };
       skillArray.push(userSkill);
     });
+
     user.skills = skillArray;
+
     const projectExperiences = this.profileForm.get('technicalInfo').value.projectExperiences;
     const projectExperiencesArray: ProjectExperience[] = [];
+
     projectExperiences.forEach(projectExp => {
       const userExperienceArray: UserExperience[] = [];
       const userExperiences = projectExp.project.userExperience;
+
       userExperiences.forEach(userExp => {
         userExperienceArray.push(userExp);
       });
+
       const project: Project = {
         id: 0,
         name: projectExp.project.name,
@@ -92,6 +103,7 @@ export class ProfileComponent implements OnInit {
         },
         userExperience: userExperienceArray
       };
+
       const projectExperience: ProjectExperience = {
         project: project,
         startDate: projectExp.startDate,
@@ -101,7 +113,5 @@ export class ProfileComponent implements OnInit {
       projectExperiencesArray.push(projectExperience);
     });
     user.projectExperiences = projectExperiencesArray;
-
   }
-
 }

@@ -17,6 +17,5 @@ export class UserDetailsComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.dataSource = new MatTableDataSource<UserSkill>(this.data.skills as UserSkill[]);
     const skills = this.data.skills;
-    console.log(skills)
   }
 }
