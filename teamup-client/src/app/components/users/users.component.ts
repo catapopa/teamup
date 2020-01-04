@@ -17,26 +17,17 @@ export class UsersComponent {
 
     dataSource: MatTableDataSource<User>;
     displayedColumns: string[] = ['firstName', 'lastName', 'email', 'company', 'location', 'menu'];
-    id: number;
 
     constructor(private userService: UserService, private userDetails: MatDialog, private authService: AuthService) {
         this.getData();
     }
 
-    getUserData() {
-        const username = this.authService.getUsername();
-
-        this.userService.getByUsername(username).subscribe((user: User) => {
-            this.id = user.id;
-            console.log('user', user);
-            console.log(this.id);
-        });
-    }
-
     getData() {
         if (this.authService.getRole() === 'SUPERVISOR') {
-            this.getUserData();
-            this.userService.getAllBySupervisor(this.id).subscribe((data) => {
+
+            const id = this.authService.getId();
+
+            this.userService.getAllBySupervisor(id).subscribe((data) => {
                 this.dataSource = new MatTableDataSource<User>(data as User[]);
                 this.dataSource.sort = this.sort;
             });

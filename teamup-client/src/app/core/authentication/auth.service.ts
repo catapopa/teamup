@@ -46,4 +46,10 @@ export class AuthService {
     const tokenPayload = decode(token);
     return tokenPayload.username;
   }
+
+  public getId() {
+    const token = localStorage.getItem('token');
+    const tokenPayload = decode(token);
+    return tokenPayload.id;
+  }
 }
