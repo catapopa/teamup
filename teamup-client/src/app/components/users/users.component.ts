@@ -4,7 +4,6 @@ import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { UserDetailsComponent } from '../user-details/user-details.component';
 import { AuthService } from 'src/app/core/authentication/auth.service';
-import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
     selector: 'teamup-users',
@@ -26,8 +25,9 @@ export class UsersComponent {
         if (this.authService.getRole() === 'SUPERVISOR') {
 
             const id = this.authService.getId();
-
             this.userService.getAllBySupervisor(id).subscribe((data) => {
+                console.log(data)
+
                 this.dataSource = new MatTableDataSource<User>(data as User[]);
                 this.dataSource.sort = this.sort;
             });
