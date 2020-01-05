@@ -136,7 +136,6 @@ public class UserService {
                     break;
             }
         }
-        userList.forEach(System.out::println);
         return userList.stream()
                 .distinct()
                 .collect(Collectors.toList());
@@ -170,8 +169,9 @@ public class UserService {
             } else {
                 return "The user is already activated!";
             }
+        } else {
+            return "Invalid username of admin/employee!";
         }
-        return "Invalid username of admin/employee!";
     }
 
     public String generateActivationLink(User user) {
@@ -179,17 +179,17 @@ public class UserService {
         return WEB_APP_URL + verificationToken.getToken();
     }
 
-    public void createVerificationTokenForUser(User user) {
+    public VerificationToken createVerificationTokenForUser(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
-
         if (verificationToken == null) {
-            tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+            return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
         } else {
             if (verificationToken.getExpiryDate().after(new Timestamp(new Date().getTime()))) {
                 tokenRepository.delete(verificationToken);
-                tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+                return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
             }
         }
+        return null;
     }
 
     /**

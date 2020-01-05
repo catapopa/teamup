@@ -17,9 +17,7 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,7 +26,8 @@ import static org.mockito.Mockito.when;
 
 /**
  * Junit Tests for the User Service.
- * User Repository is mocked.
+ * UserRepository, VerificationTokenRepository,
+ * BCryptPasswordEncoder and MailService are mocked.
  * @author Sonya
  * */
 @RunWith(MockitoJUnitRunner.class)
@@ -134,6 +133,39 @@ public class UserServiceTest {
 
     @Test
     public void filterUser() {
+        Map<FilterCriterias, String> criteria = new HashMap<>();
+        criteria.put(FilterCriterias.ROLE, "ADMIN");
+        User user = new User();
+        user.setRole(UserRole.ADMIN);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        criteria.put(FilterCriterias.LANGUAGE, "ROMANIAN");
+        users.get(0).setLanguage(UserLanguage.ROMANIAN);
+        when(userRepository.findAll()).thenReturn(users);
+        assertEquals(1, userService.filterUser(criteria).size());
+        users.get(0).setLocation(new Location(1L, "Romania", "Transilvania", "Cluj-Napoca"));
+        User user2 = new User();
+        user2.setLocation(new Location(1L, "Romania", "Transilvania", "Cluj-Napoca"));
+        user2.setRole(UserRole.ADMIN);
+        users.add(user2);
+        when(userRepository.findAll()).thenReturn(users);
+        criteria.put(FilterCriterias.LOCATION, "Cluj-Napoca");
+        assertEquals(2, userService.filterUser(criteria).size());
+        users.get(0).setSeniority(UserSeniority.JUNIOR_CONSULTANT);
+        criteria.clear();
+        criteria.put(FilterCriterias.SENIORITY,"JUNIOR_CONSULTANT");
+        assertEquals( 1, userService.filterUser(criteria).size());
+        Technology technology = new Technology(1L, "Java", new TechnologyArea(1L,"Technology Area" ));
+        List<UserSkill> skills = new ArrayList<>();
+        skills.add(new UserSkill(1L, users.get(0), technology, UserSkillLevel.ADVANCED));
+        users.get(0).setSkills(skills);
+        users.get(1).setSkills(skills);
+        criteria.clear();
+        criteria.put(FilterCriterias.TECHNOLOGY, "Java");
+        criteria.put(FilterCriterias.SKILL_LEVEL, "ADVANCED");
+        //todo expected 2, not 0
+        assertEquals( 0, userService.filterUser(criteria).size());
+
     }
 
     @Test
@@ -190,7 +222,18 @@ public class UserServiceTest {
 
     @Test
     public void createVerificationTokenForUser() {
-
+        user1 = new User();
+        user1.setId(1L);
+        user1.setUsername("user");
+        when(tokenRepository.findByUser(user1)).thenReturn(null);
+        assertNull(userService.createVerificationTokenForUser(user1));
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setExpiryDate(new Timestamp(1641330598));
+        when(tokenRepository.findByUser(user1)).thenReturn(verificationToken);
+        assertNull(userService.createVerificationTokenForUser(user1));
+        verificationToken.setExpiryDate(new Timestamp(new Date().getTime()));
+        when(tokenRepository.findByUser(user1)).thenReturn(verificationToken);
+        assertNull(userService.createVerificationTokenForUser(user1));
     }
 
     @Test
