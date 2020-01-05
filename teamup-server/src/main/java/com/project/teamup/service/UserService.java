@@ -14,6 +14,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import javax.validation.Valid;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -143,7 +144,6 @@ public class UserService {
                 .distinct()
                 .collect(Collectors.toList());
     }
-
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

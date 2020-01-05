@@ -1,33 +1,34 @@
 <form [formGroup]="technicalInfoForm">
-    <mat-label>Seniority</mat-label>
+
     <teamup-user-seniority formControlName="seniority"></teamup-user-seniority>
 
-    <mat-label>Location</mat-label>
     <teamup-location formControlName="location"></teamup-location>
 
-    <mat-label>Company</mat-label>
     <teamup-company formControlName="company"></teamup-company>
 
-    <mat-label>Skills</mat-label>
-    <div formArrayName="skills"
-         *ngFor="let skill of technicalInfoForm.get('skills').controls; let i = index;">
+    <h4>Skills</h4>
+    <div formArrayName="skills" *ngFor="let skill of technicalInfoForm.get('skills').controls; let i = index;">
         <div [formGroupName]="i">
             <teamup-user-skill [formControl]="skill"></teamup-user-skill>
         </div>
-        <button (click)="addSkill()">Add skill</button>
-        <button (click)="removeSkill(i)" *ngIf="technicalInfoForm.get('skills').controls.length >1">Remove skill</button>
+        <mat-card-actions class="add-button">
+            <button mat-raised-button color="primary" (click)="addSkill()">Add skill</button>
+            <button mat-raised-button (click)="removeSkill(i)"
+                *ngIf="technicalInfoForm.get('skills').controls.length >1"> Remove skill </button>
+        </mat-card-actions>
     </div>
     <br>
-
-    <mat-label>Project Experience</mat-label>
+    <h4>Project experience</h4>
     <div formArrayName="projectExperiences"
-         *ngFor="let exp of technicalInfoForm.get('projectExperiences').controls; let i = index;">
+        *ngFor="let exp of technicalInfoForm.get('projectExperiences').controls; let i = index;">
         <div [formGroupName]="i">
-            <teamup-project-experience [formControl]="exp" ></teamup-project-experience>
+            <teamup-project-experience [formControl]="exp"></teamup-project-experience>
         </div>
-        <button (click)="addProjectExperience()">Add project experience</button>
-        <button (click)="removeProjectExperience(i)" *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1">Remove project experience</button>
+        <mat-card-actions class="add-button">
+            <button mat-raised-button color="primary" (click)="addProjectExperience()">Add project experience</button>
+            <button mat-raised-button (click)="removeProjectExperience(i)"
+                *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1"> Remove project experience
+            </button>
+        </mat-card-actions>
     </div>
-
-    <br>
 </form>

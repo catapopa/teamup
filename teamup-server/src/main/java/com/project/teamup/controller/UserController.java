@@ -7,7 +7,6 @@ import com.project.teamup.model.User;
 import com.project.teamup.model.UserLanguage;
 import com.project.teamup.model.UserStatus;
 import com.project.teamup.service.EmailService;
-import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,7 +81,7 @@ public class UserController {
                 .orElse(null);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public UserDTO findByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username)
                 .map(user -> userMapper.toDto(user))

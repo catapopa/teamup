@@ -1,4 +1,4 @@
-export interface TechnologyArea{
-    id : number,
-    name : string
+export interface TechnologyArea {
+  id: number;
+  name: string;
 }
