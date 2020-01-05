@@ -103,15 +103,27 @@ public class UserService {
                             .filter(user -> String.valueOf(user.getSeniority()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
                 case TECHNOLOGY: {
-                    List<User> users = getAll();
-                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
-                    userList.addAll(users);
+                    for (User user : getAll()) {
+                        if (user.getSkills() != null) {
+                            for (UserSkill skill : user.getSkills()) {
+                                if (String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                                    userList.add(user);
+                                }
+                            }
+                        }
+                    }
                     break;
                 }
                 case SKILL_LEVEL: {
-                    List<User> users = getAll();
-                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
-                    userList.addAll(users);
+                    for (User user : getAll()) {
+                        if (user.getSkills() != null) {
+                            for (UserSkill skill : user.getSkills()) {
+                                if (String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                                    userList.add(user);
+                                }
+                            }
+                        }
+                    }
                     break;
                 }
                 case LOCATION:
@@ -131,6 +143,7 @@ public class UserService {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
