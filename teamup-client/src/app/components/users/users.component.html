@@ -19,6 +19,23 @@
 				<mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
 				<mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
 			</ng-container>
+			<ng-container matColumnDef="company">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.company.name}}</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="location">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>Location</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.location.country}}, {{row.location.state}}, {{row.location.city}}
+				</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="menu" align="end">
+				<mat-header-cell *matHeaderCellDef></mat-header-cell>
+				<mat-cell id="menu" class="cn-table-action" *matCellDef="let row" (click)="$event.stopPropagation()">
+					<button mat-icon-button (click)="delete(row)" aria-label="menu">
+						<mat-icon matTooltip="Delete">delete</mat-icon>
+					</button>
+				</mat-cell>
+			</ng-container>
 
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getDetails(row)"></mat-row>

@@ -1,8 +1,8 @@
-import {Technology} from "./technology";
-import {UserSkillLevel} from "./userSkillLevel";
+import { Technology } from './technology';
+import { UserSkillLevel } from './userSkillLevel';
 
 export interface UserSkill {
-    id : number,
-    technology : Technology,
-    level : UserSkillLevel
+  id: number;
+  technology: Technology;
+  level: UserSkillLevel;
 }

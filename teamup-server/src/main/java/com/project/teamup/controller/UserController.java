@@ -81,7 +81,7 @@ public class UserController {
                 .orElse(null);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public UserDTO findByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username)
                 .map(user -> userMapper.toDto(user))

@@ -1,6 +1,5 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {map} from "rxjs/operators";
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 
 @Component({
     selector: 'teamup-picture',
@@ -20,7 +19,7 @@ export class PictureComponent implements OnInit, ControlValueAccessor {
     constructor(formBuilder: FormBuilder) {
         this.pictureForm = formBuilder.group({
             blob: new FormControl('', [Validators.required])
-        })
+        });
     }
 
     ngOnInit() {
@@ -28,7 +27,7 @@ export class PictureComponent implements OnInit, ControlValueAccessor {
 
     processFile(imageInput: any) {
         const file: File = imageInput.files[0];
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
             this.pictureForm.get('blob').setValue(reader.result.toString());
@@ -38,10 +37,10 @@ export class PictureComponent implements OnInit, ControlValueAccessor {
     onTouched: any = () => { };
 
     writeValue(val: any): void {
-        val && this.pictureForm.setValue(val, {emitEvent:false});
+        val && this.pictureForm.setValue(val, { emitEvent: false });
     }
     registerOnChange(fn: any): void {
-        this.pictureForm.valueChanges.subscribe(fn)
+        this.pictureForm.valueChanges.subscribe(fn);
     }
     registerOnTouched(fn: any): void {
         this.onTouched = fn;

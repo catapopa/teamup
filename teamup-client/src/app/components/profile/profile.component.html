@@ -1,12 +1,22 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<mat-card class="profile-card mat-elevation-z8">
+	<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-	<mat-label>Basic Info</mat-label>
-	<teamup-basic-user-info formControlName="basicInfo"></teamup-basic-user-info>
+		<mat-card-header>
+			<mat-card-title>Personal details</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<teamup-basic-user-info formControlName="basicInfo"></teamup-basic-user-info>
+		</mat-card-content>
 
-	<mat-label>Technical Info</mat-label>
-	<teamup-technical-user-info formControlName="technicalInfo"></teamup-technical-user-info>
+		<mat-card-header>
+			<mat-card-title>Technical details</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<teamup-technical-user-info formControlName="technicalInfo"></teamup-technical-user-info>
+		</mat-card-content>
 
-	<!--[disabled]="this.profileForm.invalid"-->
-	<button type="submit" >Save</button>
-
-</form>
+		<mat-card-actions class="save">
+			<button mat-raised-button color="primary" type="submit">Save</button>
+		</mat-card-actions>
+	</form>
+</mat-card>

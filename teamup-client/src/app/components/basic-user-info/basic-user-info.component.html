@@ -1,4 +1,7 @@
 <form [formGroup]="basicInfoForm">
+
+    <teamup-picture formControlName="picture"></teamup-picture>
+    
     <mat-form-field>
         <input matInput placeholder="First name" formControlName="firstName" required>
     </mat-form-field>
@@ -21,6 +24,4 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <teamup-picture formControlName="picture"></teamup-picture>
-
 </form>
