@@ -2,10 +2,7 @@ package com.project.teamup.service;
 
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.dao.VerificationTokenRepository;
-import com.project.teamup.model.FilterCriterias;
-import com.project.teamup.model.User;
-import com.project.teamup.model.UserRole;
-import com.project.teamup.model.VerificationToken;
+import com.project.teamup.model.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
@@ -237,5 +233,24 @@ public class UserService {
             return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    /**
+     * Admin creates a new username and password for a
+     * new account of an employee.
+     * @param user the new created user
+     * @throws Exception if the username is not unique
+     * @author Sonya
+     * */
+    public User createNewAccount(User user) throws Exception{
+        if(!userRepository.findByUsername(user.getUsername()).isPresent()) {
+            mailService.sendEmailNewAccount(user);
+            String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+            return userRepository.save(user);
+        }
+        else{
+            throw new Exception("This username already exists!");
+        }
     }
 }
