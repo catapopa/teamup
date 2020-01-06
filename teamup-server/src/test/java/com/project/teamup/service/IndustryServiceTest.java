@@ -47,7 +47,7 @@ public class IndustryServiceTest {
         when(industryRepository.findAll()).thenReturn(industries);
         assertEquals(2, industryService.getAll().size());
 
-        Industry industry3 = new Industry();
+        Industry industry3 = new Industry(1L, "industry");
         industries.add(industry3);
         assertNotEquals(2, industryService.getAll().size());
     }

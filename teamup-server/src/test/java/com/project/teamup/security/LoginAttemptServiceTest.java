@@ -91,6 +91,5 @@ public class LoginAttemptServiceTest {
         assertThrows(UsernameNotFoundException.class, () -> {
             loginAttemptService.isBlocked(Optional.empty());
         });
-
     }
 }

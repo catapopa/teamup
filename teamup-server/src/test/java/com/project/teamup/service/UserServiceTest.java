@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -296,6 +297,28 @@ public class UserServiceTest {
         user1.setRole(UserRole.SUPERVISOR);
         when(userRepository.findUsersBySupervisorId(1L)).thenReturn(Optional.of(assignedUsers));
         assertEquals(2, userService.getAssignedUsers(1L).get().size());
+    }
+
+    @Test
+    public void createNewAccount() throws Exception {
+        User invalidUser = new User();
+        invalidUser.setId(1L);
+        invalidUser.setUsername("invalid");
+
+        when(userRepository.findByUsername("invalid")).thenReturn(Optional.of(invalidUser));
+        assertThrows(Exception.class, () -> {
+            userService.createNewAccount(invalidUser);
+        });
+
+        User goodUser = new User();
+        goodUser.setId(2L);
+        goodUser.setUsername("admin");
+        goodUser.setPassword("password");
+
+        when(userRepository.findByUsername("admin")).thenReturn(Optional.empty());
+        when(bCryptPasswordEncoder.encode(any())).thenReturn("encr pass");
+        userService.createNewAccount(goodUser);
+        Mockito.verify(userRepository, times(1)).save(any());
     }
 
     private Blob mockBlob(){
