@@ -219,7 +219,7 @@ public class MailService {
         USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated"),
         USER_NEW_ACCOUNT_DE("html/newAccountDe", "Neues Konto TeamUp"),
         USER_NEW_ACCOUNT_RO("html/newAccountRo", "Cont nou TeamUp"),
-        USER_NEW_ACCOUNT_EN("html/newAccountEn", "New account TeamUp");
+        USER_NEW_ACCOUNT_EN("html/newAccountEn", "New account TeamUp"),
         PROFILE_CREATION_DE("html/createdProfileDe", "Neues Mitarbeiter Konto Erstellung"),
         PROFILE_CREATION_EN("html/createdProfileEn", "New employee profile creation"),
         PROFILE_CREATION_RO("html/createdProfileRo", "Creare profil angajat nou");
