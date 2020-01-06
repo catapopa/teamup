@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -102,7 +101,7 @@ public class UserService {
                             .filter(user -> String.valueOf(user.getSeniority())
                                     .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
-                case TECHNOLOGY: {
+                case TECHNOLOGY:
                     for (User user : getAll()) {
                         if ( user.getSkills()
                             != null) {
@@ -115,8 +114,7 @@ public class UserService {
                         }
                     }
                     break;
-                }
-                case SKILL_LEVEL: {
+                case SKILL_LEVEL:
                     for (User user : getAll()) {
                         if ( user.getSkills()
                             != null) {
@@ -129,7 +127,6 @@ public class UserService {
                         }
                     }
                     break;
-                }
                 case LOCATION:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getLocation() != null)

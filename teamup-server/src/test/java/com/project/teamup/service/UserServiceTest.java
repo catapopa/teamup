@@ -3,6 +3,7 @@ package com.project.teamup.service;
 import com.project.teamup.dao.UserRepository;
 import com.project.teamup.dao.VerificationTokenRepository;
 import com.project.teamup.model.*;
+import com.project.teamup.security.LoginAttemptService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -39,6 +40,9 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private LoginAttemptService loginAttemptService;
 
     @Mock
     private VerificationTokenRepository tokenRepository;
@@ -143,9 +147,10 @@ public class UserServiceTest {
         users.get(0).setLanguage(UserLanguage.ROMANIAN);
         when(userRepository.findAll()).thenReturn(users);
         assertEquals(1, userService.filterUser(criteria).size());
-        users.get(0).setLocation(new Location(1L, "Romania", "Transilvania", "Cluj-Napoca"));
+        Location location = new Location(1L, "Romania", "Transilvania", "Cluj-Napoca");
+        users.get(0).setLocation(location);
         User user2 = new User();
-        user2.setLocation(new Location(1L, "Romania", "Transilvania", "Cluj-Napoca"));
+        user2.setLocation(location);
         user2.setRole(UserRole.ADMIN);
         users.add(user2);
         when(userRepository.findAll()).thenReturn(users);
@@ -155,17 +160,22 @@ public class UserServiceTest {
         criteria.clear();
         criteria.put(FilterCriterias.SENIORITY,"JUNIOR_CONSULTANT");
         assertEquals( 1, userService.filterUser(criteria).size());
-        Technology technology = new Technology(1L, "Java", new TechnologyArea(1L,"Technology Area" ));
+
+        User newUser = new User();
+        newUser.setId(6L);
+        newUser.setUsername("admin");
+        Technology technology = new Technology(4L, "JAVA", new TechnologyArea(1L,"Technology Area" ));
         List<UserSkill> skills = new ArrayList<>();
         skills.add(new UserSkill(1L, users.get(0), technology, UserSkillLevel.ADVANCED));
-        users.get(0).setSkills(skills);
-        users.get(1).setSkills(skills);
+        newUser.setSkills(skills);
+        users.clear();
+        users.add(newUser);
+        when(userRepository.findAll()).thenReturn(users);
         criteria.clear();
-        criteria.put(FilterCriterias.TECHNOLOGY, "Java");
+        criteria.put(FilterCriterias.TECHNOLOGY, "JAVA");
+        assertEquals( 1, userService.filterUser(criteria).size());
         criteria.put(FilterCriterias.SKILL_LEVEL, "ADVANCED");
-        //todo expected 2, not 0
-        assertEquals( 0, userService.filterUser(criteria).size());
-
+        assertEquals( 1, userService.filterUser(criteria).size());
     }
 
     @Test
