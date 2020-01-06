@@ -58,7 +58,6 @@ public class MailService {
         return mimeMessageHelper;
     }
 
-
     /**
      * Sends an email to the blocked user when
      * an admin generates a new password for him.
@@ -102,6 +101,50 @@ public class MailService {
     }
 
     /**
+     * Sends an email to the supervisor when an employee has
+     * created his profile, so that he can validate/invalidate
+     * it.
+     *
+     * @param user the user who has created his
+     *                        profile
+     * @param urlProfile the link where the superviser can
+     *                   access the new created profile
+     * */
+    //TODO call this method when a profile is created
+    void sendEmailProfileCreated(User user, String urlProfile){
+        Map<String, Object> variables = new HashMap<>();
+        User supervisor = user.getSupervisor();
+        List<String> recipients = Lists.newArrayList(supervisor.getEmail());
+        variables.put("firstName", supervisor.getFirstName());
+        variables.put("lastName", supervisor.getLastName());
+        variables.put("username", user.getUsername());
+        variables.put("email", user.getEmail());
+        variables.put("employeeLink", urlProfile);
+        EmailType emailType = EmailType.PROFILE_CREATION_EN; //default language
+        UserLanguage language = supervisor.getLanguage();
+        if(language != null) {
+            switch (language) {
+                case GERMAN:
+                    emailType = EmailType.PROFILE_CREATION_DE;
+                    break;
+                case ENGLISH:
+                    emailType = EmailType.PROFILE_CREATION_EN;
+                    break;
+                case ROMANIAN:
+                    emailType = EmailType.PROFILE_CREATION_RO;
+                    break;
+            }
+        }
+        try {
+            MimeMessageHelper message = generateMimeMessage(emailType.template, emailType.getSubject(),
+                    recipients,variables);
+            mailSender.send(message.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    /**
      * Sends the email to an admin when a user's account
      * has been deactivated to inform him that he has to
      * generate a new password for him.
@@ -111,8 +154,7 @@ public class MailService {
      * @param admin the admin who has to generate
      *              a new password for the user
      * */
-    //TODO call this method when a user's account is deactivated!!!
-    void sendEmailDeactivation(User admin, User blockedUser){
+    public void sendEmailDeactivation(User admin, User blockedUser){
         Map<String, Object> variables = new HashMap<>();
         List<String> recipients = Lists.newArrayList(admin.getEmail());
         variables.put("firstName", admin.getFirstName());
@@ -153,7 +195,10 @@ public class MailService {
         USER_ACTIVATION_RO("html/activationMailRo","Confirmare activare cont"),
         USER_DEACTIVATION_DE("html/deactivationMailDe","Konto deaktiviert"),
         USER_DEACTIVATION_RO("html/deactivationMailRo","Cont dezactivat"),
-        USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated");
+        USER_DEACTIVATION_EN("html/deactivationMailEn","Account deactivated"),
+        PROFILE_CREATION_DE("html/createdProfileDe", "Neues Mitarbeiter Konto Erstellung"),
+        PROFILE_CREATION_EN("html/createdProfileEn", "New employee profile creation"),
+        PROFILE_CREATION_RO("html/createdProfileRo", "Creare profil angajat nou");
 
         private String template;
         private String subject;
