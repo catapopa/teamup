@@ -80,7 +80,8 @@ public class UserService {
         if (user.getProjectExperiences().size() != 0) {
             userToUpdate.setProjectExperiences(user.getProjectExperiences());
         }
-
+        //TODO PUT THE CORRECT URL HERE!! correct url??
+        mailService.sendEmailProfileCreated(userToUpdate,"http://localhost:4200/");
         return userRepository.save(userToUpdate);
     }
 
@@ -236,5 +237,24 @@ public class UserService {
             return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    /**
+     * Admin creates a new username and password for a
+     * new account of an employee.
+     * @param user the new created user
+     * @throws Exception if the username is not unique
+     * @author Sonya
+     * */
+    public User createNewAccount(User user) throws Exception{
+        if(!userRepository.findByUsername(user.getUsername()).isPresent()) {
+            mailService.sendEmailNewAccount(user);
+            String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+            return userRepository.save(user);
+        }
+        else{
+            throw new Exception("This username already exists!");
+        }
     }
 }

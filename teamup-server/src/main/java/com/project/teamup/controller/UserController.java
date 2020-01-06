@@ -125,4 +125,21 @@ public class UserController {
                 .map(list -> userMapper.toDtoList(list))
                 .orElse(null);
     }
+
+    /**
+     * Admin sends a new username, password and email
+     * for a new account and the new employee
+     * receives an email with them.
+     * @author Sonya
+     * */
+    @PostMapping(value = "/createAccount")
+    public ResponseEntity createAccount(@RequestBody UserDTO user) {
+        try {
+            return ResponseEntity.ok(userMapper.toDto(userService.createNewAccount(userMapper.toEntity(user))));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
+    }
 }
