@@ -1,0 +1,34 @@
+<form [formGroup]="form">
+    <mat-card class="invite-card">
+        <mat-card-content>
+            <div class="form-group">
+                <mat-form-field>
+                    <input matInput placeholder="Username:"
+                           formControlName="username">
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field>
+                    <input matInput type="email" placeholder="Email"
+                           required
+                           formControlName="email">
+                    <mat-error *ngIf="form.get('email').invalid">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select [(value)]="role" placeholder="Role:">
+                        <mat-option *ngFor="let role of roles" [value]="role"> {{role}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" (click)="save()">Save</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
