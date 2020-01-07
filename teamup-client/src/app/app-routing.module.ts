@@ -12,11 +12,11 @@ const homeRoutes: Routes = [
   {
     path: 'users', component: UsersComponent
   },
-  {
-    path: '',
-    redirectTo: 'profile',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   redirectTo: 'profile',
+  //   pathMatch: 'full',
+  // },
 ];
 
 const routes: Routes = [
