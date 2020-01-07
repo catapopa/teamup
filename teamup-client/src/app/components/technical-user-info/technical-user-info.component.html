@@ -1,0 +1,34 @@
+<form [formGroup]="technicalInfoForm">
+
+    <teamup-user-seniority formControlName="seniority"></teamup-user-seniority>
+
+    <teamup-location formControlName="location"></teamup-location>
+
+    <teamup-company formControlName="company"></teamup-company>
+
+    <h4>Skills</h4>
+    <div formArrayName="skills" *ngFor="let skill of technicalInfoForm.get('skills').controls; let i = index;">
+        <div [formGroupName]="i">
+            <teamup-user-skill [formControl]="skill"></teamup-user-skill>
+        </div>
+        <mat-card-actions class="add-button">
+            <button mat-raised-button color="primary" (click)="addSkill()">Add skill</button>
+            <button mat-raised-button (click)="removeSkill(i)"
+                *ngIf="technicalInfoForm.get('skills').controls.length >1"> Remove skill </button>
+        </mat-card-actions>
+    </div>
+    <br>
+    <h4>Project experience</h4>
+    <div formArrayName="projectExperiences"
+        *ngFor="let exp of technicalInfoForm.get('projectExperiences').controls; let i = index;">
+        <div [formGroupName]="i">
+            <teamup-project-experience [formControl]="exp"></teamup-project-experience>
+        </div>
+        <mat-card-actions class="add-button">
+            <button mat-raised-button color="primary" (click)="addProjectExperience()">Add project experience</button>
+            <button mat-raised-button (click)="removeProjectExperience(i)"
+                *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1"> Remove project experience
+            </button>
+        </mat-card-actions>
+    </div>
+</form>

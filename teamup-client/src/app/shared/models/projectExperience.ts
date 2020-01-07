@@ -1,8 +1,8 @@
-import {Project} from "./project";
+import { Project } from './project';
 
-export interface ProjectExperience{
-    project: Project,
-    startDate: Date,
-    endDate: Date,
-    description: string
+export interface ProjectExperience {
+  project: Project;
+  startDate: Date;
+  endDate: Date;
+  description: string;
 }

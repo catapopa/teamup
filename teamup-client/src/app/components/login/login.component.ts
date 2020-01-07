@@ -34,10 +34,6 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    /* *
-     * Log in the user with a username and a password.
-     *
-     * */
     login() {
         this.username = this.form.get('username').value;
         this.password = this.form.get('password').value;

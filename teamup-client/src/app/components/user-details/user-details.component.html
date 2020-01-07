@@ -1,0 +1,30 @@
+<div class="table-wrapper">
+
+  <div mat-dialog-title>
+    Technology
+
+    <button mat-icon-button mat-dialog-close class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="area">
+        <mat-header-cell *matHeaderCellDef>Area</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.technology.area.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.technology.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="level">
+        <mat-header-cell *matHeaderCellDef>Level</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.level}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+</div>

@@ -287,3 +287,14 @@ databaseChangeLog:
               - column:
                   name: expiry_date
                   type: DATE
+
+  - changeSet:
+      id: 6
+      author: cristi
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+            tableName: users

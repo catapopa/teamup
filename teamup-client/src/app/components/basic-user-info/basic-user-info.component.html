@@ -1,0 +1,27 @@
+<form [formGroup]="basicInfoForm">
+
+    <teamup-picture formControlName="picture"></teamup-picture>
+    
+    <mat-form-field>
+        <input matInput placeholder="First name" formControlName="firstName" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Last name" formControlName="lastName" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email" required>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Date of birth" formControlName="birthDate" required [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Language</mat-label>
+        <mat-select formControlName="language">
+            <mat-option *ngFor="let key of keys" [value]="language[key]">
+                {{language[key]}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

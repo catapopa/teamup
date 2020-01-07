@@ -1,5 +1,5 @@
-export enum UserSkillLevel{
-    BEGINNER,
-    INTERMEDIATE,
-    ADVANCED
+export enum UserSkillLevel {
+  BEGINNER = 'BEGINNER',
+  INTERMEDIATE = 'INTERMEDIATE',
+  ADVANCED = 'ADVANCED'
 }

@@ -1,4 +1,4 @@
 export interface Industry {
-    id: number,
-    name: string
+    id: number;
+    name: string;
 }

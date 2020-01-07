@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
+
     constructor() { }
-    intercept(req: HttpRequest<any>, next: HttpHandler) {
-        if (sessionStorage.getItem('token')) {
-            req = req.clone({
-                setHeaders: {
-                    Authorization: sessionStorage.getItem('token'),
-                    'Access-Control-Allow-Origin': 'http://localhost:4200/',
-                    'Access-Control-Allow-Methods': '*',
-                    'Access-Control-Allow-Headers': '*',
-                    'Access-Control-Expose-Headers': 'Authorization'
-                }
+
+    intercept(req: HttpRequest<any>,
+        next: HttpHandler): Observable<HttpEvent<any>> {
+
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            const cloned = req.clone({
+                headers: req.headers.set('Authorization', token)
             });
+
+            return next.handle(cloned);
+        } else {
+            return next.handle(req);
         }
-        return next.handle(req);
     }
 }

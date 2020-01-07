@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Salut, '"></span>
+</p>
+<p>Un cont nou &#238;n aplica&#539;ia TeamUp a fost creat pentru tine cu urm&#259;toarele crediten&#539;iale: </p>
+<p>
+    <span th:text="'Nume utilizator: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Parol&#259;: ' + ${password}"></span>
+</p>
+<p>&#206;&#539;i sugerez s&#259; te loghezi &#238;n aplica&#539;ie &#351;i s&#259; i&#539;i completezi profilul c&acirc;t
+    de repede posibil d&acirc;nd click <a th:href="@{${link}}">aici</a>.</p>
+<p>
+</p>
+<p>O zi frumoas&#259;,</p>
+<p>
+    Echipa TeamUp
+</p>
+</body>
+</html>

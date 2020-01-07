@@ -1,18 +1,22 @@
-<a>profile works!</a>
+<mat-card class="profile-card mat-elevation-z8">
+	<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-<!-- <form [formGroup]="profileForm">
-	<mat-form-field>
-		<input matInput placeholder="First name" formControlName="firstName" required>
-	</mat-form-field>
-	<mat-form-field>
-		<input matInput placeholder="Last name" formControlName="lastName" required>
-	</mat-form-field>
-	<mat-form-field>
-		<input matInput placeholder="Email" formControlName="email" required>
-	</mat-form-field>
-	<mat-form-field>
-		<input matInput placeholder="Date of birth" formControlName="birthDate" required>
-	</mat-form-field>
+		<mat-card-header>
+			<mat-card-title>Personal details</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<teamup-basic-user-info formControlName="basicInfo"></teamup-basic-user-info>
+		</mat-card-content>
 
-	<teamup-company formControlName="company"></teamup-company>
-</form> -->
+		<mat-card-header>
+			<mat-card-title>Technical details</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<teamup-technical-user-info formControlName="technicalInfo"></teamup-technical-user-info>
+		</mat-card-content>
+
+		<mat-card-actions class="save">
+			<button mat-raised-button color="primary" type="submit">Save</button>
+		</mat-card-actions>
+	</form>
+</mat-card>
