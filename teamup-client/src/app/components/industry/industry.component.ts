@@ -21,7 +21,7 @@ export class IndustryComponent implements OnInit, ControlValueAccessor {
 
   constructor(private industryService: IndustryService, formBuilder: FormBuilder) {
     this.industryForm = formBuilder.group({
-      industry: new FormControl('', [Validators.required])
+      industry: new FormControl(null, [Validators.required])
     });
   }
 
@@ -38,7 +38,9 @@ export class IndustryComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    val && this.industryForm.setValue(val, { emitEvent: false });
+    val && this.industryForm.setValue({
+      industry: val
+    });
   }
   registerOnChange(fn: any): void {
     this.industryForm.valueChanges.subscribe(fn);

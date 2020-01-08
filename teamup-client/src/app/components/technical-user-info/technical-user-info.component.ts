@@ -67,7 +67,6 @@ export class TechnicalUserInfoComponent implements OnInit, ControlValueAccessor 
     if(val=== null){
       return;
     }
-    console.log(val, this.technicalInfoForm);
     const nrOfSkills = val.skills.length;
     for(let i=1; i<nrOfSkills; i++){
       this.addSkill();

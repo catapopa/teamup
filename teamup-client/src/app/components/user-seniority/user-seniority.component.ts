@@ -21,7 +21,7 @@ export class UserSeniorityComponent implements OnInit, ControlValueAccessor {
 
   constructor(formBuilder: FormBuilder) {
     this.userSeniorityForm = formBuilder.group({
-      seniority: new FormControl('',[Validators.required])
+      seniority: new FormControl(null,[Validators.required])
     });
   }
 
@@ -31,7 +31,6 @@ export class UserSeniorityComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    //val && this.userSeniorityForm.setValue(val, {emitEvent:false});
     val && this.userSeniorityForm.get('seniority').setValue(val);
   }
   registerOnChange(fn: any): void {

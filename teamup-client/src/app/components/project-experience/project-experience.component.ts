@@ -20,10 +20,10 @@ export class ProjectExperienceComponent implements OnInit,ControlValueAccessor {
 
   constructor(private formBuilder: FormBuilder) {
     this.projectExperienceForm = formBuilder.group({
-      project: new FormControl('', [Validators.required]),
-      startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      project: new FormControl(null, [Validators.required]),
+      startDate: new FormControl(null, [Validators.required]),
+      endDate: new FormControl(null, [Validators.required]),
+      description: new FormControl(null, [Validators.required])
     })
   }
 
@@ -36,7 +36,12 @@ export class ProjectExperienceComponent implements OnInit,ControlValueAccessor {
     if(projectExp === null){
       return;
     }
-    console.log(projectExp);
+    this.projectExperienceForm.setValue({
+      project: projectExp.project,
+      startDate: projectExp.startDate,
+      endDate: projectExp.endDate,
+      description: projectExp.description
+    })
   }
   registerOnChange(fn: any): void {
     this.projectExperienceForm.valueChanges.subscribe(fn)

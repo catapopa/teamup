@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
       };
       this.profileForm.get('basicInfo').setValue(basicInfo);
       //this.profileForm.get('technicalInfo').setValue(technicalInfo)
-      console.log(this.profileForm.get('technicalInfo').setValue(technicalInfo));
+      this.profileForm.get('technicalInfo').setValue(technicalInfo);
     })
   }
 

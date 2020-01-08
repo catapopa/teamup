@@ -31,6 +31,9 @@ export class UserSkillLevelComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
+    if(val ===null){
+      return;
+    }
     this.userSkillLevelForm.setValue({
       level: val
     });
