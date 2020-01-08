@@ -21,12 +21,12 @@ export class BasicUserInfoComponent implements OnInit, ControlValueAccessor {
 
   constructor(private formBuilder: FormBuilder) {
     this.basicInfoForm = formBuilder.group({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      birthDate: new FormControl('', [Validators.required]),
-      picture: new FormControl('', [Validators.required]),
-      language: new FormControl('', [Validators.required]),
+      firstName: new FormControl(null, [Validators.required]),
+      lastName: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required]),
+      birthDate: new FormControl(null, [Validators.required]),
+      picture: new FormControl(null, [Validators.required]),
+      language: new FormControl(null, [Validators.required]),
     })
   }
 

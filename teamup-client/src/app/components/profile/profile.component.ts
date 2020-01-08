@@ -7,6 +7,7 @@ import { ProjectExperience } from '../../shared/models/projectExperience';
 import { Technology } from '../../shared/models/technology';
 import { Project } from '../../shared/models/project';
 import { UserExperience } from '../../shared/models/userExperience';
+import {AuthService} from "../../core/authentication/auth.service";
 
 @Component({
   selector: 'teamup-profile',
@@ -15,16 +16,39 @@ import { UserExperience } from '../../shared/models/userExperience';
 })
 export class ProfileComponent implements OnInit {
 
+  currentUser: User;
   profileForm: FormGroup;
 
-  constructor(private userService: UserService, formBuilder: FormBuilder) {
+  constructor(private userService: UserService, formBuilder: FormBuilder, private authService: AuthService) {
     this.profileForm = formBuilder.group({
-      basicInfo: new FormControl('', [Validators.required]),
-      technicalInfo: new FormControl('', [Validators.required]),
+      basicInfo: new FormControl(null, [Validators.required]),
+      technicalInfo: new FormControl(null, [Validators.required]),
     });
   }
 
   ngOnInit() {
+    const id = this.authService.getId();
+    this.userService.getById(id).subscribe(data=>{
+      this.currentUser = data as User;
+      const basicInfo ={
+        firstName: this.currentUser.firstName,
+        lastName: this.currentUser.lastName ,
+        email: this.currentUser.email,
+        birthDate: this.currentUser.birthDate,
+        picture: this.currentUser.picture,
+        language: this.currentUser.language,
+      };
+      const technicalInfo ={
+        location: this.currentUser.location,
+        seniority: this.currentUser.seniority,
+        company: this.currentUser.company,
+        skills: [...this.currentUser.skills],
+        projectExperiences: [...this.currentUser.projectExperiences]
+      };
+      this.profileForm.get('basicInfo').setValue(basicInfo);
+      //this.profileForm.get('technicalInfo').setValue(technicalInfo)
+      console.log(this.profileForm.get('technicalInfo').setValue(technicalInfo));
+    })
   }
 
   public onSubmit() {
@@ -61,12 +85,12 @@ export class ProfileComponent implements OnInit {
         id: 0,
         name: skill.technology.techName,
         area: {
-          id: skill.technology.techArea.id ? skill.technology.techArea.id : 0,
-          name: skill.technology.techArea.name ? skill.technology.techArea.name : skill.technology.techArea.techArea
+          id: skill.technology.techArea.techArea.id ? skill.technology.techArea.techArea.id : 0,
+          name: skill.technology.techArea.techArea.name ? skill.technology.techArea.techArea.name : skill.technology.techArea.techArea
         }
       };
 
-      const skillLevel = skill.skillLevel.skillLevel;
+      const skillLevel = skill.level.level;
 
       const userSkill: UserSkill = {
         id: 0,
@@ -94,8 +118,8 @@ export class ProfileComponent implements OnInit {
         name: projectExp.project.name,
         description: projectExp.project.description,
         industry: {
-          id: projectExp.project.industry.id ? projectExp.project.industry.id : 0,
-          name: projectExp.project.industry.name ? projectExp.project.industry.name : projectExp.project.industry.industry,
+          id: projectExp.project.industry.industry.id ? projectExp.project.industry.industry.id : 0,
+          name: projectExp.project.industry.industry.name ? projectExp.project.industry.industry.name : projectExp.project.industry.industry,
         },
         company: {
           id: projectExp.project.company.company.id ? projectExp.project.company.company.id : 0,

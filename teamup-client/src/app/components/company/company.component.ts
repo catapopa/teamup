@@ -38,12 +38,11 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    val && this.companyForm.setValue(val, { emitEvent: false });
+    //val && this.companyForm.setValue(val, { emitEvent: false });
+    val && this.companyForm.get('company').setValue(val);
   }
   registerOnChange(fn: any): void {
-    this.companyForm.valueChanges
-      // .pipe(map(company=>{}))
-      .subscribe(fn);
+    this.companyForm.valueChanges.subscribe(fn);
   }
   registerOnTouched(fn: any): void {
     this.onTouched = fn;

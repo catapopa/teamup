@@ -1,6 +1,7 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
 import {Project} from "../../shared/models/project";
+import {ProjectExperience} from "../../shared/models/projectExperience";
 
 @Component({
   selector: 'teamup-project-experience',
@@ -31,8 +32,11 @@ export class ProjectExperienceComponent implements OnInit,ControlValueAccessor {
 
   onTouched: any = () => { };
 
-  writeValue(val: any): void {
-    val && this.projectExperienceForm.setValue(val, {emitEvent:false});
+  writeValue(projectExp: ProjectExperience): void {
+    if(projectExp === null){
+      return;
+    }
+    console.log(projectExp);
   }
   registerOnChange(fn: any): void {
     this.projectExperienceForm.valueChanges.subscribe(fn)
