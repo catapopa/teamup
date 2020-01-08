@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserLogin } from '../../shared/models/userLogin';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from "@auth0/angular-jwt";
 // Ignore cause:
 // This module is declared with using 'export =', and can only be used with a default
 // import when using the 'allowSyntheticDefaultImports' flag.
@@ -21,6 +21,7 @@ export class AuthService {
   public login(user: UserLogin) {
     this.http.post<any>(this.url + '/authenticate', user).subscribe(async (data) => {
       localStorage.setItem('token', 'Bearer ' + data.jwtToken);
+      localStorage.setItem('currentUser', JSON.stringify(user.username));
       this.router.navigate(['home']);
     });
   }
