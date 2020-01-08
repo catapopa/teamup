@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -64,9 +65,35 @@ public class User {
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    List<ProjectUserExperience> projectExperiences;
+    private List<ProjectUserExperience> projectExperiences;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<UserSkill> skills;
+
+    public void setProjectExperiences(List<ProjectUserExperience> projectExperiences) {
+        if (this.projectExperiences != null){
+            this.projectExperiences.clear();
+        }
+        if (projectExperiences != null){
+            if (this.projectExperiences != null){
+                this.projectExperiences.addAll(projectExperiences);
+            } else {
+                this.projectExperiences = new ArrayList<>(projectExperiences);
+            }
+        }
+    }
+
+    public void setSkills(List<UserSkill> skills) {
+        if (this.skills != null){
+            this.skills.clear();
+        }
+        if(skills != null){
+            if (this.skills != null){
+                this.skills.addAll(skills);
+            } else {
+                this.skills = new ArrayList<>(skills);
+            }
+        }
+    }
 }
