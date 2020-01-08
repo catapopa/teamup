@@ -1,7 +1,6 @@
 package com.project.teamup.service;
 
-import com.project.teamup.dao.UserRepository;
-import com.project.teamup.dao.VerificationTokenRepository;
+import com.project.teamup.dao.*;
 import com.project.teamup.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +24,16 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private IndustryRepository industryRepository;
+    @Autowired
+    private TechnologyAreaRepository technologyAreaRepository;
+    @Autowired
+    private TechnologyRepository technologyRepository;
     @Autowired
     private VerificationTokenRepository tokenRepository;
     @Autowired
@@ -131,6 +140,7 @@ public class UserService {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -223,5 +233,139 @@ public class UserService {
             return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    public User updateUser(User user, String picture) {
+        Optional<User> storedUser = userRepository.findById(user.getId());
+        User userToBeUpdated;
+
+        //can perform update only if user exists in db
+        if (storedUser.isPresent()) {
+            userToBeUpdated = storedUser.get();
+            userToBeUpdated.setFirstName(user.getFirstName());
+            userToBeUpdated.setLastName(user.getLastName());
+            userToBeUpdated.setBirthDate(user.getBirthDate());
+            userToBeUpdated.setPicture(user.getPicture());
+            userToBeUpdated.setEmail(user.getEmail());
+            userToBeUpdated.setLanguage(user.getLanguage());
+            userToBeUpdated.setRole(user.getRole());
+            userToBeUpdated.setSeniority(user.getSeniority());
+            userToBeUpdated.setStatus(user.getStatus());
+            userToBeUpdated.setLocation(user.getLocation());
+
+            if (picture != null && !picture.equals("")) {
+                byte[] userPicture = picture.getBytes();
+                userToBeUpdated.setPicture(userPicture);
+            }
+
+            //determine user company
+            persistUserCompany(user, userToBeUpdated);
+
+            //determine user project experience
+            userToBeUpdated.setProjectExperiences(determineUserProjectExperiences(user, userToBeUpdated));
+
+            //user skill
+            userToBeUpdated.setSkills(determineUserSkills(user, userToBeUpdated));
+
+            userRepository.save(userToBeUpdated);
+            return userToBeUpdated;
+        }
+        return null;
+    }
+
+    private List<UserSkill> determineUserSkills(User user, User userToBeUpdated) {
+        List<UserSkill> skillsToBeAddedToUser = new ArrayList<>();
+        if (user.getSkills() != null && !user.getSkills().isEmpty()) {
+            for (UserSkill userSkill : user.getSkills()) {
+                if (userSkill.getTechnology() != null) {
+                    if (userSkill.getTechnology().getArea() != null) {
+                        //check if area exists in the db; if not add it
+                        if (userSkill.getTechnology().getArea().getName() != null) {
+                            Optional<TechnologyArea> existingArea = technologyAreaRepository.findTechnologyAreaByName(userSkill.getTechnology().getArea().getName());
+                            if (existingArea.isPresent()) {
+                                userSkill.getTechnology().setArea(existingArea.get());
+                            } else {
+                                TechnologyArea addedArea = technologyAreaRepository.save(userSkill.getTechnology().getArea());
+                                userSkill.getTechnology().setArea(addedArea);
+                            }
+                        }
+                    }
+                    //check if technology exists in the db; if not add it
+                    Optional<Technology> existingTechnology = technologyRepository.findTechnologiesByNameAndArea(userSkill.getTechnology().getName(), userSkill.getTechnology().getArea());
+                    if (existingTechnology.isPresent()) {
+                        userSkill.setTechnology(existingTechnology.get());
+                    } else {
+                        Technology addedTechnology = technologyRepository.save(userSkill.getTechnology());
+                        userSkill.setTechnology(addedTechnology);
+                    }
+                }
+                userSkill.setUser(userToBeUpdated);
+                skillsToBeAddedToUser.add(userSkill);
+            }
+        }
+        return skillsToBeAddedToUser;
+    }
+
+    private List<ProjectUserExperience> determineUserProjectExperiences(User user, User userToBeUpdated) {
+        List<ProjectUserExperience> experiencesToBeAddedToUser = new ArrayList<>();
+        if (user.getProjectExperiences() != null && !user.getProjectExperiences().isEmpty()) {
+            for (ProjectUserExperience projectUserExperience : user.getProjectExperiences()) {
+                //check if project exists in the db; if not save it
+                if (projectUserExperience.getProject() != null) {
+                    if(projectUserExperience.getProject().getCompany() != null){
+                    //check if company is the same as user company (has new company has already been saved)
+                        if(projectUserExperience.getProject().getCompany().getName().equals(userToBeUpdated.getCompany().getName())){
+                            projectUserExperience.getProject().setCompany(userToBeUpdated.getCompany());
+                        }
+                        //else if it's a new company, store it in the db
+                        else if(projectUserExperience.getProject().getCompany().getId() == 0){
+                                Company addedCompany = companyRepository.save(projectUserExperience.getProject().getCompany());
+                                projectUserExperience.getProject().setCompany(addedCompany);
+                        }
+                    }
+
+                    //check if industry of project exists; if not add it
+                    if(projectUserExperience.getProject().getIndustry() != null) {
+                        if (projectUserExperience.getProject().getIndustry().getId() == 0) {
+                            Industry addedIndustry = industryRepository.save(projectUserExperience.getProject().getIndustry());
+                            projectUserExperience.getProject().setIndustry(addedIndustry);
+                        }
+                    }
+
+                    Optional<Project> existingProject = projectRepository.findProjectByName(projectUserExperience.getProject().getName());
+                    if (existingProject.isPresent()) {
+                        projectUserExperience.setProject(existingProject.get());
+                    } else {
+                        Project addedProject = projectRepository.save(projectUserExperience.getProject());
+                        projectUserExperience.setProject(addedProject);
+                    }
+                    projectUserExperience.setId(new ProjectUserId(projectUserExperience.getProject().getId(), userToBeUpdated.getId()));
+                    projectUserExperience.setUser(userToBeUpdated);
+                    experiencesToBeAddedToUser.add(projectUserExperience);
+                }
+            }
+        }
+        return experiencesToBeAddedToUser;
+    }
+
+    private void persistUserCompany(User user, User userToBeUpdated) {
+        if (user.getCompany() != null) {
+            //if it's a new company it must be saved in the db
+            if(user.getCompany().getId() == 0){
+                Company addedCompany = companyRepository.save(user.getCompany());
+                userToBeUpdated.setCompany(addedCompany);
+            }
+            else{
+                userToBeUpdated.setCompany(user.getCompany());
+            }
+        }
+    }
+
+    public User getUserByUsername(String username) {
+        Optional<User> storedUser = userRepository.findByUsername(username);
+        if (storedUser.isPresent()) {
+            return storedUser.get();
+        }
+        return null;
     }
 }
