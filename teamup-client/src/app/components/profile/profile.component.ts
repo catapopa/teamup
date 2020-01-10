@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       let currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
-      this.userService.getUserByUsername('getUserByUsername/', currentLoggedInUserName).subscribe(obj => {
+      this.userService.getUserByUsername('username/', currentLoggedInUserName).subscribe(obj => {
         this.currentLoggedInUser = obj;
         console.log(this.currentLoggedInUser.username);
         console.log(this.currentLoggedInUser.password)
