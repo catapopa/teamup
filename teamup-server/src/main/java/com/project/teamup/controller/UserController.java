@@ -135,7 +135,7 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/getUserByUsername/{username}")
+    @GetMapping(value = "/username/{username}")
     public UserDTO getUserByUsername(@PathVariable String username) {
         return userMapper.toDto(userService.getUserByUsername(username));
     }
