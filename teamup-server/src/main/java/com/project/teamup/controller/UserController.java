@@ -133,12 +133,6 @@ public class UserController {
         return userMapper.toDto(userService.updateUser(userMapper.toEntity(userWithPictureDTO.getUserToUpdate()), userWithPictureDTO.getProfilePicture()));
     }
 
-
-    @GetMapping(value = "/username/{username}")
-    public UserDTO getUserByUsername(@PathVariable String username) {
-        return userMapper.toDto(userService.getUserByUsername(username));
-    }
-
     /**
      * Admin sends a new username, password and email
      * for a new account and the new employee
