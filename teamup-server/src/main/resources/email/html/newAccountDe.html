@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hallo, '"></span>
+</p>
+<p>Ein neues Konto in der TeamUp Anwendung mit den folgenden Referenzen wurde f&#252;r dich erstellt: </p>
+<p>
+    <span th:text="'Nutzername: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Kennwort: ' + ${password}"></span>
+</p>
+<p>Ich schlage dir vor, du sollst so schell wie m&#246;glich einloggen und dein Profil erstellen, in dem du <a th:href="@{${link}}">hier</a> clickst.</p>
+<p>
+</p>
+<p>Viele Gr&#252;&#223;e,</p>
+<p>
+    TeamUp Gruppe
+</p>
+</body>
+</html>

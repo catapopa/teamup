@@ -8,7 +8,6 @@ import com.project.teamup.model.User;
 import com.project.teamup.model.UserLanguage;
 import com.project.teamup.model.UserStatus;
 import com.project.teamup.service.EmailService;
-import com.project.teamup.security.JwtUserDetailsService;
 import com.project.teamup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,7 +82,7 @@ public class UserController {
                 .orElse(null);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public UserDTO findByUsername(@PathVariable("username") String username) {
         return userService.findByUsername(username)
                 .map(user -> userMapper.toDto(user))
@@ -138,5 +137,22 @@ public class UserController {
     @GetMapping(value = "/username/{username}")
     public UserDTO getUserByUsername(@PathVariable String username) {
         return userMapper.toDto(userService.getUserByUsername(username));
+    }
+
+    /**
+     * Admin sends a new username, password and email
+     * for a new account and the new employee
+     * receives an email with them.
+     * @author Sonya
+     * */
+    @PostMapping(value = "/createAccount")
+    public ResponseEntity createAccount(@RequestBody UserDTO user) {
+        try {
+            return ResponseEntity.ok(userMapper.toDto(userService.createNewAccount(userMapper.toEntity(user))));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
     }
 }

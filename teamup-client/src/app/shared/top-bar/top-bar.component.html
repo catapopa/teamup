@@ -30,7 +30,6 @@
 	<div *ngIf="this.authService.getRole()==='EMPLOYEE'">
 		<nav>
 			<a mat-button routerLink="/home/profile" [routerLinkActive]="['is-active']">{{'Profile'}}</a>
-			<a mat-button routerLink="/home/users" [routerLinkActive]="['is-active']">{{'Users'}}</a>
 		</nav>
 	</div>
 
