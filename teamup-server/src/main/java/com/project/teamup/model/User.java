@@ -36,7 +36,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "location")
     private Location location;
-    @Lob
     @Column
     @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
