@@ -1,6 +1,7 @@
 package com.project.teamup.controller;
 
 import com.project.teamup.dto.UserDTO;
+import com.project.teamup.dto.UserWithPictureDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.FilterCriterias;
 import com.project.teamup.model.User;
@@ -124,6 +125,12 @@ public class UserController {
         return userService.getAssignedUsers(id)
                 .map(list -> userMapper.toDtoList(list))
                 .orElse(null);
+    }
+
+    @PostMapping(value = "/update")
+    public UserDTO updateUser(@RequestBody UserWithPictureDTO userWithPictureDTO) {
+        //userWithPictureDTO workaround
+        return userMapper.toDto(userService.updateUser(userMapper.toEntity(userWithPictureDTO.getUserToUpdate()), userWithPictureDTO.getProfilePicture()));
     }
 
     /**
