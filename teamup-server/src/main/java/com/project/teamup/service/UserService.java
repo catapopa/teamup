@@ -156,6 +156,20 @@ public class UserService {
     }
 
     /**
+     * Retrieves and converts picture of user to string
+     * @param username username of user
+     * @return String of profile picture or null
+     */
+    public String retrievePictureOfUser(String username){
+        Optional<User> storedUser = userRepository.findByUsername(username);
+        if (storedUser.isPresent()){
+            User user = storedUser.get();
+            return new String(user.getPicture());
+        }
+        return null;
+    }
+
+    /**
      * Activates a blocked user by setting him
      * the number of login attempts to 0 and a new generated
      * password which will be sent by email.

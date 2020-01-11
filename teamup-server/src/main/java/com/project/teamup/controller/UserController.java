@@ -89,6 +89,15 @@ public class UserController {
                 .orElse(null);
     }
 
+    @GetMapping("/userWithPicture/{username}")
+    public UserWithPictureDTO getUserWithPicture(@PathVariable("username") String username) {
+        UserDTO storedUser = userService.findByUsername(username)
+                .map(user -> userMapper.toDto(user))
+                .orElse(null);
+        String profilePicture = userService.retrievePictureOfUser(username);
+        return new UserWithPictureDTO(storedUser, profilePicture);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
