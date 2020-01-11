@@ -44,4 +44,8 @@ export class UserService {
     return this.httpService.get(this.url + path + username);
   }
 
+  getUserWithPicture(path: string, username: string) {
+    return this.httpService.get(this.url + path + username);
+  }
+
 }

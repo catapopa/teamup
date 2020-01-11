@@ -17,7 +17,12 @@ import {MatSnackBar} from "@angular/material";
 })
 export class ProfileComponent implements OnInit {
 
+  //wrapped containing user object and its profile picture
+  currentLoggedInUserWrapped: any;
+  //logged in user object
   currentLoggedInUser: any;
+  //logged in user's profile picture
+  profilePicture: string;
   profileForm: FormGroup;
 
   constructor(private userService: UserService, formBuilder: FormBuilder, private snackbar: MatSnackBar) {
@@ -30,10 +35,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
       let currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
-      this.userService.getUserByUsername('username/', currentLoggedInUserName).subscribe(obj => {
-        this.currentLoggedInUser = obj;
-        console.log(this.currentLoggedInUser.username);
-        console.log(this.currentLoggedInUser.password)
+      this.userService.getUserWithPicture('userWithPicture/', currentLoggedInUserName).subscribe(obj => {
+        this.currentLoggedInUserWrapped = obj;
+        //retrieve data from user with picture wrapper obj
+        this.currentLoggedInUser = this.currentLoggedInUserWrapped.userToUpdate;
+        this.profilePicture = this.currentLoggedInUserWrapped.profilePicture;
       });
     }
   }
