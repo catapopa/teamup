@@ -8,6 +8,7 @@ import { Technology } from '../../shared/models/technology';
 import { Project } from '../../shared/models/project';
 import { UserExperience } from '../../shared/models/userExperience';
 import {AuthService} from "../../core/authentication/auth.service";
+import {combineAll} from "rxjs/operators";
 
 @Component({
   selector: 'teamup-profile',
@@ -46,7 +47,6 @@ export class ProfileComponent implements OnInit {
         projectExperiences: [...this.currentUser.projectExperiences]
       };
       this.profileForm.get('basicInfo').setValue(basicInfo);
-      //this.profileForm.get('technicalInfo').setValue(technicalInfo)
       this.profileForm.get('technicalInfo').setValue(technicalInfo);
     })
   }
@@ -55,79 +55,130 @@ export class ProfileComponent implements OnInit {
     const basicInfoFormValue = this.profileForm.get('basicInfo').value;
     const technicalInfoFormValue = this.profileForm.get('technicalInfo').value;
 
+    const company = technicalInfoFormValue.company.company;
     const user: User = {
       id: 0,
-      username: null,
+      username: this.authService.getUsername(),
       password: null,
       email: basicInfoFormValue.email,
       firstName: basicInfoFormValue.firstName,
       lastName: basicInfoFormValue.lastName,
       birthDate: basicInfoFormValue.birthDate,
-      picture: basicInfoFormValue.picture.blob,
+      picture: null,
+      //basicInfoFormValue.picture.blob,
       language: basicInfoFormValue.language,
       role: null,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,
       location: technicalInfoFormValue.location.location,
       company: {
-        id: technicalInfoFormValue.company.company.id ? technicalInfoFormValue.company.company.id : 0,
-        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name :
-          technicalInfoFormValue.company.company
+        id: company.id ? company.id : 0,
+        name: company.name ? company.name : company
       },
       skills: null,
       projectExperiences: null,
     };
-
     const skills = this.profileForm.get('technicalInfo').value.skills;
     const skillArray: UserSkill[] = [];
 
+    //set user skills starts
     skills.forEach(skill => {
+      const area = skill.technology.area;
+      let finalArea = null;
+      if(typeof area.area =='string'){
+        finalArea = {
+          id: 0,
+          name: area.area
+        }
+      }
+      else
+        if(area.area!=undefined){
+          finalArea = {
+            id: area.area.id,
+            name: area.area.name
+          }
+        }
+        else{
+          finalArea = {
+            id: area.id,
+            name: area.name
+          }
+        }
       const technology: Technology = {
         id: 0,
-        name: skill.technology.techName,
-        area: {
-          id: skill.technology.techArea.techArea.id ? skill.technology.techArea.techArea.id : 0,
-          name: skill.technology.techArea.techArea.name ? skill.technology.techArea.techArea.name : skill.technology.techArea.techArea
-        }
+        name: skill.technology.name,
+        area: finalArea
       };
-
-      const skillLevel = skill.level.level;
-
+      const skillLevel = skill.level;
       const userSkill: UserSkill = {
         id: 0,
         technology: technology,
-        level: skillLevel
+        level: skillLevel.level ? skillLevel.level : skillLevel
       };
       skillArray.push(userSkill);
     });
-
     user.skills = skillArray;
+    //set user skills ends
 
+    //set project experiences starts
     const projectExperiences = this.profileForm.get('technicalInfo').value.projectExperiences;
     const projectExperiencesArray: ProjectExperience[] = [];
 
     projectExperiences.forEach(projectExp => {
       const userExperienceArray: UserExperience[] = [];
-      const userExperiences = projectExp.project.userExperience;
-
+      const userExperiences = projectExp.project.userExperiences;
       userExperiences.forEach(userExp => {
         userExperienceArray.push(userExp);
       });
-
+      const industry = projectExp.project.industry;
+      let finalIndustry = null;
+      if(typeof industry.industry == 'string'){
+        finalIndustry={
+          id: 0,
+          name: industry.industry
+        }
+      }
+      else
+        if(industry.industry!=undefined){
+          finalIndustry = {
+            id: industry.industry.id,
+            name: industry.industry.name
+          }
+        }
+        else{
+          finalIndustry = {
+            id: industry.id,
+            name: industry.name
+          }
+        }
+      const company = projectExp.project.company;
+      let finalCompany = null;
+      if(typeof company.company == 'string'){
+        finalCompany ={
+          id: 0,
+          name: company.company
+        }
+      }
+      else
+        if(company.company!=undefined){
+          finalCompany = {
+            id: company.company.id,
+            name: company.company.name
+          }
+        }
+        else{
+          finalCompany = {
+            id: company.id,
+            name: company.name
+          }
+        }
       const project: Project = {
         id: 0,
         name: projectExp.project.name,
         description: projectExp.project.description,
-        industry: {
-          id: projectExp.project.industry.industry.id ? projectExp.project.industry.industry.id : 0,
-          name: projectExp.project.industry.industry.name ? projectExp.project.industry.industry.name : projectExp.project.industry.industry,
-        },
-        company: {
-          id: projectExp.project.company.company.id ? projectExp.project.company.company.id : 0,
-          name: projectExp.project.company.company.name ? projectExp.project.company.company.name : projectExp.project.company.company
-        },
-        userExperience: userExperienceArray
+        industry: finalIndustry,
+        company: finalCompany,
+        userExperiences: userExperienceArray
       };
-
       const projectExperience: ProjectExperience = {
         project: project,
         startDate: projectExp.startDate,
@@ -137,5 +188,7 @@ export class ProfileComponent implements OnInit {
       projectExperiencesArray.push(projectExperience);
     });
     user.projectExperiences = projectExperiencesArray;
+    //set project experiences ends
+
   }
 }

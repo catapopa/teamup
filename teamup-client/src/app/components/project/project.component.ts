@@ -32,19 +32,19 @@ export class ProjectComponent implements OnInit,ControlValueAccessor {
       description: new FormControl(null, [Validators.required]),
       industry: new FormControl(null, [Validators.required]),
       company: new FormControl(null, [Validators.required]),
-      userExperience: this.formBuilder.array([])
+      userExperiences: this.formBuilder.array([])
     });
     this.addUserExperience();
   }
 
   addUserExperience(){
-    const userExp = this.projectForm.get('userExperience') as FormArray;
+    const userExp = this.projectForm.get('userExperiences') as FormArray;
     const control = new FormControl(null,[Validators.required]);
     userExp.push(control);
   }
 
   removeUserExperience(i: number){
-    const userExp = this.projectForm.get('userExperience') as FormArray;
+    const userExp = this.projectForm.get('userExperiences') as FormArray;
     userExp.removeAt(i);
   }
 
@@ -66,7 +66,7 @@ export class ProjectComponent implements OnInit,ControlValueAccessor {
       description: project.description,
       industry: project.industry,
       company:project.company,
-      userExperience: [...project.userExperiences]
+      userExperiences: [...project.userExperiences]
     })
   }
   registerOnChange(fn: any): void {

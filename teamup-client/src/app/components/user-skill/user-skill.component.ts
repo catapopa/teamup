@@ -38,7 +38,7 @@ export class UserSkillComponent implements OnInit, ControlValueAccessor {
       id: skill.id,
       technology: skill.technology,
       level: skill.level
-    })
+    });
   }
   registerOnChange(fn: any): void {
     this.userSkillForm.valueChanges.subscribe(fn)
