@@ -101,51 +101,56 @@ public class UserService {
                 case ROLE:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getRole() != null)
-                            .filter(user -> String.valueOf(user.getRole()).equalsIgnoreCase(String.valueOf(entry.getValue())))
+                            .filter(user -> String.valueOf(user.getRole())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue())))
                             .collect(Collectors.toList()));
                     break;
                 case SENIORITY:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getSeniority() != null)
-                            .filter(user -> String.valueOf(user.getSeniority()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getSeniority())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
-                case TECHNOLOGY: {
+                case TECHNOLOGY:
                     for (User user : getAll()) {
-                        if (user.getSkills() != null) {
+                        if ( user.getSkills()
+                            != null) {
                             for (UserSkill skill : user.getSkills()) {
-                                if (String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                                if ( String.valueOf(skill.getTechnology().getName())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
                                     userList.add(user);
                                 }
                             }
                         }
                     }
                     break;
-                }
-                case SKILL_LEVEL: {
+                case SKILL_LEVEL:
                     for (User user : getAll()) {
-                        if (user.getSkills() != null) {
+                        if ( user.getSkills()
+                            != null) {
                             for (UserSkill skill : user.getSkills()) {
-                                if (String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))) {
+                                if ( String.valueOf(skill.getLevel())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
                                     userList.add(user);
                                 }
                             }
                         }
                     }
                     break;
-                }
                 case LOCATION:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getLocation() != null)
-                            .filter(user -> String.valueOf(user.getLocation().getCity()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getLocation().getCity())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
                 case LANGUAGE:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getLanguage() != null)
-                            .filter(user -> String.valueOf(user.getLanguage()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getLanguage())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
             }
         }
-        userList.forEach(System.out::println);
         return userList.stream()
                 .distinct()
                 .collect(Collectors.toList());
@@ -193,27 +198,27 @@ public class UserService {
             } else {
                 return "The user is already activated!";
             }
+        } else {
+            return "Invalid username of admin/employee!";
         }
-        return "Invalid username of admin/employee!";
     }
 
     public String generateActivationLink(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
-
         return WEB_APP_URL + verificationToken.getToken();
     }
 
-    public void createVerificationTokenForUser(User user) {
+    public VerificationToken createVerificationTokenForUser(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
-
         if (verificationToken == null) {
-            tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+            return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
         } else {
             if (verificationToken.getExpiryDate().after(new Timestamp(new Date().getTime()))) {
                 tokenRepository.delete(verificationToken);
-                tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+                return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
             }
         }
+        return null;
     }
 
     /**
@@ -221,7 +226,7 @@ public class UserService {
      * which represents the new password for
      * a user who must be activated.
      */
-    private String generateNewPassword() {
+    String generateNewPassword() {
         int length = 6;
         boolean useLetters = true;
         boolean useNumbers = true;
@@ -230,12 +235,10 @@ public class UserService {
 
     public boolean isValidToken(String token) {
         VerificationToken verificationToken = tokenRepository.findByToken(token);
-
         if (verificationToken != null && verificationToken.getExpiryDate().before(new Timestamp(new Date().getTime()))) {
             tokenRepository.delete(verificationToken);
             return true;
         }
-
         return false;
     }
 
