@@ -1,6 +1,7 @@
 package com.project.teamup.controller;
 
 import com.project.teamup.dto.UserDTO;
+import com.project.teamup.dto.UserWithPictureDTO;
 import com.project.teamup.mapper.UserMapper;
 import com.project.teamup.model.FilterCriterias;
 import com.project.teamup.model.User;
@@ -88,6 +89,15 @@ public class UserController {
                 .orElse(null);
     }
 
+    @GetMapping("/userWithPicture/{username}")
+    public UserWithPictureDTO getUserWithPicture(@PathVariable("username") String username) {
+        UserDTO storedUser = userService.findByUsername(username)
+                .map(user -> userMapper.toDto(user))
+                .orElse(null);
+        String profilePicture = userService.retrievePictureOfUser(username);
+        return new UserWithPictureDTO(storedUser, profilePicture);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteUser(@PathVariable("id") Long id) {
@@ -124,6 +134,12 @@ public class UserController {
         return userService.getAssignedUsers(id)
                 .map(list -> userMapper.toDtoList(list))
                 .orElse(null);
+    }
+
+    @PostMapping(value = "/update")
+    public UserDTO updateUser(@RequestBody UserWithPictureDTO userWithPictureDTO) {
+        //userWithPictureDTO workaround
+        return userMapper.toDto(userService.updateUser(userMapper.toEntity(userWithPictureDTO.getUserToUpdate()), userWithPictureDTO.getProfilePicture()));
     }
 
     /**
