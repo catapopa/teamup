@@ -7,8 +7,8 @@ import { ProjectExperience } from '../../shared/models/projectExperience';
 import { Technology } from '../../shared/models/technology';
 import { Project } from '../../shared/models/project';
 import { UserExperience } from '../../shared/models/userExperience';
-import {AuthService} from "../../core/authentication/auth.service";
-import {combineAll} from "rxjs/operators";
+import {UserWithPictureWrapper} from "../../shared/models/userWithPictureWrapper";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'teamup-profile',
@@ -17,10 +17,15 @@ import {combineAll} from "rxjs/operators";
 })
 export class ProfileComponent implements OnInit {
 
-  currentUser: User;
+  //wrapped containing user object and its profile picture
+  currentLoggedInUserWrapped: any;
+  //logged in user object
+  currentLoggedInUser: any;
+  //logged in user's profile picture
+  profilePicture: string;
   profileForm: FormGroup;
 
-  constructor(private userService: UserService, formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private userService: UserService, formBuilder: FormBuilder, private snackbar: MatSnackBar) {
     this.profileForm = formBuilder.group({
       basicInfo: new FormControl(null, [Validators.required]),
       technicalInfo: new FormControl(null, [Validators.required]),
@@ -28,6 +33,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('currentUser')) {
+      let currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
+      this.userService.getUserWithPicture('userWithPicture/', currentLoggedInUserName).subscribe(obj => {
+        this.currentLoggedInUserWrapped = obj;
+        //retrieve data from user with picture wrapper obj
+        this.currentLoggedInUser = this.currentLoggedInUserWrapped.userToUpdate;
+        this.profilePicture = this.currentLoggedInUserWrapped.profilePicture;
+      });
+    }
     const id = this.authService.getId();
     this.userService.getById(id).subscribe(data=>{
       this.currentUser = data as User;
@@ -58,14 +72,13 @@ export class ProfileComponent implements OnInit {
     const company = technicalInfoFormValue.company.company;
     const user: User = {
       id: 0,
-      username: this.authService.getUsername(),
+      username: null,
       password: null,
       email: basicInfoFormValue.email,
       firstName: basicInfoFormValue.firstName,
       lastName: basicInfoFormValue.lastName,
       birthDate: basicInfoFormValue.birthDate,
-      picture: null,
-      //basicInfoFormValue.picture.blob,
+      picture: basicInfoFormValue.picture.blob,
       language: basicInfoFormValue.language,
       role: null,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,
@@ -77,6 +90,7 @@ export class ProfileComponent implements OnInit {
       skills: null,
       projectExperiences: null,
     };
+
     const skills = this.profileForm.get('technicalInfo').value.skills;
     const skillArray: UserSkill[] = [];
 
@@ -116,6 +130,7 @@ export class ProfileComponent implements OnInit {
       };
       skillArray.push(userSkill);
     });
+
     user.skills = skillArray;
     //set user skills ends
 
@@ -179,6 +194,7 @@ export class ProfileComponent implements OnInit {
         company: finalCompany,
         userExperiences: userExperienceArray
       };
+
       const projectExperience: ProjectExperience = {
         project: project,
         startDate: projectExp.startDate,
@@ -189,6 +205,25 @@ export class ProfileComponent implements OnInit {
     });
     user.projectExperiences = projectExperiencesArray;
     //set project experiences ends
+
+
+    //workaround for user with profile picture
+    user.id = this.currentLoggedInUser.id;
+    const profilePicture = user.picture;
+    user.picture = null;
+    const userToBeUpdated: UserWithPictureWrapper = {
+      userToUpdate: user,
+      profilePicture: profilePicture,
+    };
+
+    this.userService.update('update', userToBeUpdated).subscribe(
+        () => {
+          this.snackbar.open('User saved.');
+        },
+        () => {
+          this.snackbar.open('Error occured.');
+        }
+    );
 
   }
 }
