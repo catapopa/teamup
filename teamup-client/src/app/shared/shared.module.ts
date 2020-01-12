@@ -28,6 +28,7 @@ import { ProjectComponent } from '../components/project/project.component';
 import { ProjectExperienceComponent } from '../components/project-experience/project-experience.component';
 import { TechnicalUserInfoComponent } from '../components/technical-user-info/technical-user-info.component';
 import { PictureComponent } from '../components/picture/picture.component';
+import {ApproveProfileComponent} from "../components/approve-profile/approve-profile.component";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import { PictureComponent } from '../components/picture/picture.component';
         ProjectComponent,
         ProjectExperienceComponent,
         TechnicalUserInfoComponent,
-        PictureComponent
+        PictureComponent,
+        ApproveProfileComponent
     ],
     exports: [
         CommonModule,
