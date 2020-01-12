@@ -37,7 +37,12 @@ export class PictureComponent implements OnInit, ControlValueAccessor {
     onTouched: any = () => { };
 
     writeValue(val: any): void {
-        val && this.pictureForm.setValue(val, { emitEvent: false });
+        if(val == null){
+            return;
+        }
+        this.pictureForm.setValue({
+            blob: val
+        });
     }
     registerOnChange(fn: any): void {
         this.pictureForm.valueChanges.subscribe(fn);

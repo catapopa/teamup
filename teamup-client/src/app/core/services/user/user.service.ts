@@ -35,8 +35,8 @@ export class UserService {
   }
 
   update(path: string, data: any) {
-    console.log(this.url + path);
-    console.log(data);
+    // console.log(this.url + path);
+    // console.log(data);
     return this.httpService.post(this.url + path, data);
   }
 

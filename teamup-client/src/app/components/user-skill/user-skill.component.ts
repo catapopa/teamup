@@ -19,7 +19,7 @@ export class UserSkillComponent implements OnInit, ControlValueAccessor {
 
   constructor(formBuilder: FormBuilder) {
     this.userSkillForm = formBuilder.group({
-      id: new FormControl(null),
+     id: new FormControl(null),
       technology: new FormControl(null, [Validators.required]),
       level: new FormControl(null, [Validators.required])
     });
@@ -35,7 +35,7 @@ export class UserSkillComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this.userSkillForm.setValue({
-      id: skill.id,
+     id: skill.id,
       technology: skill.technology,
       level: skill.level
     });

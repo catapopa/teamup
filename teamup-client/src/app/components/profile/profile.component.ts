@@ -40,39 +40,36 @@ export class ProfileComponent implements OnInit {
         //retrieve data from user with picture wrapper obj
         this.currentLoggedInUser = this.currentLoggedInUserWrapped.userToUpdate;
         this.profilePicture = this.currentLoggedInUserWrapped.profilePicture;
+        const basicInfo ={
+          firstName: this.currentLoggedInUser.firstName,
+          lastName: this.currentLoggedInUser.lastName ,
+          email: this.currentLoggedInUser.email,
+          birthDate: this.currentLoggedInUser.birthDate,
+          picture: this.profilePicture,
+          language: this.currentLoggedInUser.language,
+        };
+        const technicalInfo ={
+          location: this.currentLoggedInUser.location,
+          seniority: this.currentLoggedInUser.seniority,
+          company: this.currentLoggedInUser.company,
+          skills: [...this.currentLoggedInUser.skills],
+          projectExperiences: [...this.currentLoggedInUser.projectExperiences]
+        };
+        this.profileForm.get('basicInfo').setValue(basicInfo);
+        this.profileForm.get('technicalInfo').setValue(technicalInfo);
       });
+
+
     }
-    const id = this.authService.getId();
-    this.userService.getById(id).subscribe(data=>{
-      this.currentUser = data as User;
-      const basicInfo ={
-        firstName: this.currentUser.firstName,
-        lastName: this.currentUser.lastName ,
-        email: this.currentUser.email,
-        birthDate: this.currentUser.birthDate,
-        picture: this.currentUser.picture,
-        language: this.currentUser.language,
-      };
-      const technicalInfo ={
-        location: this.currentUser.location,
-        seniority: this.currentUser.seniority,
-        company: this.currentUser.company,
-        skills: [...this.currentUser.skills],
-        projectExperiences: [...this.currentUser.projectExperiences]
-      };
-      this.profileForm.get('basicInfo').setValue(basicInfo);
-      this.profileForm.get('technicalInfo').setValue(technicalInfo);
-    })
   }
 
   public onSubmit() {
     const basicInfoFormValue = this.profileForm.get('basicInfo').value;
     const technicalInfoFormValue = this.profileForm.get('technicalInfo').value;
-
     const company = technicalInfoFormValue.company.company;
     const user: User = {
-      id: 0,
-      username: null,
+      id: this.currentLoggedInUser.id,
+      username: this.currentLoggedInUser.username,
       password: null,
       email: basicInfoFormValue.email,
       firstName: basicInfoFormValue.firstName,
@@ -80,7 +77,7 @@ export class ProfileComponent implements OnInit {
       birthDate: basicInfoFormValue.birthDate,
       picture: basicInfoFormValue.picture.blob,
       language: basicInfoFormValue.language,
-      role: null,
+      role: this.currentLoggedInUser.role,
       seniority: this.profileForm.get('technicalInfo').value.seniority.seniority,
       location: technicalInfoFormValue.location.location,
       company: {
@@ -118,13 +115,13 @@ export class ProfileComponent implements OnInit {
           }
         }
       const technology: Technology = {
-        id: 0,
+        id: skill.technology.id ? skill.technology.id : 0,
         name: skill.technology.name,
         area: finalArea
       };
       const skillLevel = skill.level;
       const userSkill: UserSkill = {
-        id: 0,
+        id: skill.id? skill.id : 0,
         technology: technology,
         level: skillLevel.level ? skillLevel.level : skillLevel
       };
@@ -141,8 +138,10 @@ export class ProfileComponent implements OnInit {
     projectExperiences.forEach(projectExp => {
       const userExperienceArray: UserExperience[] = [];
       const userExperiences = projectExp.project.userExperiences;
-      userExperiences.forEach(userExp => {
+      userExperiences.forEach(userExp=> {
+        userExp.userId = this.currentLoggedInUser.id;
         userExperienceArray.push(userExp);
+
       });
       const industry = projectExp.project.industry;
       let finalIndustry = null;
@@ -215,6 +214,7 @@ export class ProfileComponent implements OnInit {
       userToUpdate: user,
       profilePicture: profilePicture,
     };
+    console.log(userToBeUpdated.userToUpdate);
 
     this.userService.update('update', userToBeUpdated).subscribe(
         () => {

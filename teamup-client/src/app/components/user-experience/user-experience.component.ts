@@ -19,6 +19,7 @@ export class UserExperienceComponent implements OnInit, ControlValueAccessor {
 
   constructor(private formBuilder: FormBuilder) {
     this.userExperienceForm = formBuilder.group({
+      userId: new FormControl(null, [Validators.required]),
       fullName: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
       startDate: new FormControl(null, [Validators.required]),
@@ -37,6 +38,7 @@ export class UserExperienceComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this.userExperienceForm.setValue({
+      userId: userExp.userId,
       fullName: userExp.fullName,
       email: userExp.email,
       startDate: userExp.startDate,
