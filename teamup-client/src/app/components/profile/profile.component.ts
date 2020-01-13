@@ -214,16 +214,15 @@ export class ProfileComponent implements OnInit {
       userToUpdate: user,
       profilePicture: profilePicture,
     };
-    console.log(userToBeUpdated.userToUpdate);
 
-    this.userService.update('update', userToBeUpdated).subscribe(
-        () => {
-          this.snackbar.open('User saved.');
-        },
-        () => {
-          this.snackbar.open('Error occured.');
-        }
-    );
+        this.userService.update('update', userToBeUpdated).subscribe(
+            () => {
+                this.snackbar.open('User saved.');
+            },
+            () => {
+                this.snackbar.open('Error occurred.');
+            }
+        );
 
   }
 }

@@ -35,8 +35,6 @@ export class UserService {
   }
 
   update(path: string, data: any) {
-    // console.log(this.url + path);
-    // console.log(data);
     return this.httpService.post(this.url + path, data);
   }
 
@@ -48,4 +46,7 @@ export class UserService {
     return this.httpService.get(this.url + path + username);
   }
 
+    invite(user: User) {
+        return this.httpService.post(this.url + 'createAccount/', user);
+    }
 }
