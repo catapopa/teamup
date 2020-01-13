@@ -1,17 +1,32 @@
-.form-group {
+:host {
+  align-items: center;
   display: flex;
   flex-direction: column;
-}
-
-.form-group > * {
-  width: 100%;
+  justify-content: center;
 }
 
 .invite-card {
-  width: 400px;
-  max-height: 300px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  //height: 90%;
+  width: 50%;
+  padding: 50px;
+
+  .mat-card-header {
+    justify-content: center;
+    padding: 20px;
+  }
+}
+
+.invite {
+  margin: 50px 0 0;
+}
+
+button {
+  width: 100%;
+  margin: 0 auto;
+  color: whitesmoke;
+  background-color: #320b86;
+}
+
+button:hover {
+  box-shadow: 0 19px 38px #0000004d, 0 15px 12px #00000038;
 }

@@ -51,7 +51,7 @@ import {InviteComponent} from "../components/invite/invite.component";
         ProjectExperienceComponent,
         TechnicalUserInfoComponent,
         PictureComponent,
-        InviteComponent
+        InviteComponent,
     ],
     exports: [
         CommonModule,

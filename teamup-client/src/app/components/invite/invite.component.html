@@ -1,34 +1,38 @@
-<form [formGroup]="form">
-    <mat-card class="invite-card">
+<mat-card class="invite-card mat-elevation-z8">
+    <form [formGroup]="invitationForm" (ngSubmit)="onSubmit()">
+        <mat-card-header>
+            <mat-card-title>Invite user</mat-card-title>
+        </mat-card-header>
         <mat-card-content>
-            <div class="form-group">
-                <mat-form-field>
-                    <input matInput placeholder="Username:"
-                           formControlName="username">
-                </mat-form-field>
-            </div>
-
-            <div class="form-group">
-                <mat-form-field>
-                    <input matInput type="email" placeholder="Email"
-                           required
-                           formControlName="email">
-                    <mat-error *ngIf="form.get('email').invalid">
-                        Email is <strong>required</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select [(value)]="role" placeholder="Role:">
-                        <mat-option *ngFor="let role of roles" [value]="role"> {{role}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field>
+                <input matInput placeholder="Username"
+                       formControlName="username"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email"
+                       formControlName="email"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password"
+                       formControlName="password"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="role" placeholder="Role" required>
+                    <mat-option *ngFor="let role of key(roles)" [value]="role">
+                        {{roles[role]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <teamup-location formControlName="location"></teamup-location>
+            <teamup-company formControlName="company"></teamup-company>
         </mat-card-content>
-        <mat-card-actions align="end">
-            <button mat-raised-button color="primary" (click)="save()">Save</button>
+
+        <mat-card-actions class="invite">
+            <button mat-raised-button color="primary" type="submit">Invite</button>
         </mat-card-actions>
-    </mat-card>
-</form>
+    </form>
+</mat-card>
+
