@@ -1,10 +1,7 @@
 package com.project.teamup.dto;
 
 
-import com.project.teamup.model.UserLanguage;
-import com.project.teamup.model.UserRole;
-import com.project.teamup.model.UserSeniority;
-import com.project.teamup.model.UserStatus;
+import com.project.teamup.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +27,7 @@ public class UserDTO {
     private UserRole role;
     private UserSeniority seniority;
     private UserStatus status;
+    private UserApprovalStatus approvalStatus;
     private LocationDTO location;
     private CompanyDTO company;
     private List<UserSkillDTO> skills;

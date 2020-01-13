@@ -311,3 +311,14 @@ databaseChangeLog:
             columnName: picture
             newDataType: bytea
             tableName: users
+
+  - changeSet:
+      id: 6
+      author: iosif
+      changes:
+        - addColumn:
+            columns:
+              - column:
+                  name: approval_status
+                  type: VARCHAR(50)
+            tableName: users
