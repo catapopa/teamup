@@ -27,7 +27,7 @@ public class LoginAttemptService {
         }
     }
 
-    public void loginFailed(String username) {
+    void loginFailed(String username) {
         Optional<com.project.teamup.model.User> tempUser = userRepository.findByUsername(username);
         if (tempUser.isPresent()) {
             User user = tempUser.get();
@@ -44,7 +44,7 @@ public class LoginAttemptService {
         }
     }
 
-    public boolean isBlocked(Optional<com.project.teamup.model.User> user) {
+    boolean isBlocked(Optional<com.project.teamup.model.User> user) {
         if (user.isPresent()) {
             Integer failedAttempts = user.get().getFailedLoginAttempts();
             if (failedAttempts == null) {
