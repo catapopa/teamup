@@ -28,7 +28,6 @@ import { ProjectComponent } from '../components/project/project.component';
 import { ProjectExperienceComponent } from '../components/project-experience/project-experience.component';
 import { TechnicalUserInfoComponent } from '../components/technical-user-info/technical-user-info.component';
 import { PictureComponent } from '../components/picture/picture.component';
-import {InviteComponent} from "../components/invite/invite.component";
 
 @NgModule({
     declarations: [
@@ -50,6 +49,8 @@ import {InviteComponent} from "../components/invite/invite.component";
         ProjectComponent,
         ProjectExperienceComponent,
         TechnicalUserInfoComponent,
+        PictureComponent,
+        ApproveProfileComponent
         PictureComponent,
         InviteComponent,
     ],

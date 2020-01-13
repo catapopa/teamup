@@ -1,5 +1,6 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
+import {UserExperience} from "../../shared/models/userExperience";
 
 @Component({
   selector: 'teamup-user-experience',
@@ -18,11 +19,12 @@ export class UserExperienceComponent implements OnInit, ControlValueAccessor {
 
   constructor(private formBuilder: FormBuilder) {
     this.userExperienceForm = formBuilder.group({
-      fullName: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      userId: new FormControl(null, [Validators.required]),
+      fullName: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required]),
+      startDate: new FormControl(null, [Validators.required]),
+      endDate: new FormControl(null, [Validators.required]),
+      description: new FormControl(null, [Validators.required])
     })
   }
 
@@ -31,8 +33,18 @@ export class UserExperienceComponent implements OnInit, ControlValueAccessor {
 
   onTouched: any = () => { };
 
-  writeValue(val: any): void {
-    val && this.userExperienceForm.setValue(val, {emitEvent:false});
+  writeValue(userExp: UserExperience): void {
+    if(userExp === null){
+      return;
+    }
+    this.userExperienceForm.setValue({
+      userId: userExp.userId,
+      fullName: userExp.fullName,
+      email: userExp.email,
+      startDate: userExp.startDate,
+      endDate:userExp.endDate,
+      description: userExp.description
+    })
   }
   registerOnChange(fn: any): void {
     this.userExperienceForm.valueChanges.subscribe(fn)

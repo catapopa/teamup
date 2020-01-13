@@ -26,9 +26,9 @@ export class TechnicalUserInfoComponent implements OnInit, ControlValueAccessor 
 
   constructor(private formBuilder: FormBuilder) {
     this.technicalInfoForm = formBuilder.group({
-      location: new FormControl('', [Validators.required]),
-      seniority: new FormControl('', [Validators.required]),
-      company: new FormControl('', [Validators.required]),
+      location: new FormControl(null, [Validators.required]),
+      seniority: new FormControl(null, [Validators.required]),
+      company: new FormControl(null, [Validators.required]),
       skills: this.formBuilder.array([]),
       projectExperiences: this.formBuilder.array([])
     });
@@ -64,7 +64,25 @@ export class TechnicalUserInfoComponent implements OnInit, ControlValueAccessor 
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    val && this.technicalInfoForm.setValue(val, {emitEvent:false});
+    if(val=== null){
+      return;
+    }
+    const nrOfSkills = val.skills.length;
+    for(let i=1; i<nrOfSkills; i++){
+      this.addSkill();
+    }
+    const nrOfProjExp = val.projectExperiences.length;
+    for(let i=1; i<nrOfProjExp; i++){
+      this.addProjectExperience();
+    }
+    this.technicalInfoForm.setValue({
+      location: val.location,
+      seniority: val.seniority,
+      company: val.company,
+      skills: [...val.skills],
+      projectExperiences: [...val.projectExperiences]
+    });
+
   }
   registerOnChange(fn: any): void {
     this.technicalInfoForm.valueChanges.subscribe(fn)
