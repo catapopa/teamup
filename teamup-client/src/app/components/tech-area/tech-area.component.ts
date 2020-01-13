@@ -21,7 +21,7 @@ export class TechAreaComponent implements OnInit, ControlValueAccessor {
 
     constructor(private techAreaService: TechAreaService, formBuilder: FormBuilder) {
         this.techAreaForm = formBuilder.group({
-            area: new FormControl(null, [Validators.required])
+            techArea: new FormControl('', [Validators.required])
         });
     }
 
@@ -38,12 +38,7 @@ export class TechAreaComponent implements OnInit, ControlValueAccessor {
     onTouched: any = () => { };
 
     writeValue(val: any): void {
-        if (val===null){
-            return;
-        }
-        this.techAreaForm.setValue({
-            area:val
-        });
+        val && this.techAreaForm.setValue(val, { emitEvent: false });
     }
     registerOnChange(fn: any): void {
         this.techAreaForm.valueChanges.subscribe(fn);

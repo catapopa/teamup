@@ -21,7 +21,7 @@ export class UserSkillLevelComponent implements OnInit, ControlValueAccessor {
 
   constructor(formBuilder: FormBuilder) {
     this.userSkillLevelForm = formBuilder.group({
-      level: new FormControl(null, [Validators.required])
+      skillLevel: new FormControl('', [Validators.required])
     });
   }
 
@@ -31,12 +31,7 @@ export class UserSkillLevelComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    if(val ===null){
-      return;
-    }
-    this.userSkillLevelForm.setValue({
-      level: val
-    });
+    val && this.userSkillLevelForm.setValue(val, {emitEvent:false});
   }
   registerOnChange(fn: any): void {
     this.userSkillLevelForm.valueChanges.subscribe(fn)

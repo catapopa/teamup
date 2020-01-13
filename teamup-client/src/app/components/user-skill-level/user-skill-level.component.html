@@ -1,7 +1,7 @@
 <form [formGroup]="userSkillLevelForm">
     <mat-form-field>
         <mat-label>Skill level</mat-label>
-        <mat-select formControlName="level">
+        <mat-select formControlName="skillLevel">
             <mat-option *ngFor="let key of keys" [value]="userSkillLevel[key]">
                 {{userSkillLevel[key]}}
             </mat-option>

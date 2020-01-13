@@ -1,8 +1,6 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
+import { LocationService } from '../../core/services/location/location.service';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Location } from "../../shared/models/location";
-import {LocationService} from "../../core/services/location/location.service";
-import {take} from "rxjs/operators";
 
 @Component({
     selector: 'teamup-location',
@@ -17,34 +15,26 @@ import {take} from "rxjs/operators";
 })
 export class LocationComponent implements OnInit, ControlValueAccessor {
 
+    locations: Location[];
     locationForm: FormGroup;
-    locationsPromise: Promise<Location[]>;
 
     constructor(private locationService: LocationService, private formBuilder: FormBuilder) {
         this.locationForm = formBuilder.group({
-            location: new FormControl(null, [Validators.required])
+            location: new FormControl('', [Validators.required])
         });
     }
 
     ngOnInit() {
-        this.locationsPromise = this.locationService.getAll().pipe(take(1)).toPromise() as Promise<Location[]>;
+        this.locationService.getAll().subscribe((data) => {
+            this.locations = data as Location[];
+        });
 
     }
 
     onTouched: any = () => { };
 
-    async writeValue(val: Location) {
-        if(val=== null){
-            return;
-        }
-        const locations = await this.locationsPromise;
-        const foundLocation = locations.find(x=>x.id===val.id);
-        if (!foundLocation){
-            return;
-        }
-        this.locationForm.setValue({
-            location: foundLocation
-        });
+    writeValue(val: any): void {
+        val && this.locationForm.setValue(val, { emitEvent: false });
     }
     registerOnChange(fn: any): void {
         this.locationForm.valueChanges.subscribe(fn);

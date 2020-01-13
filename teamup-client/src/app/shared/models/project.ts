@@ -8,5 +8,5 @@ export interface Project {
     description: string;
     industry: Industry;
     company: Company;
-    userExperiences: UserExperience[];
+    userExperience: UserExperience[];
 }

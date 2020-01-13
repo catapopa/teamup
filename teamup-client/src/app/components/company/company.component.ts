@@ -21,7 +21,7 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
 
   constructor(private companyService: CompanyService, formBuilder: FormBuilder) {
     this.companyForm = formBuilder.group({
-      company: new FormControl(null, [Validators.required])
+      company: new FormControl('', [Validators.required])
     });
   }
 
@@ -38,12 +38,12 @@ export class CompanyComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(val: any): void {
-    val && this.companyForm.setValue({
-      company:val
-    });
+    val && this.companyForm.setValue(val, { emitEvent: false });
   }
   registerOnChange(fn: any): void {
-    this.companyForm.valueChanges.subscribe(fn);
+    this.companyForm.valueChanges
+      // .pipe(map(company=>{}))
+      .subscribe(fn);
   }
   registerOnTouched(fn: any): void {
     this.onTouched = fn;

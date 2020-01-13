@@ -1,7 +1,5 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {UserSkill} from "../../shared/models/userSkill";
-import {Technology} from "../../shared/models/technology";
 
 @Component({
   selector: 'teamup-technology',
@@ -20,9 +18,8 @@ export class TechnologyComponent implements OnInit, ControlValueAccessor {
 
   constructor(formBuilder: FormBuilder) {
     this.technologyForm = formBuilder.group({
-      id: new FormControl(null),
-      name: new FormControl(null, [Validators.required]),
-      area: new FormControl(null, [Validators.required])
+      techName: new FormControl('', [Validators.required]),
+      techArea: new FormControl('', [Validators.required])
     });
   }
 
@@ -31,16 +28,8 @@ export class TechnologyComponent implements OnInit, ControlValueAccessor {
 
   onTouched: any = () => { };
 
-  writeValue(technology: Technology): void {
-    if(technology === null){
-      return;
-    }
-    this.technologyForm.setValue({
-      id: technology.id,
-      name: technology.name,
-      area: technology.area
-    })
-
+  writeValue(val: any): void {
+    val && this.technologyForm.setValue(val, {emitEvent:false});
   }
   registerOnChange(fn: any): void {
     this.technologyForm.valueChanges.subscribe(fn)

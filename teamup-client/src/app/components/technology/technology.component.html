@@ -1,7 +1,6 @@
 <form [formGroup]="technologyForm">
-    <input type="hidden" formControlName="id">
     <mat-form-field>
-        <input matInput placeholder="Technology name" formControlName="name" required>
+        <input matInput placeholder="Technology name" formControlName="techName" required>
     </mat-form-field>
-    <teamup-tech-area formControlName="area"></teamup-tech-area>
+    <teamup-tech-area formControlName="techArea"></teamup-tech-area>
 </form>

@@ -1,6 +1,5 @@
 import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators} from "@angular/forms";
-import {UserSkill} from "../../shared/models/userSkill";
 
 @Component({
   selector: 'teamup-user-skill',
@@ -19,9 +18,8 @@ export class UserSkillComponent implements OnInit, ControlValueAccessor {
 
   constructor(formBuilder: FormBuilder) {
     this.userSkillForm = formBuilder.group({
-     id: new FormControl(null),
-      technology: new FormControl(null, [Validators.required]),
-      level: new FormControl(null, [Validators.required])
+      technology: new FormControl('', [Validators.required]),
+      skillLevel: new FormControl('', [Validators.required])
     });
   }
 
@@ -30,15 +28,8 @@ export class UserSkillComponent implements OnInit, ControlValueAccessor {
 
   onTouched: any = () => { };
 
-  writeValue(skill: UserSkill): void {
-    if (skill === null) {
-      return;
-    }
-    this.userSkillForm.setValue({
-     id: skill.id,
-      technology: skill.technology,
-      level: skill.level
-    });
+  writeValue(val: any): void {
+    val && this.userSkillForm.setValue(val, {emitEvent:false});
   }
   registerOnChange(fn: any): void {
     this.userSkillForm.valueChanges.subscribe(fn)

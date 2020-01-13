@@ -1,7 +1,6 @@
 <form [formGroup]="techAreaForm" class="techArea-form">
-
     <mat-form-field>
-        <input type="text" placeholder="Technology Area" aria-label="Number" matInput formControlName="area"
+        <input type="text" placeholder="Technology Area" aria-label="Number" matInput formControlName="techArea"
                [matAutocomplete]="auto" required>
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let option of techAreas" [value]="option">
