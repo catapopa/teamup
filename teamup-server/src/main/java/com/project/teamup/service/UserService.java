@@ -169,7 +169,10 @@ public class UserService {
         Optional<User> storedUser = userRepository.findByUsername(username);
         if (storedUser.isPresent()){
             User user = storedUser.get();
-            return new String(user.getPicture());
+            if(user.getPicture()!=null){
+                return new String(user.getPicture());
+            }
+            else return null;
         }
         return null;
     }

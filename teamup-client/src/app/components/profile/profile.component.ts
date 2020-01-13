@@ -7,8 +7,8 @@ import { ProjectExperience } from '../../shared/models/projectExperience';
 import { Technology } from '../../shared/models/technology';
 import { Project } from '../../shared/models/project';
 import { UserExperience } from '../../shared/models/userExperience';
-import {UserWithPictureWrapper} from "../../shared/models/userWithPictureWrapper";
-import {MatSnackBar} from "@angular/material";
+import { UserWithPictureWrapper } from '../../shared/models/userWithPictureWrapper';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'teamup-profile',
@@ -17,11 +17,11 @@ import {MatSnackBar} from "@angular/material";
 })
 export class ProfileComponent implements OnInit {
 
-  //wrapped containing user object and its profile picture
+  // wrapped containing user object and its profile picture
   currentLoggedInUserWrapped: any;
-  //logged in user object
+  // logged in user object
   currentLoggedInUser: any;
-  //logged in user's profile picture
+  // logged in user's profile picture
   profilePicture: string;
   profileForm: FormGroup;
 
@@ -34,21 +34,22 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('currentUser')) {
-      let currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
+      const currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
       this.userService.getUserWithPicture('userWithPicture/', currentLoggedInUserName).subscribe(obj => {
         this.currentLoggedInUserWrapped = obj;
-        //retrieve data from user with picture wrapper obj
+        // retrieve data from user with picture wrapper obj
         this.currentLoggedInUser = this.currentLoggedInUserWrapped.userToUpdate;
         this.profilePicture = this.currentLoggedInUserWrapped.profilePicture;
-        const basicInfo ={
+
+        const basicInfo = {
           firstName: this.currentLoggedInUser.firstName,
-          lastName: this.currentLoggedInUser.lastName ,
+          lastName: this.currentLoggedInUser.lastName,
           email: this.currentLoggedInUser.email,
           birthDate: this.currentLoggedInUser.birthDate,
           picture: this.profilePicture,
           language: this.currentLoggedInUser.language,
         };
-        const technicalInfo ={
+        const technicalInfo = {
           location: this.currentLoggedInUser.location,
           seniority: this.currentLoggedInUser.seniority,
           company: this.currentLoggedInUser.company,
@@ -58,8 +59,6 @@ export class ProfileComponent implements OnInit {
         this.profileForm.get('basicInfo').setValue(basicInfo);
         this.profileForm.get('technicalInfo').setValue(technicalInfo);
       });
-
-
     }
   }
 
@@ -91,28 +90,26 @@ export class ProfileComponent implements OnInit {
     const skills = this.profileForm.get('technicalInfo').value.skills;
     const skillArray: UserSkill[] = [];
 
-    //set user skills starts
+    // set user skills starts
     skills.forEach(skill => {
       const area = skill.technology.area;
       let finalArea = null;
-      if(typeof area.area =='string'){
+      if (typeof area.area == 'string') {
         finalArea = {
           id: 0,
           name: area.area
-        }
-      }
-      else
-        if(area.area!=undefined){
+        };
+      } else
+        if (area.area != undefined) {
           finalArea = {
             id: area.area.id,
             name: area.area.name
-          }
-        }
-        else{
+          };
+        } else {
           finalArea = {
             id: area.id,
             name: area.name
-          }
+          };
         }
       const technology: Technology = {
         id: skill.technology.id ? skill.technology.id : 0,
@@ -121,7 +118,7 @@ export class ProfileComponent implements OnInit {
       };
       const skillLevel = skill.level;
       const userSkill: UserSkill = {
-        id: skill.id? skill.id : 0,
+        id: skill.id ? skill.id : 0,
         technology: technology,
         level: skillLevel.level ? skillLevel.level : skillLevel
       };
@@ -129,62 +126,61 @@ export class ProfileComponent implements OnInit {
     });
 
     user.skills = skillArray;
-    //set user skills ends
+    // set user skills ends
 
-    //set project experiences starts
+    // set project experiences starts
     const projectExperiences = this.profileForm.get('technicalInfo').value.projectExperiences;
     const projectExperiencesArray: ProjectExperience[] = [];
 
     projectExperiences.forEach(projectExp => {
       const userExperienceArray: UserExperience[] = [];
       const userExperiences = projectExp.project.userExperiences;
-      userExperiences.forEach(userExp=> {
+      userExperiences.forEach(userExp => {
         userExp.userId = this.currentLoggedInUser.id;
         userExperienceArray.push(userExp);
 
       });
       const industry = projectExp.project.industry;
       let finalIndustry = null;
-      if(typeof industry.industry == 'string'){
-        finalIndustry={
+      if (typeof industry.industry == 'string') {
+        finalIndustry = {
           id: 0,
           name: industry.industry
-        }
-      }
-      else
-        if(industry.industry!=undefined){
+        };
+      } else
+        if (industry.industry != undefined) {
           finalIndustry = {
             id: industry.industry.id,
             name: industry.industry.name
-          }
-        }
-        else{
+          };
+        } else {
           finalIndustry = {
             id: industry.id,
             name: industry.name
-          }
+          };
         }
+
       const company = projectExp.project.company;
       let finalCompany = null;
-      if(typeof company.company == 'string'){
-        finalCompany ={
+
+      if (typeof company.company == 'string') {
+        finalCompany = {
           id: 0,
           name: company.company
-        }
-      }
-      else
-        if(company.company!=undefined){
+        };
+      } else
+        if (company.company != undefined) {
           finalCompany = {
             id: company.company.id,
             name: company.company.name
-          }
-        }
-        else{
+          };
+        } else {
           finalCompany = {
             id: company.id,
             name: company.name
-          }
+          };
         }
+
       const project: Project = {
         id: 0,
         name: projectExp.project.name,
@@ -203,26 +199,27 @@ export class ProfileComponent implements OnInit {
       projectExperiencesArray.push(projectExperience);
     });
     user.projectExperiences = projectExperiencesArray;
-    //set project experiences ends
+    // set project experiences ends
 
 
-    //workaround for user with profile picture
+    // workaround for user with profile picture
     user.id = this.currentLoggedInUser.id;
+
     const profilePicture = user.picture;
     user.picture = null;
+
     const userToBeUpdated: UserWithPictureWrapper = {
       userToUpdate: user,
       profilePicture: profilePicture,
     };
 
-        this.userService.update('update', userToBeUpdated).subscribe(
-            () => {
-                this.snackbar.open('User saved.');
-            },
-            () => {
-                this.snackbar.open('Error occurred.');
-            }
-        );
-
+    this.userService.update('update', userToBeUpdated).subscribe(
+      () => {
+        this.snackbar.open('User saved.');
+      },
+      () => {
+        this.snackbar.open('Error occurred.');
+      }
+    );
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../http/http.service';
-import {User} from "../../../shared/models/user";
-import {Observable} from "rxjs";
+import { User } from "../../../shared/models/user";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +46,7 @@ export class UserService {
     return this.httpService.get(this.url + path + username);
   }
 
-    invite(user: User) {
-        return this.httpService.post(this.url + 'createAccount/', user);
-    }
+  invite(user: User) {
+    return this.httpService.post(this.url + 'createAccount/', user);
+  }
 }

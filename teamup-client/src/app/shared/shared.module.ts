@@ -1,6 +1,6 @@
 import { BasicUserInfoComponent } from './../components/basic-user-info/basic-user-info.component';
 import { UserDetailsComponent } from '../components/user-details/user-details.component';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -28,6 +28,8 @@ import { ProjectComponent } from '../components/project/project.component';
 import { ProjectExperienceComponent } from '../components/project-experience/project-experience.component';
 import { TechnicalUserInfoComponent } from '../components/technical-user-info/technical-user-info.component';
 import { PictureComponent } from '../components/picture/picture.component';
+import { ApproveProfileComponent } from '../components/approve-profile/approve-profile.component';
+import { InviteComponent } from '../components/invite/invite.component';
 
 @NgModule({
     declarations: [
@@ -49,8 +51,7 @@ import { PictureComponent } from '../components/picture/picture.component';
         ProjectComponent,
         ProjectExperienceComponent,
         TechnicalUserInfoComponent,
-        PictureComponent,
-        ApproveProfileComponent
+        ApproveProfileComponent,
         PictureComponent,
         InviteComponent,
     ],
