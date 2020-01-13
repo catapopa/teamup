@@ -61,6 +61,9 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserApprovalStatus approvalStatus;
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

@@ -14,6 +14,10 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.project.teamup.model.UserApprovalStatus.*;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Service
 public class UserService {
     private final static int VERIFICATION_TOKEN_VALIDITY = 60 * 60 * 1000;
@@ -43,6 +47,18 @@ public class UserService {
     }
 
     public User save(@Valid User user) {
+        if (isNull(user.getApprovalStatus())) {
+            user.setApprovalStatus(DRAFT);
+        }
+        if (nonNull(user.getId())) {
+            User oldVersion = userRepository.getOne(user.getId());
+            if (user.getApprovalStatus().equals(APPROVED)) {
+                if (oldVersion.getApprovalStatus().equals(WAITING_FOR_APPROVAL)) {
+                    //TODO: Here should be handled the backup of the previous APPROVED version of the user
+                    userRepository.findByUsername(user.getUsername()).ifPresent(lastApproved -> userRepository.delete(lastApproved));
+                }
+            }
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -90,7 +106,7 @@ public class UserService {
             userToUpdate.setProjectExperiences(user.getProjectExperiences());
         }
         //TODO PUT THE CORRECT URL HERE!! correct url??
-        mailService.sendEmailProfileCreated(userToUpdate,"http://localhost:4200/");
+        mailService.sendEmailProfileCreated(userToUpdate, "http://localhost:4200/");
         return userRepository.save(userToUpdate);
     }
 
@@ -113,11 +129,11 @@ public class UserService {
                     break;
                 case TECHNOLOGY:
                     for (User user : getAll()) {
-                        if ( user.getSkills()
-                            != null) {
+                        if (user.getSkills()
+                                != null) {
                             for (UserSkill skill : user.getSkills()) {
-                                if ( String.valueOf(skill.getTechnology().getName())
-                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
+                                if (String.valueOf(skill.getTechnology().getName())
+                                        .equalsIgnoreCase(String.valueOf(entry.getValue()))) {
                                     userList.add(user);
                                 }
                             }
@@ -126,11 +142,11 @@ public class UserService {
                     break;
                 case SKILL_LEVEL:
                     for (User user : getAll()) {
-                        if ( user.getSkills()
-                            != null) {
+                        if (user.getSkills()
+                                != null) {
                             for (UserSkill skill : user.getSkills()) {
-                                if ( String.valueOf(skill.getLevel())
-                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
+                                if (String.valueOf(skill.getLevel())
+                                        .equalsIgnoreCase(String.valueOf(entry.getValue()))) {
                                     userList.add(user);
                                 }
                             }
@@ -162,12 +178,13 @@ public class UserService {
 
     /**
      * Retrieves and converts picture of user to string
+     *
      * @param username username of user
      * @return String of profile picture or null
      */
-    public String retrievePictureOfUser(String username){
+    public String retrievePictureOfUser(String username) {
         Optional<User> storedUser = userRepository.findByUsername(username);
-        if (storedUser.isPresent()){
+        if (storedUser.isPresent()) {
             User user = storedUser.get();
             return new String(user.getPicture());
         }
@@ -339,20 +356,20 @@ public class UserService {
             for (ProjectUserExperience projectUserExperience : user.getProjectExperiences()) {
                 //check if project exists in the db; if not save it
                 if (projectUserExperience.getProject() != null) {
-                    if(projectUserExperience.getProject().getCompany() != null){
-                    //check if company is the same as user company (has new company has already been saved)
-                        if(projectUserExperience.getProject().getCompany().getName().equals(userToBeUpdated.getCompany().getName())){
+                    if (projectUserExperience.getProject().getCompany() != null) {
+                        //check if company is the same as user company (has new company has already been saved)
+                        if (projectUserExperience.getProject().getCompany().getName().equals(userToBeUpdated.getCompany().getName())) {
                             projectUserExperience.getProject().setCompany(userToBeUpdated.getCompany());
                         }
                         //else if it's a new company, store it in the db
-                        else if(projectUserExperience.getProject().getCompany().getId() == 0){
-                                Company addedCompany = companyRepository.save(projectUserExperience.getProject().getCompany());
-                                projectUserExperience.getProject().setCompany(addedCompany);
+                        else if (projectUserExperience.getProject().getCompany().getId() == 0) {
+                            Company addedCompany = companyRepository.save(projectUserExperience.getProject().getCompany());
+                            projectUserExperience.getProject().setCompany(addedCompany);
                         }
                     }
 
                     //check if industry of project exists; if not add it
-                    if(projectUserExperience.getProject().getIndustry() != null) {
+                    if (projectUserExperience.getProject().getIndustry() != null) {
                         if (projectUserExperience.getProject().getIndustry().getId() == 0) {
                             Industry addedIndustry = industryRepository.save(projectUserExperience.getProject().getIndustry());
                             projectUserExperience.getProject().setIndustry(addedIndustry);
@@ -378,11 +395,10 @@ public class UserService {
     private void persistUserCompany(User user, User userToBeUpdated) {
         if (user.getCompany() != null) {
             //if it's a new company it must be saved in the db
-            if(user.getCompany().getId() == 0){
+            if (user.getCompany().getId() == 0) {
                 Company addedCompany = companyRepository.save(user.getCompany());
                 userToBeUpdated.setCompany(addedCompany);
-            }
-            else{
+            } else {
                 userToBeUpdated.setCompany(user.getCompany());
             }
         }
@@ -399,19 +415,24 @@ public class UserService {
     /**
      * Admin creates a new username and password for a
      * new account of an employee.
+     *
      * @param user the new created user
      * @throws Exception if the username is not unique
      * @author Sonya
-     * */
-    public User createNewAccount(User user) throws Exception{
-        if(!userRepository.findByUsername(user.getUsername()).isPresent()) {
+     */
+    public User createNewAccount(User user) throws Exception {
+        if (!userRepository.findByUsername(user.getUsername()).isPresent()) {
             mailService.sendEmailNewAccount(user);
             String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
             user.setPassword(hashedPassword);
             return userRepository.save(user);
-        }
-        else{
+        } else {
             throw new Exception("This username already exists!");
         }
+    }
+
+    public void requestForApproval(User user) {
+        user.setApprovalStatus(WAITING_FOR_APPROVAL);
+        userRepository.save(user);
     }
 }

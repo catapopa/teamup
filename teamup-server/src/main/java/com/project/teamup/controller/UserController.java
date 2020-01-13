@@ -158,4 +158,10 @@ public class UserController {
                     .body(e.getMessage());
         }
     }
+
+    @PostMapping(value = "/requestForApproval")
+    public ResponseEntity requestForApproval(@RequestBody UserDTO user) {
+        userService.requestForApproval(userMapper.toEntity(user));
+        return ResponseEntity.ok().build();
+    }
 }
