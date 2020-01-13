@@ -1,0 +1,38 @@
+<mat-card class="invite-card mat-elevation-z8">
+    <form [formGroup]="invitationForm" (ngSubmit)="onSubmit()">
+        <mat-card-header>
+            <mat-card-title>Invite user</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field>
+                <input matInput placeholder="Username"
+                       formControlName="username"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email"
+                       formControlName="email"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password"
+                       formControlName="password"
+                       required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="role" placeholder="Role" required>
+                    <mat-option *ngFor="let role of key(roles)" [value]="role">
+                        {{roles[role]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <teamup-location formControlName="location"></teamup-location>
+            <teamup-company formControlName="company"></teamup-company>
+        </mat-card-content>
+
+        <mat-card-actions class="invite">
+            <button mat-raised-button color="primary" type="submit">Invite</button>
+        </mat-card-actions>
+    </form>
+</mat-card>
+

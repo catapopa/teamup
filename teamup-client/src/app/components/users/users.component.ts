@@ -23,11 +23,9 @@ export class UsersComponent {
 
     getData() {
         if (this.authService.getRole() === 'SUPERVISOR') {
-
             const id = this.authService.getId();
-            this.userService.getAllBySupervisor(id).subscribe((data) => {
-                console.log(data)
 
+            this.userService.getAllBySupervisor(id).subscribe((data) => {
                 this.dataSource = new MatTableDataSource<User>(data as User[]);
                 this.dataSource.sort = this.sort;
             });
