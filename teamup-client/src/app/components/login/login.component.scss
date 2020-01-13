@@ -1,54 +1,61 @@
 :host {
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
 }
 
 .login {
-	text-align: center;
-	display: block;
-	height: 100%;
-	width: 100%;
-	background-color: #673ab7;
+  text-align: center;
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #673ab7;
 }
 
 .login-box {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 30%;
-	height: 55%;
-	padding: 30px 8px;
-	background-color: whitesmoke;
-	border-radius: 10px;
-	box-shadow: 0 30px 38px #1a2e314d, 0 30px 30px #1a2e314d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 57%;
+  padding: 30px 8px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 0 30px 38px #1a2e314d, 0 30px 30px #1a2e314d;
+}
+
+@media only screen and (max-width: 380px) {
+  .login-box {
+	width: 60%;
+	height: 70%;
+  }
 }
 
 button {
-	width: 100%;
-	height: 15%;
-	border-radius: 0px;
-	margin: 0 auto;
-	color: whitesmoke;
-	background-color: #320b86;
+  width: 100%;
+  height: 15%;
+  border-radius: 0px;
+  margin: 0 auto;
+  color: whitesmoke;
+  background-color: #320b86;
 }
 
 button:hover {
-	box-shadow: 0 19px 38px #0000004d, 0 15px 12px #00000038;
+  box-shadow: 0 19px 38px #0000004d, 0 15px 12px #00000038;
 }
 
 mat-form-field {
-	width: 70%;
+  width: 70%;
 }
 
 mat-card-actions {
-	margin-top: 7%;
+  margin-top: 7%;
 }
 
 img {
-	margin-bottom: 15px;
-	width: 60%;
+  margin-bottom: 15px;
+  width: 60%;
 }

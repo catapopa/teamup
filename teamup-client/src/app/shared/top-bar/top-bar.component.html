@@ -35,10 +35,20 @@
 	</div>
 
 	<span class="fill-remaining-space"></span>
-	<div class="language-wrapper">
-		<a mat-button (click)="useLanguage('en')">EN</a>
-		<a mat-button (click)="useLanguage('en')">DE</a>
-		<a mat-button (click)="useLanguage('en')">RO</a>
-	</div>
-	<a mat-button (click)="signOut();">Sign out</a>
+	<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<mat-menu #menu="matMenu">
+		<span mat-menu-item>
+			<mat-icon>language</mat-icon>
+			<a mat-button (click)="useLanguage('en')">EN</a>
+			<a mat-button (click)="useLanguage('de')">DE</a>
+			<a mat-button (click)="useLanguage('ro')">RO</a>
+		</span>
+		<span mat-menu-item>
+			<mat-icon>exit_to_app</mat-icon>
+			<a mat-button (click)="signOut();">Sign out</a>
+		</span>
+	</mat-menu>
+
 </mat-toolbar>
