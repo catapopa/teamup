@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hallo, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>Der Arbeiter mit den folgenden Referenzen hat sein Konto erstellt: </p>
+<p>
+    <span th:text="'Nutzername: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Email Adresse: ' + ${email}"></span>
+</p>
+<p>Bitte &#252;berprufe sein Profil, um ihn zu validieren. Du kannst ihn <a th:href="@{${employeeLink}}">hier </a>
+ zugreifen.</p>
+<p>
+</p>
+<p>Einen sch&#246;nen Tag,</p>
+<p>
+    Die Team Up Gruppe
+</p>
+</body>
+</html>

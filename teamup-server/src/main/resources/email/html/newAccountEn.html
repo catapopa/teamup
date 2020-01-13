@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Hello, '"></span>
+</p>
+<p>A new account in the TeamUp Application has been created with the following credentials: </p>
+<p>
+    <span th:text="'Username: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Password: ' + ${password}"></span>
+</p>
+<p>I recommend you to log in and to create your profile as soon as possible by clicking <a th:href="@{${link}}">here</a>.</p>
+<p>
+</p>
+<p>Have a nice day,</p>
+<p>
+    TeamUp Group
+</p>
+</body>
+</html>

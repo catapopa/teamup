@@ -1,15 +1,11 @@
 package com.project.teamup.service;
 
-import com.project.teamup.dao.UserRepository;
-import com.project.teamup.dao.VerificationTokenRepository;
+import com.project.teamup.dao.*;
 import com.project.teamup.model.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.project.teamup.dao.VerificationTokenRepository;
-import com.project.teamup.model.UserRole;
-import com.project.teamup.model.VerificationToken;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.validation.Valid;
 import java.sql.Blob;
@@ -25,6 +21,16 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private IndustryRepository industryRepository;
+    @Autowired
+    private TechnologyAreaRepository technologyAreaRepository;
+    @Autowired
+    private TechnologyRepository technologyRepository;
     @Autowired
     private VerificationTokenRepository tokenRepository;
     @Autowired
@@ -83,7 +89,8 @@ public class UserService {
         if (user.getProjectExperiences().size() != 0) {
             userToUpdate.setProjectExperiences(user.getProjectExperiences());
         }
-
+        //TODO PUT THE CORRECT URL HERE!! correct url??
+        mailService.sendEmailProfileCreated(userToUpdate,"http://localhost:4200/");
         return userRepository.save(userToUpdate);
     }
 
@@ -94,45 +101,77 @@ public class UserService {
                 case ROLE:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getRole() != null)
-                            .filter(user -> String.valueOf(user.getRole()).equalsIgnoreCase(String.valueOf(entry.getValue())))
+                            .filter(user -> String.valueOf(user.getRole())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue())))
                             .collect(Collectors.toList()));
                     break;
                 case SENIORITY:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getSeniority() != null)
-                            .filter(user -> String.valueOf(user.getSeniority()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getSeniority())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
-                case TECHNOLOGY: {
-                    List<User> users = getAll();
-                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getTechnology().getName()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
-                    userList.addAll(users);
+                case TECHNOLOGY:
+                    for (User user : getAll()) {
+                        if ( user.getSkills()
+                            != null) {
+                            for (UserSkill skill : user.getSkills()) {
+                                if ( String.valueOf(skill.getTechnology().getName())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
+                                    userList.add(user);
+                                }
+                            }
+                        }
+                    }
                     break;
-                }
-                case SKILL_LEVEL: {
-                    List<User> users = getAll();
-                    users.removeIf(user -> user.getSkills().stream().anyMatch(skill -> String.valueOf(skill.getLevel()).equalsIgnoreCase(String.valueOf(entry.getValue()))));
-                    userList.addAll(users);
+                case SKILL_LEVEL:
+                    for (User user : getAll()) {
+                        if ( user.getSkills()
+                            != null) {
+                            for (UserSkill skill : user.getSkills()) {
+                                if ( String.valueOf(skill.getLevel())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))){
+                                    userList.add(user);
+                                }
+                            }
+                        }
+                    }
                     break;
-                }
                 case LOCATION:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getLocation() != null)
-                            .filter(user -> String.valueOf(user.getLocation().getCity()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getLocation().getCity())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
                 case LANGUAGE:
                     userList.addAll(getAll().stream()
                             .filter(user -> user.getLanguage() != null)
-                            .filter(user -> String.valueOf(user.getLanguage()).equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
+                            .filter(user -> String.valueOf(user.getLanguage())
+                                    .equalsIgnoreCase(String.valueOf(entry.getValue()))).collect(Collectors.toList()));
                     break;
             }
         }
-        userList.forEach(System.out::println);
         return userList.stream()
                 .distinct()
                 .collect(Collectors.toList());
     }
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    /**
+     * Retrieves and converts picture of user to string
+     * @param username username of user
+     * @return String of profile picture or null
+     */
+    public String retrievePictureOfUser(String username){
+        Optional<User> storedUser = userRepository.findByUsername(username);
+        if (storedUser.isPresent()){
+            User user = storedUser.get();
+            return new String(user.getPicture());
+        }
+        return null;
     }
 
     /**
@@ -159,27 +198,27 @@ public class UserService {
             } else {
                 return "The user is already activated!";
             }
+        } else {
+            return "Invalid username of admin/employee!";
         }
-        return "Invalid username of admin/employee!";
     }
 
     public String generateActivationLink(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
-
         return WEB_APP_URL + verificationToken.getToken();
     }
 
-    public void createVerificationTokenForUser(User user) {
+    public VerificationToken createVerificationTokenForUser(User user) {
         VerificationToken verificationToken = tokenRepository.findByUser(user);
-
         if (verificationToken == null) {
-            tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+            return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
         } else {
             if (verificationToken.getExpiryDate().after(new Timestamp(new Date().getTime()))) {
                 tokenRepository.delete(verificationToken);
-                tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
+                return tokenRepository.save(new VerificationToken(null, UUID.randomUUID().toString(), user, new Timestamp(new Date().getTime() + VERIFICATION_TOKEN_VALIDITY)));
             }
         }
+        return null;
     }
 
     /**
@@ -187,7 +226,7 @@ public class UserService {
      * which represents the new password for
      * a user who must be activated.
      */
-    private String generateNewPassword() {
+    String generateNewPassword() {
         int length = 6;
         boolean useLetters = true;
         boolean useNumbers = true;
@@ -196,12 +235,10 @@ public class UserService {
 
     public boolean isValidToken(String token) {
         VerificationToken verificationToken = tokenRepository.findByToken(token);
-
         if (verificationToken != null && verificationToken.getExpiryDate().before(new Timestamp(new Date().getTime()))) {
             tokenRepository.delete(verificationToken);
             return true;
         }
-
         return false;
     }
 
@@ -223,5 +260,158 @@ public class UserService {
             return Optional.empty();
         }
         return Optional.empty();
+    }
+
+    public User updateUser(User user, String picture) {
+        Optional<User> storedUser = userRepository.findById(user.getId());
+        User userToBeUpdated;
+
+        //can perform update only if user exists in db
+        if (storedUser.isPresent()) {
+            userToBeUpdated = storedUser.get();
+            userToBeUpdated.setFirstName(user.getFirstName());
+            userToBeUpdated.setLastName(user.getLastName());
+            userToBeUpdated.setBirthDate(user.getBirthDate());
+            userToBeUpdated.setPicture(user.getPicture());
+            userToBeUpdated.setEmail(user.getEmail());
+            userToBeUpdated.setLanguage(user.getLanguage());
+            userToBeUpdated.setRole(user.getRole());
+            userToBeUpdated.setSeniority(user.getSeniority());
+            userToBeUpdated.setStatus(user.getStatus());
+            userToBeUpdated.setLocation(user.getLocation());
+
+            if (picture != null && !picture.equals("")) {
+                byte[] userPicture = picture.getBytes();
+                userToBeUpdated.setPicture(userPicture);
+            }
+
+            //determine user company
+            persistUserCompany(user, userToBeUpdated);
+
+            //determine user project experience
+            userToBeUpdated.setProjectExperiences(determineUserProjectExperiences(user, userToBeUpdated));
+
+            //user skill
+            userToBeUpdated.setSkills(determineUserSkills(user, userToBeUpdated));
+
+            userRepository.save(userToBeUpdated);
+            return userToBeUpdated;
+        }
+        return null;
+    }
+
+    private List<UserSkill> determineUserSkills(User user, User userToBeUpdated) {
+        List<UserSkill> skillsToBeAddedToUser = new ArrayList<>();
+        if (user.getSkills() != null && !user.getSkills().isEmpty()) {
+            for (UserSkill userSkill : user.getSkills()) {
+                if (userSkill.getTechnology() != null) {
+                    if (userSkill.getTechnology().getArea() != null) {
+                        //check if area exists in the db; if not add it
+                        if (userSkill.getTechnology().getArea().getName() != null) {
+                            Optional<TechnologyArea> existingArea = technologyAreaRepository.findTechnologyAreaByName(userSkill.getTechnology().getArea().getName());
+                            if (existingArea.isPresent()) {
+                                userSkill.getTechnology().setArea(existingArea.get());
+                            } else {
+                                TechnologyArea addedArea = technologyAreaRepository.save(userSkill.getTechnology().getArea());
+                                userSkill.getTechnology().setArea(addedArea);
+                            }
+                        }
+                    }
+                    //check if technology exists in the db; if not add it
+                    Optional<Technology> existingTechnology = technologyRepository.findTechnologiesByNameAndArea(userSkill.getTechnology().getName(), userSkill.getTechnology().getArea());
+                    if (existingTechnology.isPresent()) {
+                        userSkill.setTechnology(existingTechnology.get());
+                    } else {
+                        Technology addedTechnology = technologyRepository.save(userSkill.getTechnology());
+                        userSkill.setTechnology(addedTechnology);
+                    }
+                }
+                userSkill.setUser(userToBeUpdated);
+                skillsToBeAddedToUser.add(userSkill);
+            }
+        }
+        return skillsToBeAddedToUser;
+    }
+
+    private List<ProjectUserExperience> determineUserProjectExperiences(User user, User userToBeUpdated) {
+        List<ProjectUserExperience> experiencesToBeAddedToUser = new ArrayList<>();
+        if (user.getProjectExperiences() != null && !user.getProjectExperiences().isEmpty()) {
+            for (ProjectUserExperience projectUserExperience : user.getProjectExperiences()) {
+                //check if project exists in the db; if not save it
+                if (projectUserExperience.getProject() != null) {
+                    if(projectUserExperience.getProject().getCompany() != null){
+                    //check if company is the same as user company (has new company has already been saved)
+                        if(projectUserExperience.getProject().getCompany().getName().equals(userToBeUpdated.getCompany().getName())){
+                            projectUserExperience.getProject().setCompany(userToBeUpdated.getCompany());
+                        }
+                        //else if it's a new company, store it in the db
+                        else if(projectUserExperience.getProject().getCompany().getId() == 0){
+                                Company addedCompany = companyRepository.save(projectUserExperience.getProject().getCompany());
+                                projectUserExperience.getProject().setCompany(addedCompany);
+                        }
+                    }
+
+                    //check if industry of project exists; if not add it
+                    if(projectUserExperience.getProject().getIndustry() != null) {
+                        if (projectUserExperience.getProject().getIndustry().getId() == 0) {
+                            Industry addedIndustry = industryRepository.save(projectUserExperience.getProject().getIndustry());
+                            projectUserExperience.getProject().setIndustry(addedIndustry);
+                        }
+                    }
+
+                    Optional<Project> existingProject = projectRepository.findProjectByName(projectUserExperience.getProject().getName());
+                    if (existingProject.isPresent()) {
+                        projectUserExperience.setProject(existingProject.get());
+                    } else {
+                        Project addedProject = projectRepository.save(projectUserExperience.getProject());
+                        projectUserExperience.setProject(addedProject);
+                    }
+                    projectUserExperience.setId(new ProjectUserId(projectUserExperience.getProject().getId(), userToBeUpdated.getId()));
+                    projectUserExperience.setUser(userToBeUpdated);
+                    experiencesToBeAddedToUser.add(projectUserExperience);
+                }
+            }
+        }
+        return experiencesToBeAddedToUser;
+    }
+
+    private void persistUserCompany(User user, User userToBeUpdated) {
+        if (user.getCompany() != null) {
+            //if it's a new company it must be saved in the db
+            if(user.getCompany().getId() == 0){
+                Company addedCompany = companyRepository.save(user.getCompany());
+                userToBeUpdated.setCompany(addedCompany);
+            }
+            else{
+                userToBeUpdated.setCompany(user.getCompany());
+            }
+        }
+    }
+
+    public User getUserByUsername(String username) {
+        Optional<User> storedUser = userRepository.findByUsername(username);
+        if (storedUser.isPresent()) {
+            return storedUser.get();
+        }
+        return null;
+    }
+
+    /**
+     * Admin creates a new username and password for a
+     * new account of an employee.
+     * @param user the new created user
+     * @throws Exception if the username is not unique
+     * @author Sonya
+     * */
+    public User createNewAccount(User user) throws Exception{
+        if(!userRepository.findByUsername(user.getUsername()).isPresent()) {
+            mailService.sendEmailNewAccount(user);
+            String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
+            return userRepository.save(user);
+        }
+        else{
+            throw new Exception("This username already exists!");
+        }
     }
 }

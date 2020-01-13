@@ -7,6 +7,8 @@ import { ProjectExperience } from '../../shared/models/projectExperience';
 import { Technology } from '../../shared/models/technology';
 import { Project } from '../../shared/models/project';
 import { UserExperience } from '../../shared/models/userExperience';
+import {UserWithPictureWrapper} from "../../shared/models/userWithPictureWrapper";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'teamup-profile',
@@ -15,9 +17,15 @@ import { UserExperience } from '../../shared/models/userExperience';
 })
 export class ProfileComponent implements OnInit {
 
+  //wrapped containing user object and its profile picture
+  currentLoggedInUserWrapped: any;
+  //logged in user object
+  currentLoggedInUser: any;
+  //logged in user's profile picture
+  profilePicture: string;
   profileForm: FormGroup;
 
-  constructor(private userService: UserService, formBuilder: FormBuilder) {
+  constructor(private userService: UserService, formBuilder: FormBuilder, private snackbar: MatSnackBar) {
     this.profileForm = formBuilder.group({
       basicInfo: new FormControl('', [Validators.required]),
       technicalInfo: new FormControl('', [Validators.required]),
@@ -25,6 +33,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('currentUser')) {
+      let currentLoggedInUserName = JSON.parse(localStorage.getItem('currentUser'));
+      this.userService.getUserWithPicture('userWithPicture/', currentLoggedInUserName).subscribe(obj => {
+        this.currentLoggedInUserWrapped = obj;
+        //retrieve data from user with picture wrapper obj
+        this.currentLoggedInUser = this.currentLoggedInUserWrapped.userToUpdate;
+        this.profilePicture = this.currentLoggedInUserWrapped.profilePicture;
+      });
+    }
   }
 
   public onSubmit() {
@@ -46,8 +63,7 @@ export class ProfileComponent implements OnInit {
       location: technicalInfoFormValue.location.location,
       company: {
         id: technicalInfoFormValue.company.company.id ? technicalInfoFormValue.company.company.id : 0,
-        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name :
-          technicalInfoFormValue.company.company
+        name: technicalInfoFormValue.company.company.name ? technicalInfoFormValue.company.company.name : technicalInfoFormValue.company.company
       },
       skills: null,
       projectExperiences: null,
@@ -61,8 +77,8 @@ export class ProfileComponent implements OnInit {
         id: 0,
         name: skill.technology.techName,
         area: {
-          id: skill.technology.techArea.id ? skill.technology.techArea.id : 0,
-          name: skill.technology.techArea.name ? skill.technology.techArea.name : skill.technology.techArea.techArea
+          id: skill.technology.techArea.techArea.id ? skill.technology.techArea.techArea.id : 0,
+          name: skill.technology.techArea.techArea.name ? skill.technology.techArea.techArea.name : skill.technology.techArea.techArea
         }
       };
 
@@ -94,8 +110,8 @@ export class ProfileComponent implements OnInit {
         name: projectExp.project.name,
         description: projectExp.project.description,
         industry: {
-          id: projectExp.project.industry.id ? projectExp.project.industry.id : 0,
-          name: projectExp.project.industry.name ? projectExp.project.industry.name : projectExp.project.industry.industry,
+          id: projectExp.project.industry.industry.id ? projectExp.project.industry.industry.id : 0,
+          name: projectExp.project.industry.industry.name ? projectExp.project.industry.industry.name : projectExp.project.industry.industry,
         },
         company: {
           id: projectExp.project.company.company.id ? projectExp.project.company.company.id : 0,
@@ -113,5 +129,24 @@ export class ProfileComponent implements OnInit {
       projectExperiencesArray.push(projectExperience);
     });
     user.projectExperiences = projectExperiencesArray;
+
+    //workaround for user with profile picture
+    user.id = this.currentLoggedInUser.id;
+    const profilePicture = user.picture;
+    user.picture = null;
+    const userToBeUpdated: UserWithPictureWrapper = {
+      userToUpdate: user,
+      profilePicture: profilePicture,
+    };
+
+    this.userService.update('update', userToBeUpdated).subscribe(
+        () => {
+          this.snackbar.open('User saved.');
+        },
+        () => {
+          this.snackbar.open('Error occured.');
+        }
+    );
+
   }
 }

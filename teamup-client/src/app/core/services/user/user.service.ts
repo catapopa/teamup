@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../../http/http.service';
+import {User} from "../../../shared/models/user";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,17 @@ export class UserService {
   }
 
   update(path: string, data: any) {
-    return this.httpService.put(this.url + path, data);
+    console.log(this.url + path);
+    console.log(data);
+    return this.httpService.post(this.url + path, data);
   }
+
+  getUserByUsername(path: string, username: string) {
+    return this.httpService.get(this.url + path + username);
+  }
+
+  getUserWithPicture(path: string, username: string) {
+    return this.httpService.get(this.url + path + username);
+  }
+
 }

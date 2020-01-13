@@ -19,7 +19,7 @@ public class UserSkill {
     private Long id;
     @ToString.Exclude
     @JsonBackReference
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "\"user\"")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
     @ToString.Exclude

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <title th:remove="all" th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span th:text="'Salut, ' + ${firstName} + ' '+ ${lastName} + '!'"></span>
+</p>
+<p>Angajatul cu urm&#259;toarele crediten&#539;iale &#351;i-a creat profilul: </p>
+<p>
+    <span th:text="'Nume utilizator: ' + ${username}"></span>
+</p>
+<p>
+    <span th:text="'Adresa de email: ' + ${email}"></span>
+</p>
+<p>Te rog verific&#259; profilul lui pentru a-l valida f&#259;c&#226;nd click <a th:href="@{${employeeLink}}">aici</a>.
+</p>
+<p>
+</p>
+<p>O zi frumoas&#259;,</p>
+<p>
+    Echipa Team Up
+</p>
+</body>
+</html>

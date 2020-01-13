@@ -298,3 +298,16 @@ databaseChangeLog:
                   name: status
                   type: VARCHAR(50)
             tableName: users
+
+  - changeSet:
+      id: 9
+      author: steph
+      changes:
+        - modifyDataType:
+            columnName: picture
+            newDataType: text
+            tableName: users
+        - modifyDataType:
+            columnName: picture
+            newDataType: bytea
+            tableName: users
