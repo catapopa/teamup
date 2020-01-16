@@ -3,21 +3,21 @@
     <teamup-picture formControlName="picture"></teamup-picture>
     
     <mat-form-field>
-        <input matInput placeholder="First name" formControlName="firstName" required>
+        <input matInput placeholder="{{'profile.firstName' | translate}}" formControlName="firstName" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Last name" formControlName="lastName" required>
+        <input matInput placeholder="{{'profile.lastName' | translate}}" formControlName="lastName" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email" required>
+        <input matInput placeholder="{{'profile.email' | translate}}" formControlName="email" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Date of birth" formControlName="birthDate" required [matDatepicker]="picker">
+        <input matInput placeholder="{{'profile.dateOfBirth' | translate}}" formControlName="birthDate" required [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Language</mat-label>
+        <mat-label>{{ 'profile.language' | translate }}</mat-label>
         <mat-select formControlName="language">
             <mat-option *ngFor="let key of keys" [value]="language[key]">
                 {{language[key]}}

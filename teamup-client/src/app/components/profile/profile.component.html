@@ -3,7 +3,7 @@
 
 		<mat-card-header>
 			<mat-icon>face</mat-icon>
-			<mat-card-title>Personal details</mat-card-title>
+			<mat-card-title>{{ 'profile.personalDetails' | translate }}</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
             <img [src]="profilePicture" *ngIf="profilePicture">
@@ -13,14 +13,14 @@
 
 		<mat-card-header>
 			<mat-icon>important_devices</mat-icon>
-			<mat-card-title>Technical details</mat-card-title>
+			<mat-card-title>{{ 'profile.technicalDetails' | translate }}</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
 			<teamup-technical-user-info formControlName="technicalInfo"></teamup-technical-user-info>
 		</mat-card-content>
 
 		<mat-card-actions class="save">
-			<button mat-raised-button color="primary" type="submit">Save</button>
+			<button mat-raised-button color="primary" type="submit">{{ 'profile.saveButton' | translate }}</button>
 		</mat-card-actions>
 	</form>
 </mat-card>

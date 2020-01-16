@@ -1,24 +1,24 @@
 <form [formGroup]="projectForm">
     <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" required>
+        <input matInput placeholder="{{'project.name' | translate}}" formControlName="name" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Description" formControlName="description" required>
+        <input matInput placeholder="{{'project.description' | translate}}" formControlName="description" required>
     </mat-form-field>
 
     <teamup-industry formControlName="industry"></teamup-industry>
     <teamup-company formControlName="company"></teamup-company>
 
-    <h4>User experience</h4>
+    <h4>{{ 'project.userExperience' | translate }}</h4>
     <div formArrayName="userExperiences"
         *ngFor="let userexp of projectForm.get('userExperiences').controls; let i = index;">
         <div [formGroupName]="i">
             <teamup-user-experience [formControl]="userexp"></teamup-user-experience>
         </div>
         <mat-card-actions class="add-button">
-            <button mat-raised-button color="primary" (click)="addUserExperience()">Add user experience</button>
+            <button mat-raised-button color="primary" (click)="addUserExperience()">{{ 'project.buttonAddUserExperience' | translate }}</button>
             <button mat-raised-button (click)="removeUserExperience(i)"
-                *ngIf="projectForm.get('userExperiences').controls.length >1">Remove user experience</button>
+                *ngIf="projectForm.get('userExperiences').controls.length >1">{{ 'project.buttonRemoveUserExperience' | translate }}</button>
         </mat-card-actions>
 
     </div>

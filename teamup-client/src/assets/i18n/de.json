@@ -8,5 +8,70 @@
   },
   "home": {
     "logout": "Logout"
+  },
+  "profile": {
+    "approve": "Profil genehmigen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail-Adresse",
+    "dateOfBirth": "Geburtsdatum",
+    "company": "Unternehmen",
+    "industry": "Industrie",
+    "saveButton": "Speichern",
+    "language": "Sprache",
+    "personalDetails": "Persönlichedetails",
+    "technicalDetails": "Technischedetails"
+  },
+  "invite": {
+    "button": "Einladen",
+    "username": "Benutzer",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "role": "Rolle"
+  },
+  "project": {
+    "name": "Name",
+    "description": "Beschreibung",
+    "buttonAddUserExperience": "Benutzererfahrung hinzufügen",
+    "buttonRemoveUserExperience": "Entfernen Sie die Benutzererfahrung",
+    "userExperience": "Benutzererfahrung"
+  },
+  "projectExperience": {
+    "startDate": "Anfangsdatum",
+    "endDate": "Enddatum",
+    "description": "Beschreibung"
+  },
+  "techArea": {
+    "technologyArea": "Technologiebereich"
+  },
+  "skill": {
+    "skillLevel": "Qualifikationsniveau"
+  },
+  "userSeniority": {
+    "seniority": "Dienstalter"
+  },
+  "location": {
+    "location": "Ort"
+  },
+  "technology": {
+    "name": "Name der Technologie"
+  },
+  "technicalUserInfo": {
+    "buttonAddSkill": "Fähigkeit hinzufügen",
+    "buttonRemoveSkill": "Fähigkeit entfernen",
+    "buttonAddProjectExperience": "Projekterfahrung hinzufügen",
+    "buttonRemoveProjectExperience": "Projekterfahrung entfernen",
+    "projectExperience": "Projekterfahrung"
+  },
+  "users": {
+    "filter": "Filter",
+    "buttonDelete": "löschen"
+  },
+  "userExperience": {
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "startDate": "Anfangsdatum",
+    "endDate": "Enddatum",
+    "description": "Beschreibung"
   }
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="companyForm" class="company-form">
 	<mat-form-field>
-		<input type="text" placeholder="Company" aria-label="Number" matInput formControlName="company"
+		<input type="text" placeholder="{{'profile.company' | translate}}" aria-label="Number" matInput formControlName="company"
 			[matAutocomplete]="auto" required>
 		<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
 			<mat-option *ngFor="let option of companies" [value]="option">

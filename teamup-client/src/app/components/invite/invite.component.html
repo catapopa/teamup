@@ -5,22 +5,22 @@
         </mat-card-header>
         <mat-card-content>
             <mat-form-field>
-                <input matInput placeholder="Username"
+                <input matInput placeholder="{{'invite.username' | translate}}"
                        formControlName="username"
                        required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="email" placeholder="Email"
+                <input matInput type="email" placeholder="{{'invite.email' | translate}}"
                        formControlName="email"
                        required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="password" placeholder="Password"
+                <input matInput type="password" placeholder="{{'invite.password' | translate}}"
                        formControlName="password"
                        required>
             </mat-form-field>
             <mat-form-field>
-                <mat-select formControlName="role" placeholder="Role" required>
+                <mat-select formControlName="role" placeholder="{{'invite.role' | translate}}" required>
                     <mat-option *ngFor="let role of key(roles)" [value]="role">
                         {{roles[role]}}
                     </mat-option>
@@ -31,7 +31,7 @@
         </mat-card-content>
 
         <mat-card-actions class="invite">
-            <button mat-raised-button color="primary" type="submit">Invite</button>
+            <button mat-raised-button color="primary" type="submit" >{{ 'invite.button' | translate }}</button>
         </mat-card-actions>
     </form>
 </mat-card>
