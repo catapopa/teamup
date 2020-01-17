@@ -13,7 +13,7 @@
     "approve": "Accepta profil",
     "firstName": "Prenume",
     "lastName": "Nume de familie",
-    "email": "adresa de email",
+    "email": "Adresa de email",
     "dateOfBirth": "Data de nastere",
     "company": "Compania",
     "industry": "Industria",
@@ -27,7 +27,7 @@
     "username": "Utilizator",
     "email": "Adresa de email",
     "password": "Parola",
-    "role": "rol"
+    "role": "Rol"
   },
   "project": {
     "name": "Nume",

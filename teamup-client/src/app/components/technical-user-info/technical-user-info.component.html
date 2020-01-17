@@ -6,29 +6,33 @@
 
     <teamup-company formControlName="company"></teamup-company>
 
-    <h4>{{ 'technicalUserInfo.skills' | translate }}</h4>
+    <h4> {{ 'technicalUserInfo.skills' | translate }}</h4>
+
     <div formArrayName="skills" *ngFor="let skill of technicalInfoForm.get('skills').controls; let i = index;">
         <div [formGroupName]="i">
             <teamup-user-skill [formControl]="skill"></teamup-user-skill>
         </div>
         <mat-card-actions class="add-button">
-<!--            <button mat-raised-button color="primary" (click)="addSkill()">{{ technicalUserInfo.buttonAddSkill | translate }}</button>-->
-            <button mat-raised-button color="primary" (click)="addSkill()">{{ 'technicalUserInfo.buttonAddSkill' | translate }}</button>
+            <button mat-raised-button color="primary"
+                (click)="addSkill()">{{ 'technicalUserInfo.buttonAddSkill' | translate }}</button>
             <button mat-raised-button (click)="removeSkill(i)"
-                *ngIf="technicalInfoForm.get('skills').controls.length >1" >{{ 'technicalUserInfo.buttonRemoveSkill' | translate }}</button>
+                *ngIf="technicalInfoForm.get('skills').controls.length >1">{{ 'technicalUserInfo.buttonRemoveSkill' | translate }}</button>
         </mat-card-actions>
     </div>
+
     <br>
     <h4>{{ 'technicalUserInfo.projectExperience' | translate }}</h4>
+
     <div formArrayName="projectExperiences"
         *ngFor="let exp of technicalInfoForm.get('projectExperiences').controls; let i = index;">
         <div [formGroupName]="i">
             <teamup-project-experience [formControl]="exp"></teamup-project-experience>
         </div>
         <mat-card-actions class="add-button">
-            <button mat-raised-button color="primary" (click)="addProjectExperience()" >{{ 'technicalUserInfo.buttonAddProjectExperience' | translate }}</button>
+            <button mat-raised-button color="primary"
+                (click)="addProjectExperience()">{{ 'technicalUserInfo.buttonAddProjectExperience' | translate }}</button>
             <button mat-raised-button (click)="removeProjectExperience(i)"
-                *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1" >{{ 'technicalUserInfo.buttonRemoveProjectExperience' | translate }}
+                *ngIf="technicalInfoForm.get('projectExperiences').controls.length >1">{{ 'technicalUserInfo.buttonRemoveProjectExperience' | translate }}
             </button>
         </mat-card-actions>
     </div>
