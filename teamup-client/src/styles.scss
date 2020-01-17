@@ -10,6 +10,11 @@ body {
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-card-header {
+    justify-content: center;
+    padding: 50px;
+  }
+
 .mat-column-menu {
 	flex: none;
 	width: 30px;
