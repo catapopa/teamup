@@ -1,21 +1,21 @@
 <form [formGroup]="userExperienceForm">
     <mat-form-field>
-        <input matInput placeholder="Full name" formControlName="fullName" required>
+        <input matInput placeholder="{{'userExperience.fullName' | translate}}" formControlName="fullName" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email" required>
+        <input matInput placeholder="{{'userExperience.email' | translate}}" formControlName="email" required>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Start date" formControlName="startDate" required [matDatepicker]="startDatePicker">
+        <input matInput placeholder="{{'userExperience.startDate' | translate}}" formControlName="startDate" required [matDatepicker]="startDatePicker">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="End date" formControlName="endDate" required [matDatepicker]="endDatePicker">
+        <input matInput placeholder="{{'userExperience.endDate' | translate}}" formControlName="endDate" required [matDatepicker]="endDatePicker">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Description" formControlName="description" required>
+        <input matInput placeholder="{{'userExperience.description' | translate}}" formControlName="description" required>
     </mat-form-field>
 </form>

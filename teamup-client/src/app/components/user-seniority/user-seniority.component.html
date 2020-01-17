@@ -1,6 +1,6 @@
 <form [formGroup]="userSeniorityForm">
     <mat-form-field>
-        <mat-label>Seniority</mat-label>
+        <mat-label>{{ 'userSeniority.seniority' | translate }}</mat-label>
         <mat-select formControlName="seniority">
             <mat-option *ngFor="let key of keys" [value]="userSeniority[key]">
                 {{userSeniority[key]}}

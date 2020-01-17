@@ -8,5 +8,70 @@
   },
   "home": {
     "logout": "Deconectare"
+  },
+  "profile": {
+    "approve": "Accepta profil",
+    "firstName": "Prenume",
+    "lastName": "Nume de familie",
+    "email": "adresa de email",
+    "dateOfBirth": "Data de nastere",
+    "company": "Compania",
+    "industry": "Industria",
+    "saveButton": "Salveaza",
+    "language": "Limba",
+    "personalDetails": "Detalii personale",
+    "technicalDetails": "Detalii tehnice"
+  },
+  "invite": {
+    "button": "Invita",
+    "username": "Utilizator",
+    "email": "Adresa de email",
+    "password": "Parola",
+    "role": "rol"
+  },
+  "project": {
+    "name": "Nume",
+    "description": "Descriere",
+    "buttonAddUserExperience": "Adauga experienta utilizator",
+    "buttonRemoveUserExperience": "Sterge experienta utilizator"
+  },
+  "projectExperience": {
+    "startDate": "Data de inceput",
+    "endDate": "Data de sfarsit",
+    "description": "Descriere",
+    "userExperience": "Experienta utilizator"
+  },
+  "techArea": {
+    "technologyArea": "Sectiunea tehnologica"
+  },
+  "skill": {
+    "skillLevel": "Nivelul de aptitudine"
+  },
+  "userSeniority": {
+  "seniority": "Vechime in munca"
+},
+  "location": {
+    "location": "Locatia"
+  },
+  "technology": {
+    "name": "Numele tehnologiei"
+  },
+  "technicalUserInfo": {
+    "buttonAddSkill": "Adauga aptitudine",
+    "buttonRemoveSkill": "Sterge aptitudine",
+    "buttonAddProjectExperience": "Adauga experienta pe proiect",
+    "buttonRemoveProjectExperience": "Sterge experienta pe proiect",
+    "projectExperience": "Experienta pe proiect"
+  },
+  "users": {
+    "filter": "Filtrare",
+    "buttonDelete": "Sterge"
+  },
+  "userExperience": {
+    "fullName": "Numele complet",
+    "email": "Adresa de email",
+    "startDate": "Data de inceput",
+    "endDate": "Data de sfarsit",
+    "description": "Descriere"
   }
 }

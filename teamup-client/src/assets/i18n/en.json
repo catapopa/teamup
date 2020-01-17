@@ -8,5 +8,71 @@
   },
   "home": {
     "logout": "Logout"
+  },
+  "profile": {
+    "approve": "Approve Profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "dateOfBirth": "Date of birth",
+    "company": "Company",
+    "industry": "Industry",
+    "saveButton": "Save",
+    "language": "Language",
+    "personalDetails": "Personal details",
+    "technicalDetails": "Technical details"
+  },
+  "invite": {
+    "button": "Invite",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role"
+  },
+  "project": {
+    "name": "Name",
+    "description": "Description",
+    "buttonAddUserExperience": "Add user experience",
+    "buttonRemoveUserExperience": "Remove user experience",
+    "userExperience": "User experience"
+  },
+  "projectExperience": {
+    "startDate": "Start date",
+    "endDate": "End date",
+    "description": "Description"
+  },
+  "techArea": {
+    "technologyArea": "Technology Area"
+  },
+  "skill": {
+    "skillLevel": "Skill level"
+  },
+  "userSeniority": {
+    "seniority": "Seniority"
+  },
+  "location": {
+    "location": "Location"
+  },
+  "technology": {
+    "name": "Technology name"
+  },
+  "technicalUserInfo": {
+    "buttonAddSkill": "Add skill",
+    "buttonRemoveSkill": "Remove skill",
+    "buttonAddProjectExperience": "Add project experience",
+    "buttonRemoveProjectExperience": "Remove project experience",
+    "skills": "Skills",
+    "projectExperience": "Project experience"
+  },
+  "users": {
+    "filter": "Filter",
+    "buttonDelete": "delete"
+  },
+  "userExperience": {
+    "fullName": "Full name",
+    "email": "Email",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "description": "Description"
   }
 }

@@ -1,7 +1,7 @@
 <form [formGroup]="technologyForm">
     <input type="hidden" formControlName="id">
     <mat-form-field>
-        <input matInput placeholder="Technology name" formControlName="name" required>
+        <input matInput placeholder="{{'technology.name' | translate}}" formControlName="name" required>
     </mat-form-field>
     <teamup-tech-area formControlName="area"></teamup-tech-area>
 </form>

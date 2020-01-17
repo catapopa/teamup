@@ -1,6 +1,6 @@
 <form [formGroup]="locationForm">
     <mat-form-field>
-        <mat-label>Location</mat-label>
+        <mat-label>{{ 'location.location' | translate }}</mat-label>
         <mat-select formControlName="location" >
             <mat-option *ngFor="let location of (locationsPromise | async)" [value]="location">
                 {{location.country }}, {{location.state }}, {{location.city}}
