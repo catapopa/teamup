@@ -1,22 +1,26 @@
 mat-toolbar {
-	padding: 0 2%;
+  padding: 0 2%;
 }
 
 mat-button {
-	font-size: 20px;
+  font-size: 20px;
 }
 
 .fill-remaining-space {
-	/* This fills the remaining space, by using flexbox.
+  /* This fills the remaining space, by using flexbox.
      Every toolbar row uses a flexbox row layout. */
-	flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .is-active {
-	background: #ffffff1a;
+  background: #ffffff1a;
 }
 
-.mat-icon {
-	color: white;
-	padding-right: 20px;
+#menu {
+  color: white;
+  padding-right: 20px;
+}
+
+#icon {
+  padding: 10px 20px 0 0;
 }

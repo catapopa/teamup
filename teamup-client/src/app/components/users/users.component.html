@@ -28,7 +28,10 @@
 				<mat-cell *matCellDef="let row"> {{row.location.country}}, {{row.location.state}}, {{row.location.city}}
 				</mat-cell>
 			</ng-container>
-			<ng-container matColumnDef="menu" align="end">
+
+			<span class="fill-remaining-space"></span>
+			
+			<ng-container matColumnDef="menu">
 				<mat-header-cell *matHeaderCellDef></mat-header-cell>
 				<mat-cell id="menu" class="cn-table-action" *matCellDef="let row" (click)="$event.stopPropagation()">
 					<button mat-icon-button (click)="delete(row)" aria-label="menu">
