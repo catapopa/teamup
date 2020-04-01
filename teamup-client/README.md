@@ -3,6 +3,7 @@
 ## Recommendations
 
 Use Visual Studio Code and install the following plugins
+
 EditorConfig: (https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 js-beautify: (https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify )
 TSLint (https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin )
